@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
+from skimage.measure import marching_cubes
 import src.utils.io_utils as io
 
 # Parâmetros
@@ -75,8 +76,15 @@ def save_to_file(mask: np.ndarray, nome_arq: str):
 	file_path = io.get_data_path(f"{nome_arq}.npy")
 	np.savetxt(file_path, points, delimiter=",")
 
+def save_obj(verts, faces, nome_arq: str):
+	file_path = io.get_data_path(f"{nome_arq}.obj")
+	with open(file_path, 'w') as f:
+		for vert in verts:
+			f.write(f"v {vert[0]} {vert[1]} {vert[2]}\n")
+		for face in faces:
+			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
+
 def main():
-	'''
 	r = float(input("Digite o raio da esfera: "))
 	func = sphere(r)
 	mascara = threshold_3d(func, tol=5e-2)
@@ -87,13 +95,15 @@ def main():
 	if option.lower() == 's':
 		nome_arq = input("Digite o nome do arquivo (sem extensão): ")
 		save_to_file(mascara, nome_arq)
+		verts, faces, _, _ = marching_cubes(func, level=0)
+		save_obj(verts, faces, nome_arq)
 	print("Programa finalizado.")
 
 	'''
 	mascara = threshold_3d(arbitrary_scalar, tol=1e-2)
 	#plot_scalar_func(arbitrary_scalar, mode=3, mask=mascara)
 	save_to_file(mascara, "arbitrary_points2")
-	
+	'''
 
 if __name__ == '__main__':
 	main()
