@@ -30,18 +30,12 @@ def load_obj(file_name: str, name="LoadedObject"):
 				verts.append((float(x), float(y), float(z)))
 			elif line.startswith('f '):
 				_, v1, v2, v3 = line.strip().split()
-				faces.append((int(v1) - 1, int(v2) - 1, int(v3) - 1))
-	lines = []
-
-	for f in faces:
-		lines.append((f[0], f[1]))
-		lines.append((f[1], f[2]))
-		lines.append((f[2], f[0]))
+				faces.append((int(v1), int(v2), int(v3)))
 
 	mesh = bpy.data.meshes.new(f"{name}Mesh")
 	obj = bpy.data.objects.new(name, mesh)
 	bpy.context.collection.objects.link(obj)
-	mesh.from_pydata(verts, lines, faces)
+	mesh.from_pydata(verts, [], faces)
 	mesh.update()
 
 def create_point_cloud(points, name="PointCloud"):

@@ -76,13 +76,23 @@ def save_to_file(mask: np.ndarray, nome_arq: str):
 	file_path = io.get_data_path(f"{nome_arq}.npy")
 	np.savetxt(file_path, points, delimiter=",")
 
-def save_obj(verts, faces, nome_arq: str):
+def save_obj(func: np.ndarray, nome_arq: str):
+	dx = x[1] - x[0]
+	dy = y[1] - y[0]
+	dz = z[1] - z[0]
+
+	verts, faces, _, _ = marching_cubes(func, level=0, spacing=(dx, dy, dz))
+	
+	verts[:, 0] += x.min()
+	verts[:, 1] += y.min()
+	verts[:, 2] += z.min()
+
 	file_path = io.get_data_path(f"{nome_arq}.obj")
 	with open(file_path, 'w') as f:
 		for vert in verts:
 			f.write(f"v {vert[0]} {vert[1]} {vert[2]}\n")
 		for face in faces:
-			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
+			f.write(f"f {face[0]} {face[1]} {face[2]}\n")
 
 def main():
 	r = float(input("Digite o raio da esfera: "))
@@ -95,8 +105,7 @@ def main():
 	if option.lower() == 's':
 		nome_arq = input("Digite o nome do arquivo (sem extensão): ")
 		save_to_file(mascara, nome_arq)
-		verts, faces, _, _ = marching_cubes(func, level=0)
-		save_obj(verts, faces, nome_arq)
+		save_obj(func, nome_arq)
 	print("Programa finalizado.")
 
 	'''
