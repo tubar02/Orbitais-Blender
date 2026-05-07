@@ -56,5 +56,15 @@ def sphere_instancing(points, radius=0.1, name="SphereInstance"):
 		instance.location = point
 		bpy.context.collection.objects.link(instance)
 
-file_name = "esfera"
-load_obj(file_name)
+n = 3
+l = 2
+m = 2
+
+file_name = f"orbital_n{n}_l{l}_m{m}"
+load_obj(file_name, name=file_name)
+
+'''
+file_name = "orbital_n3_l2_m-2"
+points = load_data(file_name)
+create_point_cloud(points, name=file_name)
+'''
