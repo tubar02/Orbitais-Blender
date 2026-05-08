@@ -106,10 +106,13 @@ def hydrogen_wavefunction(n: int, l: int, m: int) -> np.ndarray:
 	wavefunction = radial * angular
 	return wavefunction
 
-def probability_density(wavefunction: np.ndarray, real: bool = False) -> np.ndarray:
+def probability_density(wavefunction: np.ndarray, real: bool = False, m: int = 0) -> np.ndarray:
 	# Densidade de probabilidade
 	if real:
-		wavefunction = np.real(wavefunction)
+		if m > 0:
+			wavefunction = np.real(wavefunction)
+		else:
+			wavefunction = np.imag(wavefunction)
 	density = np.abs(wavefunction) ** 2
 	return density
 
@@ -144,7 +147,7 @@ def main():
 	assert -l <= m <= l, "m deve ser um inteiro tal que -l <= m <= l"
 
 	wavefunction = hydrogen_wavefunction(n, l, m)
-	density = probability_density(wavefunction, real=True)
+	density = probability_density(wavefunction, True, m)
 
 	print(f"Densidade de probabilidade máxima: {np.max(density)}")
 	print(f"Densidade de probabilidade mínima: {np.min(density)}")
@@ -169,11 +172,11 @@ def _main():
 	save_obj(arbitrary_scalar, "arbitrary_points2")
 
 def auto_orbitals():
-	for n in range(4, 5):
+	for n in range(1, 5):
 		for l in range(0, n):
 			for m in range(-l, l + 1):
 				wavefunction = hydrogen_wavefunction(n, l, m)
-				density = probability_density(wavefunction, True)
+				density = probability_density(wavefunction, True, m=m)
 				level = 0.01 * np.max(density)
 				save_obj(density, f"orbital_n{n}_l{l}_m{m}", level=level)
 				print(f"Gerado orbital n={n}, l={l}, m={m}")
