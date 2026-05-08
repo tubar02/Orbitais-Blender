@@ -9,8 +9,8 @@ from skimage.measure import marching_cubes # Para extração de isosuperfícies
 import src.utils.io_utils as io
 
 # Parâmetros
-TAM_ESPACO = 10
-NUM_DIV = 250
+TAM_ESPACO = 40
+NUM_DIV = 300
 ORIGEM = 0
 A_0 = 1 # Raio de Bohr
 
@@ -106,8 +106,10 @@ def hydrogen_wavefunction(n: int, l: int, m: int) -> np.ndarray:
 	wavefunction = radial * angular
 	return wavefunction
 
-def probability_density(wavefunction: np.ndarray) -> np.ndarray:
+def probability_density(wavefunction: np.ndarray, real: bool = False) -> np.ndarray:
 	# Densidade de probabilidade
+	if real:
+		wavefunction = np.real(wavefunction)
 	density = np.abs(wavefunction) ** 2
 	return density
 
@@ -142,7 +144,7 @@ def main():
 	assert -l <= m <= l, "m deve ser um inteiro tal que -l <= m <= l"
 
 	wavefunction = hydrogen_wavefunction(n, l, m)
-	density = probability_density(wavefunction)
+	density = probability_density(wavefunction, real=True)
 
 	print(f"Densidade de probabilidade máxima: {np.max(density)}")
 	print(f"Densidade de probabilidade mínima: {np.min(density)}")
@@ -158,7 +160,6 @@ def main():
 	
 	print("Deseja salvar os pontos da isosuperfície em um arquivo? (s/n)")
 	if input().lower() == 's':
-		save_to_file(mask, f"orbital_n{n}_l{l}_m{m}")
 		save_obj(density, f"orbital_n{n}_l{l}_m{m}", level=level)
 
 def _main():
@@ -168,14 +169,14 @@ def _main():
 	save_obj(arbitrary_scalar, "arbitrary_points2")
 
 def auto_orbitals():
-	for n in range(1, 4):
+	for n in range(4, 5):
 		for l in range(0, n):
 			for m in range(-l, l + 1):
 				wavefunction = hydrogen_wavefunction(n, l, m)
-				density = probability_density(wavefunction)
+				density = probability_density(wavefunction, True)
 				level = 0.01 * np.max(density)
-				mask = density >= level
 				save_obj(density, f"orbital_n{n}_l{l}_m{m}", level=level)
+				print(f"Gerado orbital n={n}, l={l}, m={m}")
 
 if __name__ == '__main__':
 	auto_orbitals()
