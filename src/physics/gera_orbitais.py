@@ -35,7 +35,7 @@ def atualiza_espaco(n: int):
 	if n < 4:
 		pass
 	else:
-		NUM_DIV = (n - 1) * 250
+		NUM_DIV = 500 + (n - 3) * 100
 	
 	TAM_ESPACO = 5 + (n - 1) * 10
 	
