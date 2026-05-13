@@ -9,8 +9,8 @@ from skimage.measure import marching_cubes # Para extração de isosuperfícies
 import src.utils.io_utils as io
 
 # Parâmetros
-TAM_ESPACO = 40
-NUM_DIV = 300
+TAM_ESPACO = 10
+NUM_DIV = 500
 ORIGEM = 0
 A_0 = 1 # Raio de Bohr
 
@@ -29,7 +29,26 @@ THETA = np.zeros_like(R)
 THETA[R != 0] = np.arccos(Z[R != 0] / R[R != 0])
 PHI = np.arctan2(Y, X)
 
-def plot_scalar_func(func: np.ndarray, mode: int = 1, mask: np.ndarray = None):
+def atualiza_espaco(n: int):
+	global TAM_ESPACO, NUM_DIV, x, y, z, X, Y, Z, R, THETA, PHI
+
+	if n < 4:
+		pass
+	else:
+		NUM_DIV = (n - 1) * 250
+	
+	TAM_ESPACO = 5 + (n - 1) * 10
+	
+	x = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
+	y = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
+	z = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
+	X, Y, Z = np.meshgrid(x, y, z, indexing="ij")
+	R = np.sqrt(X**2 + Y**2 + Z**2)
+	THETA = np.zeros_like(R)
+	THETA[R != 0] = np.arccos(Z[R != 0] / R[R != 0])
+	PHI = np.arctan2(Y, X)
+
+def plot_scalar_func(func: np.ndarray, mode: int = 1, mask: np.ndarray | None = None):
 	global X, Y, Z, x, y, z
 	if mode == 1:
 		fig = plt.figure()
@@ -146,14 +165,11 @@ def main():
 	assert 0 <= l < n, "l deve ser um inteiro tal que 0 <= l < n"
 	assert -l <= m <= l, "m deve ser um inteiro tal que -l <= m <= l"
 
+	atualiza_espaco(n)
+
 	wavefunction = hydrogen_wavefunction(n, l, m)
 	density = probability_density(wavefunction, True, m)
-
-	print(f"Densidade de probabilidade máxima: {np.max(density)}")
-	print(f"Densidade de probabilidade mínima: {np.min(density)}")
-
-	level = int(input("\nEscolha a porcentagem da densidade máxima para a isosuperfície (ex: 1 para 1%): ")) / 100 * np.max(density)
-	print(f"Level escolhido: {level}% da densidade máxima")
+	level = 0.01 * np.max(density)
 	mask = density >= level
 
 	print("Deseja plotar a função de onda? (s/n)")
@@ -173,6 +189,7 @@ def _main():
 
 def auto_orbitals():
 	for n in range(1, 5):
+		atualiza_espaco(n)
 		for l in range(0, n):
 			for m in range(-l, l + 1):
 				wavefunction = hydrogen_wavefunction(n, l, m)
