@@ -13,8 +13,16 @@ def get_data_path(file_name: str) -> Path:
 	file = DATA_DIR / file_name
 	return file
 
+def read_data_batch(dir_name: str):
+	dir_path = get_data_path(dir_name)
+	if not dir_path.is_dir():
+		raise ValueError(f"{dir_name} não é um diretório válido.")
+	for file in dir_path.iterdir():
+		yield file
+
 def main():
-	print(sys.builtin_module_names)
+	for file in read_data_batch("orbital_n2_l1_m0"):
+		print(file)
 
 if __name__ == "__main__":
 	main()

@@ -21,8 +21,10 @@ def load_data(file_name: str):
 
 def load_obj(file_name: str, name="LoadedObject"):
 	file_path = io.get_data_path(f"{file_name}.obj")
+
 	verts = []
 	faces = []
+
 	with open(file_path, 'r') as f:
 		for line in f:
 			if line.startswith('v '):
@@ -30,7 +32,7 @@ def load_obj(file_name: str, name="LoadedObject"):
 				verts.append((float(x), float(y), float(z)))
 			elif line.startswith('f '):
 				_, v1, v2, v3 = line.strip().split()
-				faces.append((int(v1), int(v2), int(v3)))
+				faces.append((int(v1), int(v2), int(v3)))	
 
 	mesh = bpy.data.meshes.new(f"{name}Mesh")
 	obj = bpy.data.objects.new(name, mesh)
@@ -85,7 +87,7 @@ def m_order(l: int) -> list[int]:
 		order.extend([-m, m])
 	return order
 
-def arrange_orbital_grid(rows, margin_x=8, margin_y=12, margin_l=18):
+def arrange_orbital_grid(rows, margin_x=8, margin_y=30, margin_l=18):
 	y_cursor = 0
 
 	for n, groups_l in rows.items():
@@ -146,10 +148,113 @@ def load_orbital_grid(n_max=4):
 
 	arrange_orbital_grid(rows)
 
-load_orbital_grid()
+def interpolate_color(t: float) -> tuple[float, float, float]:
+	if t < 0.5:
+		# Azul para ciano
+		r = 0
+		g = t * 2  # 0 → 1
+		b = 1 - t * 2  # 1 → 0
+	else:
+		# Ciano para amarelo
+		r = (t - 0.5) * 2  # 0 → 1
+		g = 1
+		b = 0
+	
+	return (r, g, b)
 
-'''
-file_name = "orbital_n3_l2_m-2"
-points = load_data(file_name)
-create_point_cloud(points, name=file_name)
-'''
+def create_orbital_material(name: str, color: tuple, alpha: float):
+	mat = bpy.data.materials.new(name)
+	mat.use_nodes = True
+	#mat.shadow_method = 'HASHED'
+	mat.blend_method = 'BLEND'
+	
+	# Limpa nodes padrão
+	mat.node_tree.nodes.clear()
+	
+	# Cria nodes
+	links = mat.node_tree.links
+	nodes = mat.node_tree.nodes
+	
+	# Node de saída
+	output_node = nodes.new(type='ShaderNodeOutputMaterial')
+	
+	# BSDF principal
+	bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
+	bsdf.inputs['Base Color'].default_value = (*color, 1.0)
+	bsdf.inputs['Alpha'].default_value = alpha
+	#bsdf.inputs['Specular IOR'].default_value = 1.5  # deixa um pouco brilhante
+	
+	# Conecta
+	links.new(bsdf.outputs['BSDF'], output_node.inputs['Surface'])
+	#links.new(bsdf.outputs['Alpha'], output_node.inputs['Alpha'])
+	
+	return mat
+
+def load_obj_batch(dir_name: str, name="LoadedObject"):
+	# Níveis para normalizar cores
+	levels = []
+	for file in io.read_data_batch(dir_name):
+		levels.append(int(file.stem.split('_')[-1].lstrip('lvl')))
+	min_level, max_level = min(levels), max(levels)
+
+	# Mesh principal
+	main_mesh = bpy.data.meshes.new(f"{name}Mesh")
+	main_obj = bpy.data.objects.new(name, main_mesh)
+	bpy.context.collection.objects.link(main_obj)
+
+	all_verts = []
+	all_faces = []
+	vert_offset = 0
+	face_materials = []  # rastreia qual material cada face usa
+	
+	# Dicionário para reutilizar materiais
+	materials_cache = {}
+
+	i = 0
+	for file in io.read_data_batch(dir_name):
+		lvl = levels[i]
+		norm_lvl = (lvl - min_level) / (max_level - min_level) if max_level > min_level else 0
+		color_rgb = interpolate_color(norm_lvl)
+		alpha = 0.3 + 0.7 * norm_lvl  # mais transparente para níveis baixos
+		mat_key = (round(color_rgb[0], 2), round(color_rgb[1], 2), round(color_rgb[2], 2), round(alpha, 2))
+
+		if mat_key not in materials_cache:
+			mat_name = f"{name}_lvl{lvl}"
+			mat = create_orbital_material(mat_name, color_rgb, alpha)
+			materials_cache[mat_key] = len(main_obj.data.materials)
+			main_obj.data.materials.append(mat)
+
+		mat_index = materials_cache[mat_key]
+		
+		# Lê o OBJ
+		verts = []
+		faces = []
+		with open(file, 'r') as f:
+			for line in f:
+				if line.startswith('v '):
+					_, x, y, z = line.strip().split()
+					verts.append((float(x), float(y), float(z)))
+				elif line.startswith('f '):
+					_, v1, v2, v3 = line.strip().split()
+					face_indices = [int(v1) + vert_offset, int(v2) + vert_offset, int(v3) + vert_offset]
+					faces.append(face_indices)
+		
+		all_verts.extend(verts)
+		for face in faces:
+			face_materials.append(mat_index)
+		all_faces.extend(faces)
+		vert_offset += len(verts)
+
+	main_mesh.from_pydata(all_verts, [], all_faces)
+
+	# Atribui materiais às faces
+	for face_idx, mat_idx in enumerate(face_materials):
+		main_mesh.polygons[face_idx].material_index = mat_idx
+
+	main_mesh.update()
+	smooth_object(main_obj)
+
+	return main_obj
+
+dir_name = "orbital_n2_l1_m0"
+obj = load_obj_batch(dir_name, dir_name)

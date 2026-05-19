@@ -9,7 +9,7 @@ from skimage.measure import marching_cubes # Para extração de isosuperfícies
 import src.utils.io_utils as io
 
 # Parâmetros
-TAM_ESPACO = 10
+TAM_ESPACO = 15
 NUM_DIV = 500
 ORIGEM = 0
 A_0 = 1 # Raio de Bohr
@@ -65,7 +65,7 @@ def plot_scalar_func(func: np.ndarray, mode: int = 1, mask: np.ndarray | None = 
 
 		# Fatia inicial
 		k0 = NUM_DIV // 2
-		img = ax.imshow(func[:, :, k0], extent=[x.min(), x.max(), y.min(), y.max()])
+		img = ax.imshow(func[:, :, k0], extent=(x.min(), x.max(), y.min(), y.max()))
 		ax.set_title(f"z = {z[k0]:.2f}")
 		plt.colorbar(img)
 
@@ -140,7 +140,9 @@ def save_to_file(mask: np.ndarray, nome_arq: str):
 	file_path = io.get_data_path(f"{nome_arq}.npy")
 	np.savetxt(file_path, points, delimiter=",")
 
-def save_obj(func: np.ndarray, nome_arq: str, level: float = 0):
+def save_obj(func: np.ndarray, nome_arq: str, level: float = 0, mode: int = 1, percent: float | None = None):
+	assert mode in (1, 2)
+
 	dx = x[1] - x[0]
 	dy = y[1] - y[0]
 	dz = z[1] - z[0]
@@ -151,7 +153,13 @@ def save_obj(func: np.ndarray, nome_arq: str, level: float = 0):
 	verts[:, 1] += y.min()
 	verts[:, 2] += z.min()
 
-	file_path = io.get_data_path(f"{nome_arq}.obj")
+	if mode == 1:
+		file_path = io.get_data_path(f"{nome_arq}.obj")
+	elif mode == 2:
+		dir_path = io.get_data_path(f"{nome_arq}")
+		io.ensure_dir(dir_path)
+		file_path = dir_path / f"{nome_arq}_lvl{int(100 * percent)}.obj"
+
 	with open(file_path, 'w') as f:
 		for vert in verts:
 			f.write(f"v {vert[0]} {vert[1]} {vert[2]}\n")
@@ -169,7 +177,8 @@ def main():
 
 	wavefunction = hydrogen_wavefunction(n, l, m)
 	density = probability_density(wavefunction, True, m)
-	level = 0.01 * np.max(density)
+	percent = 0.01
+	level = percent * np.max(density)
 	mask = density >= level
 
 	print("Deseja plotar a função de onda? (s/n)")
@@ -177,9 +186,17 @@ def main():
 		mode = int(input("\nEscolha o modo de plotagem\n1: Scatter 3D\n2: Fatias 2D\n3: Isosuperfície\nDigite o número do modo: "))
 		plot_scalar_func(density, mode=mode, mask=mask)
 	
-	print("Deseja salvar os pontos da isosuperfície em um arquivo? (s/n)")
+	print("Deseja salvar a função de onda em um arquivo? (s/n)")
 	if input().lower() == 's':
-		save_obj(density, f"orbital_n{n}_l{l}_m{m}", level=level)
+		mode = int(input("\nEscolha o modo\n1: Isossuperfície única\n2: Variação da porcentagem\nDigite o número do modo: "))
+
+		if mode == 1:
+			save_obj(density, f"orbital_n{n}_l{l}_m{m}", level=level)
+		elif mode == 2:
+			for i in range(10):
+				save_obj(density, f"orbital_n{n}_l{l}_m{m}", level=level, mode=mode, percent=percent)
+				percent += 0.1
+				level = percent * np.max(density)
 
 def _main():
 	mascara = threshold_3d(arbitrary_scalar, tol=1e-2)
@@ -199,4 +216,4 @@ def auto_orbitals():
 				print(f"Gerado orbital n={n}, l={l}, m={m}")
 
 if __name__ == '__main__':
-	auto_orbitals()
+	main()
