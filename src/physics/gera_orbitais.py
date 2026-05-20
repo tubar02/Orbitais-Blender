@@ -8,17 +8,6 @@ from skimage.measure import marching_cubes # Para extração de isosuperfícies
 
 import src.io.paths as io
 
-
-def probability_density(wavefunction: np.ndarray, real: bool = False, m: int = 0) -> np.ndarray:
-	# Densidade de probabilidade
-	if real:
-		if m > 0:
-			wavefunction = np.real(wavefunction)
-		elif m < 0:
-			wavefunction = np.imag(wavefunction)
-	density = np.abs(wavefunction) ** 2
-	return density
-
 def main():
 	n, l, m = map(int, input("Digite os números quânticos n, l e m (separados por espaço): ").split())
 
