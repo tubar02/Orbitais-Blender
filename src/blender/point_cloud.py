@@ -195,7 +195,7 @@ def create_orbital_material(name: str, color: tuple, alpha: float):
 def load_obj_batch(dir_name: str, name="LoadedObject"):
 	# Níveis para normalizar cores
 	levels = []
-	for file in io.read_data_batch(dir_name):
+	for file in io.get_data_batch(dir_name):
 		levels.append(int(file.stem.split('_')[-1].lstrip('lvl')))
 	min_level, max_level = min(levels), max(levels)
 
@@ -213,7 +213,7 @@ def load_obj_batch(dir_name: str, name="LoadedObject"):
 	materials_cache = {}
 
 	i = 0
-	for file in io.read_data_batch(dir_name):
+	for file in io.get_data_batch(dir_name):
 		lvl = levels[i]
 		norm_lvl = (lvl - min_level) / (max_level - min_level) if max_level > min_level else 0
 		color_rgb = interpolate_color(norm_lvl)
@@ -258,5 +258,10 @@ def load_obj_batch(dir_name: str, name="LoadedObject"):
 	smooth_object(main_obj)
 	return main_obj
 
+'''
 dir_name = "orbital_n2_l1_m0"
 obj = load_obj_batch(dir_name, dir_name)
+'''
+
+file_name = "orbital_n2_l1_m0"
+load_obj_batch(file_name, file_name)
