@@ -6,7 +6,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
 import bpy
-import src.utils.io_utils as io
+import src.io.paths as io
 
 def load_data(file_name: str):
 	file_path = io.get_data_path(f"{file_name}.npy")

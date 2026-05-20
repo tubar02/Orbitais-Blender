@@ -6,7 +6,7 @@ from scipy.special import sph_harm_y, genlaguerre, factorial
 
 from skimage.measure import marching_cubes # Para extração de isosuperfícies
 
-import src.utils.io_utils as io
+import src.io.paths as io
 
 def plot_scalar_func(func: np.ndarray, mode: int = 1, mask: np.ndarray | None = None):
 	global X, Y, Z, x, y, z

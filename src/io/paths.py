@@ -1,5 +1,4 @@
 from pathlib import Path
-import sys
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
@@ -13,7 +12,7 @@ def get_data_path(file_name: str) -> Path:
 	file = DATA_DIR / file_name
 	return file
 
-def read_data_batch(dir_name: str):
+def get_data_batch(dir_name: str):
 	dir_path = get_data_path(dir_name)
 	if not dir_path.is_dir():
 		raise ValueError(f"{dir_name} não é um diretório válido.")
@@ -21,7 +20,7 @@ def read_data_batch(dir_name: str):
 		yield file
 
 def main():
-	for file in read_data_batch("orbital_n2_l1_m0"):
+	for file in get_data_batch("orbital_n2_l1_m0"):
 		print(file)
 
 if __name__ == "__main__":
