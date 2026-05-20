@@ -8,57 +8,6 @@ from skimage.measure import marching_cubes # Para extração de isosuperfícies
 
 import src.io.paths as io
 
-def plot_scalar_func(func: np.ndarray, mode: int = 1, mask: np.ndarray | None = None):
-	global X, Y, Z, x, y, z
-	if mode == 1:
-		fig = plt.figure()
-		ax = fig.add_subplot(111, projection='3d')
-		ax.scatter(X, Y, Z, c=func)
-		ax.set_xlabel("x")
-		ax.set_ylabel("y")
-		ax.set_zlabel("z")
-
-	elif mode == 2:
-		# Figura
-		fig, ax = plt.subplots()
-		plt.subplots_adjust(bottom=0.25)
-
-		# Fatia inicial
-		k0 = NUM_DIV // 2
-		img = ax.imshow(func[:, :, k0], extent=(x.min(), x.max(), y.min(), y.max()))
-		ax.set_title(f"z = {z[k0]:.2f}")
-		plt.colorbar(img)
-
-		# Slider
-		ax_slider = plt.axes((0.4, 0.1, 0.2, 0.03))
-		slider = Slider(ax_slider, "z index", 0, NUM_DIV - 1, valinit=k0, valstep=1)
-
-		# Atualizador
-		def update(val):
-			k = int(slider.val)
-			img.set_data(func[:, :, k])
-			ax.set_title(f"z = {z[k]:.2f}")
-			fig.canvas.draw_idle()
-		slider.on_changed(update)
-
-	elif mode == 3:
-		x_plot, y_plot, z_plot = X[mask], Y[mask], Z[mask]
-		fig = plt.figure()
-		ax = fig.add_subplot(111, projection='3d')
-		ax.scatter(x_plot, y_plot, z_plot)
-		ax.set_xlabel("x")
-		ax.set_ylabel("y")
-		ax.set_zlabel("z")
-
-	plt.show()
-
-def sphere(R: int) -> np.ndarray:
-	func = X ** 2 + Y ** 2 + Z ** 2 - R ** 2
-	return func
-
-def threshold_3d(func: np.ndarray, threshold: int = 0, tol: float = 1e-1) -> np.ndarray:
-	mask = np.abs(func - threshold) < tol
-	return mask
 
 def probability_density(wavefunction: np.ndarray, real: bool = False, m: int = 0) -> np.ndarray:
 	# Densidade de probabilidade
@@ -69,37 +18,6 @@ def probability_density(wavefunction: np.ndarray, real: bool = False, m: int = 0
 			wavefunction = np.imag(wavefunction)
 	density = np.abs(wavefunction) ** 2
 	return density
-
-def save_to_file(mask: np.ndarray, nome_arq: str):
-	points = np.column_stack((X[mask], Y[mask], Z[mask]))
-	file_path = io.get_data_path(f"{nome_arq}.npy")
-	np.savetxt(file_path, points, delimiter=",")
-
-def save_obj(func: np.ndarray, nome_arq: str, level: float = 0, mode: int = 1, percent: float | None = None):
-	assert mode in (1, 2)
-
-	dx = x[1] - x[0]
-	dy = y[1] - y[0]
-	dz = z[1] - z[0]
-
-	verts, faces, _, _ = marching_cubes(func, level=level, spacing=(dx, dy, dz))
-	
-	verts[:, 0] += x.min()
-	verts[:, 1] += y.min()
-	verts[:, 2] += z.min()
-
-	if mode == 1:
-		file_path = io.get_data_path(f"{nome_arq}.obj")
-	elif mode == 2:
-		dir_path = io.get_data_path(f"{nome_arq}")
-		io.ensure_dir(dir_path)
-		file_path = dir_path / f"{nome_arq}_lvl{int(100 * percent)}.obj"
-
-	with open(file_path, 'w') as f:
-		for vert in verts:
-			f.write(f"v {vert[0]} {vert[1]} {vert[2]}\n")
-		for face in faces:
-			f.write(f"f {face[0]} {face[1]} {face[2]}\n")
 
 def main():
 	n, l, m = map(int, input("Digite os números quânticos n, l e m (separados por espaço): ").split())
