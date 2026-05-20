@@ -8,46 +8,6 @@ from skimage.measure import marching_cubes # Para extração de isosuperfícies
 
 import src.utils.io_utils as io
 
-# Parâmetros
-TAM_ESPACO = 15
-NUM_DIV = 500
-ORIGEM = 0
-A_0 = 1 # Raio de Bohr
-
-# Gera eixos de coordenadas
-x = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
-y = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
-z = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
-
-# Gera espaço euclidiano
-X, Y, Z = np.meshgrid(x, y, z, indexing="ij")
-
-arbitrary_scalar = np.cos(X) + np.exp(-Y**2) + np.sin(Z)
-
-R = np.sqrt(X**2 + Y**2 + Z**2)
-THETA = np.zeros_like(R)
-THETA[R != 0] = np.arccos(Z[R != 0] / R[R != 0])
-PHI = np.arctan2(Y, X)
-
-def atualiza_espaco(n: int):
-	global TAM_ESPACO, NUM_DIV, x, y, z, X, Y, Z, R, THETA, PHI
-
-	if n < 4:
-		pass
-	else:
-		NUM_DIV = 500 + (n - 3) * 100
-	
-	TAM_ESPACO = 5 + (n - 1) * 10
-	
-	x = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
-	y = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
-	z = np.linspace(ORIGEM - TAM_ESPACO, ORIGEM + TAM_ESPACO, NUM_DIV)
-	X, Y, Z = np.meshgrid(x, y, z, indexing="ij")
-	R = np.sqrt(X**2 + Y**2 + Z**2)
-	THETA = np.zeros_like(R)
-	THETA[R != 0] = np.arccos(Z[R != 0] / R[R != 0])
-	PHI = np.arctan2(Y, X)
-
 def plot_scalar_func(func: np.ndarray, mode: int = 1, mask: np.ndarray | None = None):
 	global X, Y, Z, x, y, z
 	if mode == 1:
@@ -99,31 +59,6 @@ def sphere(R: int) -> np.ndarray:
 def threshold_3d(func: np.ndarray, threshold: int = 0, tol: float = 1e-1) -> np.ndarray:
 	mask = np.abs(func - threshold) < tol
 	return mask
-
-def normalization(n: int, l: int) -> float:
-	# Normalização para as funções de onda atômicas
-	normal = np.sqrt((2 / (n * A_0)) ** 3 * factorial(n - l - 1) / (2 * n * factorial(n + l)))
-	return normal
-
-def radial_part(n: int, l: int, r: np.ndarray) -> np.ndarray:
-	# Parte radial das funções de onda atômicas
-	radial = np.zeros_like(r)
-	normal = normalization(n, l)
-	laguerre = genlaguerre(n - l - 1, 2 * l + 1)
-	radial = normal * ((2 * r) / (n * A_0)) ** l * np.exp(-r / (n * A_0)) * laguerre((2 * r) /(n * A_0))
-	return radial
-
-def angular_part(l: int, m: int, theta: np.ndarray, phi: np.ndarray) -> np.ndarray:
-	# Parte angular das funções de onda atômicas
-	angular = sph_harm_y(l, m, theta, phi)
-	return angular
-
-def hydrogen_wavefunction(n: int, l: int, m: int) -> np.ndarray:
-	# Função de onda do átomo de hidrogênio
-	radial = radial_part(n, l, R)
-	angular = angular_part(l, m, THETA, PHI)
-	wavefunction = radial * angular
-	return wavefunction
 
 def probability_density(wavefunction: np.ndarray, real: bool = False, m: int = 0) -> np.ndarray:
 	# Densidade de probabilidade

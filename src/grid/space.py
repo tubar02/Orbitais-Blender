@@ -1,4 +1,4 @@
-import numpy as np # Manipulação matemática
+import numpy as np
 
 class Space:
 	def _update(self):
