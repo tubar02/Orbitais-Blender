@@ -165,28 +165,30 @@ def interpolate_color(t: float) -> tuple[float, float, float]:
 def create_orbital_material(name: str, color: tuple, alpha: float):
 	mat = bpy.data.materials.new(name)
 	mat.use_nodes = True
-	#mat.shadow_method = 'HASHED'
 	mat.blend_method = 'BLEND'
-	
-	# Limpa nodes padrão
-	mat.node_tree.nodes.clear()
+	mat.show_transparent_back = True
 	
 	# Cria nodes
 	links = mat.node_tree.links
 	nodes = mat.node_tree.nodes
+
+	# Limpa nodes padrão
+	nodes.clear()
 	
 	# Node de saída
 	output_node = nodes.new(type='ShaderNodeOutputMaterial')
+	output_node.location = (300, 0)
 	
 	# BSDF principal
 	bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
+	bsdf.location = (0, 0)
 	bsdf.inputs['Base Color'].default_value = (*color, 1.0)
 	bsdf.inputs['Alpha'].default_value = alpha
-	#bsdf.inputs['Specular IOR'].default_value = 1.5  # deixa um pouco brilhante
+	bsdf.inputs['Emission Color'].default_value = (*color, 1.0)  # Cor de emissão
+	bsdf.inputs['Emission Strength'].default_value = 0.3  # Ajusta o brilho da emissão
 	
 	# Conecta
 	links.new(bsdf.outputs['BSDF'], output_node.inputs['Surface'])
-	#links.new(bsdf.outputs['Alpha'], output_node.inputs['Alpha'])
 	
 	return mat
 
@@ -244,6 +246,7 @@ def load_obj_batch(dir_name: str, name="LoadedObject"):
 			face_materials.append(mat_index)
 		all_faces.extend(faces)
 		vert_offset += len(verts)
+		i += 1
 
 	main_mesh.from_pydata(all_verts, [], all_faces)
 
@@ -253,7 +256,6 @@ def load_obj_batch(dir_name: str, name="LoadedObject"):
 
 	main_mesh.update()
 	smooth_object(main_obj)
-
 	return main_obj
 
 dir_name = "orbital_n2_l1_m0"
