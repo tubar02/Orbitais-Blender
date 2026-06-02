@@ -5,7 +5,6 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 	
-import bpy
 import src.io.paths as io
 
 def load_data(file_name: str) -> list[tuple[float, float, float]]:
