@@ -2,9 +2,11 @@ import numpy as np
 
 class Space:
 	def _update(self):
-		self.x = np.linspace(self.origem - self.tam_espaco, self.origem + self.tam_espaco, self.num_div)
-		self.y = np.linspace(self.origem - self.tam_espaco, self.origem + self.tam_espaco, self.num_div)
-		self.z = np.linspace(self.origem - self.tam_espaco, self.origem + self.tam_espaco, self.num_div)
+		self.x: np.ndarray = np.linspace(self.origem[0] - self.tam_espaco, self.origem[0] + self.tam_espaco, self.num_div)
+		self.y: np.ndarray = np.linspace(self.origem[1] - self.tam_espaco, self.origem[1] + self.tam_espaco, self.num_div)
+		self.z: np.ndarray = np.linspace(self.origem[2] - self.tam_espaco, self.origem[2] + self.tam_espaco, self.num_div)
+
+		self.div: tuple[int, int, int] = (self.x[1] - self.x[0], self.y[1] - self.y[0], self.z[1] - self.z[0])
 
 		self.X, self.Y, self.Z = np.meshgrid(self.x, self.y, self.z, indexing="ij")
 
@@ -13,10 +15,10 @@ class Space:
 		self.THETA[self.R != 0] = np.arccos(self.Z[self.R != 0] / self.R[self.R != 0])
 		self.PHI = np.arctan2(self.Y, self.X)
 
-	def __init__(self, tam_espaco=15, num_div=500, origem=0):
-		self.tam_espaco = tam_espaco
-		self.num_div = num_div
-		self.origem = origem
+	def __init__(self, tam_espaco=15, num_div=500, origem=(0, 0, 0)):
+		self.tam_espaco: int = tam_espaco
+		self.num_div: int = num_div
+		self.origem: tuple[float, float, float] = origem
 		self._update()
 	
 	def static_space_update(self, n: int):

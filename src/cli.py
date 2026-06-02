@@ -33,10 +33,9 @@ def main():
 		assert 0 <= l < n, "l deve ser um inteiro tal que 0 <= l < n"
 		assert -l <= m <= l, "m deve ser um inteiro tal que -l <= m <= l"
 
+		space.static_space_update(n)
 		wavefunction = orb.hydrogen_wavefunction(n, l, m, space)
 		density = den.probability_density(wavefunction, real=True, m=m)
-		percent = 0.01 * np.max(density)
-		mask = density >= percent
 
 		print("Deseja plotar a função de onda? (s/n)")
 		if input().lower() == 's':
@@ -46,17 +45,17 @@ def main():
 			elif mode == 2:
 				plt.slice_view(space, density)
 			elif mode == 3:
+				mask = density >= 0.01 * np.max(density)
 				plt.scatter_masked(space, mask)
 		
 		print("Deseja salvar a função de onda em um arquivo? (s/n)")
 		if input().lower() == 's':
 			mode = int(input("\nEscolha o modo\n1: Isossuperfície única\n2: Variação da porcentagem\nDigite o número do modo: "))
 			if mode == 1:
-				xp.save_obj(space, density, f"orbital_n{n}_l{l}_m{m}", level=percent)
+				level = int(input("Digite a porcentagem do valor máximo para a isossuperfície (0-100): ")) / 100 * np.max(density)
+				xp.save_obj(space, density, f"orbital_n{n}_l{l}_m{m}", level)
 			elif mode == 2:
-				for i in range(10):
-					xp.save_obj(space, density, f"orbital_n{n}_l{l}_m{m}", level=percent, mode=mode)
-					percent += 0.1 * np.max(density)
+				xp.save_batch(space, density, f"orbital_n{n}_l{l}_m{m}")
 
 if __name__ == '__main__':
 	main()
