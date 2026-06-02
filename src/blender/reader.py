@@ -18,7 +18,7 @@ def load_data(file_name: str) -> list[tuple[float, float, float]]:
 
 	return points
 
-def load_obj(file_name: str) -> tuple[list[tuple[float, float, float]], list[tuple[int, int, int]]]:
+def load_obj_data(file_name: str) -> tuple[list[tuple[float, float, float]], list[tuple[int, int, int]]]:
 	file_path = io.get_path(f"{file_name}.obj")
 
 	verts = []
@@ -35,7 +35,7 @@ def load_obj(file_name: str) -> tuple[list[tuple[float, float, float]], list[tup
 
 	return verts, faces
 
-def load_obj_batch(dir_name: str, name="LoadedObject"):
+def load_obj_batch_data(dir_name: str, name="LoadedObject"):
 	# Níveis para normalizar cores
 	levels = []
 	for file in io.get_data_batch(dir_name):
