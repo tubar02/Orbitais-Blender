@@ -28,7 +28,7 @@ def save_obj(space: Space, func: np.ndarray, nome_arq: str, level: float):
 	file_path = io.get_path(f"{nome_arq}.obj")
 	write_obj(file_path, verts, faces)
 
-def save_batch(space: Space, func: np.ndarray, nome_dir: str, layers: int = 10, start_percent: int = 0.01):
+def save_batch(space: Space, func: np.ndarray, nome_dir: str, layers: int = 10, start_percent: float = 0.01):
 	levels = np.linspace(start_percent * np.max(func), np.max(func), layers, endpoint=False)
 	percents = np.round(np.linspace(0.01, 1.0, 10, endpoint=False) * 100).astype(int)
 
