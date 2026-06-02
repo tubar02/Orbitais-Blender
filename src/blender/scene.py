@@ -1,5 +1,17 @@
 import bpy
 
+def new_empty_object(name: str = "EmptyObject"):
+	mesh = bpy.data.meshes.new(f"{name}Mesh")
+	obj = bpy.data.objects.new(name, mesh)
+	bpy.context.collection.objects.link(obj)
+	return mesh, obj
+
+def create_mesh_object(verts, faces, name="NewObject"):
+	mesh, obj = new_empty_object(name)
+	mesh.from_pydata(verts, [], faces)
+	mesh.update()
+	return obj
+
 def make_collection(name: str):
 	if name in bpy.data.collections:
 		return bpy.data.collections[name]

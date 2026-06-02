@@ -3,7 +3,7 @@ import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT))
+	sys.path.append(str(PROJECT_ROOT))
 	
 import src.io.paths as io
 
@@ -18,7 +18,7 @@ def load_data(file_name: str) -> list[tuple[float, float, float]]:
 
 	return points
 
-def load_obj(file_name: str, name: str ="LoadedObject"):
+def load_obj(file_name: str) -> tuple[list[tuple[float, float, float]], list[tuple[int, int, int]]]:
 	file_path = io.get_path(f"{file_name}.obj")
 
 	verts = []
@@ -33,13 +33,7 @@ def load_obj(file_name: str, name: str ="LoadedObject"):
 				_, v1, v2, v3 = line.strip().split()
 				faces.append((int(v1) -1, int(v2) -1, int(v3) -1))	
 
-	mesh = bpy.data.meshes.new(f"{name}Mesh")
-	obj = bpy.data.objects.new(name, mesh)
-	bpy.context.collection.objects.link(obj)
-	mesh.from_pydata(verts, [], faces)
-	mesh.update()
-	
-	return obj
+	return verts, faces
 
 def load_obj_batch(dir_name: str, name="LoadedObject"):
 	# Níveis para normalizar cores
