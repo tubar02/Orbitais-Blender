@@ -14,7 +14,7 @@ def interpolate_color(t: float) -> tuple[float, float, float]:
 	
 	return (r, g, b)
 
-def create_orbital_material(name: str, color: tuple, alpha: float):
+def create_orbital_material(name: str, color: tuple[float, float, float], alpha: float):
 	mat = bpy.data.materials.new(name)
 	mat.use_nodes = True
 	mat.blend_method = 'BLEND'
