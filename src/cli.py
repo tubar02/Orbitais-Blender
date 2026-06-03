@@ -8,11 +8,12 @@ import src.physics.density as den
 import src.utils.plot as plt
 
 def main():
-	print("Bem-vindo ao gerador de orbitais atômicos!")
+	print("\nBem-vindo ao gerador de orbitais atômicos!\n")
 	print("Selecione a opção desejada:")
 	print("1: Gerar orbitais automaticamente")
 	print("2: Gerar orbital personalizado")
 	option = int(input("Digite o número da opção: "))
+	print("\n")
 
 	space = sp.Space()
 
@@ -29,6 +30,7 @@ def main():
 
 	elif option == 2:
 		n, l, m = map(int, input("Digite os números quânticos n, l e m (separados por espaço): ").split())
+		print("\n")
 
 		assert n > 0, "n deve ser um inteiro positivo"
 		assert 0 <= l < n, "l deve ser um inteiro tal que 0 <= l < n"
@@ -49,7 +51,7 @@ def main():
 				mask = density >= 0.01 * np.max(density)
 				plt.scatter_masked(space, mask)
 		
-		print("Deseja salvar a função de onda em um arquivo? (s/n)")
+		print("\nDeseja salvar a função de onda em um arquivo? (s/n)")
 		if input().lower() == 's':
 			mode = sv.ask_save_mode()
 			kwargs = sv.ask_save_kwargs(mode, density)
