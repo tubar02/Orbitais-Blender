@@ -17,11 +17,11 @@ def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: b
 		for face in tqdm(faces, desc=f"Salvando faces em {file_path.name}", colour="green", leave=leave):
 			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
 
-def save_obj(space: Space, nome_arq: str, func: np.ndarray, level: float):
+def save_obj(space: Space, nome_arq: str, func: np.ndarray, level: float, leave: bool = True):
 	verts, faces = space.apply_marching_cubes(func, level)
 
 	file_path = io.get_path(f"{nome_arq}.obj", io.SINGLE_OBJ_DIR)
-	write_obj(file_path, verts, faces)
+	write_obj(file_path, verts, faces, leave=leave)
 
 def save_batch(space: Space, nome_dir: str, func: np.ndarray, layers: int = 10, start_percent: float = 0.01):
 	levels = np.linspace(start_percent * np.max(func), np.max(func), layers, endpoint=False)
