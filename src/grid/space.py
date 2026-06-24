@@ -1,4 +1,5 @@
 import numpy as np
+from skimage.measure import marching_cubes
 
 class Space:
 	def _update(self):
@@ -15,7 +16,7 @@ class Space:
 		self.THETA[self.R != 0] = np.arccos(self.Z[self.R != 0] / self.R[self.R != 0])
 		self.PHI = np.arctan2(self.Y, self.X)
 
-	def __init__(self, tam_espaco=15, num_div=500, origem=(0, 0, 0)):
+	def __init__(self, tam_espaco=15, num_div=50, origem=(0, 0, 0)):
 		self.tam_espaco: int = tam_espaco
 		self.num_div: int = num_div
 		self.origem: tuple[float, float, float] = origem
@@ -23,9 +24,16 @@ class Space:
 	
 	def static_space_update(self, n: int):
 		if n < 4:
-			pass
+			self.num_div = 500
 		else:
 			self.num_div = 500 + (n - 3) * 100
 		
 		self.tam_espaco = 5 + (n - 1) * 10
 		self._update()
+
+	def apply_marching_cubes(self, func: np.ndarray, level: float):
+		verts, faces, _, _ = marching_cubes(func, level, spacing=self.div)
+		verts[:, 0] = self.x.min() # Ajusta para as coordenadas do espaço
+		verts[:, 1] = self.y.min()
+		verts[:, 2] = self.z.min()
+		return verts, faces

@@ -1,6 +1,5 @@
 from pathlib import Path
 import numpy as np
-from skimage.measure import marching_cubes
 
 from src.grid.space import Space
 import src.io.paths as io
@@ -18,12 +17,7 @@ def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray):
 			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
 
 def save_obj(space: Space, func: np.ndarray, nome_arq: str, level: float):
-	dx, dy, dz = space.div
-	verts, faces, _, _ = marching_cubes(func, level=level, spacing=(dx, dy, dz))
-	
-	verts[:, 0] += space.x.min() # Ajusta as coordenadas para o sistema de coordenadas do espaço
-	verts[:, 1] += space.y.min()
-	verts[:, 2] += space.z.min()
+	verts, faces = space.apply_marching_cubes(func, level)
 
 	file_path = io.get_path(f"{nome_arq}.obj", io.SINGLE_OBJ_DIR)
 	write_obj(file_path, verts, faces)
@@ -32,18 +26,11 @@ def save_batch(space: Space, func: np.ndarray, nome_dir: str, layers: int = 10, 
 	levels = np.linspace(start_percent * np.max(func), np.max(func), layers, endpoint=False)
 	percents = np.round(np.linspace(0.01, 1.0, 10, endpoint=False) * 100).astype(int)
 
-	dx, dy, dz = space.div
-
 	dir_path = io.get_path(f"{nome_dir}", io.BATCH_OBJ_DIR)
 	io.ensure_dir(dir_path)
 
 	for level, percent in zip(levels, percents):
-		verts, faces, _, _ = marching_cubes(func, level=level, spacing=(dx, dy, dz))
-
-		verts[:, 0] += space.x.min() # Ajusta as coordenadas para o sistema de coordenadas do espaço
-		verts[:, 1] += space.y.min()
-		verts[:, 2] += space.z.min()
-
+		verts, faces = space.apply_marching_cubes(func, level)
 		file_path = dir_path / f"lvl{percent}.obj"
 		write_obj(file_path, verts, faces)
 
