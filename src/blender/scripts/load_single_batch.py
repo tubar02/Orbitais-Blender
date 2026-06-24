@@ -21,7 +21,7 @@ def main():
 		verts, faces = batch[lvl]
 		all_verts.extend(verts)
 		all_faces.extend(faces)
-	main_obj = bl.scene.create_mesh_object(all_verts, all_faces, name=f"Orbitaln{n}_l{l}_m{m}")
+	main_obj = bl.scene.create_mesh_object(all_verts, all_faces, name=f"Orbital_n{n}_l{l}_m{m}")
 
 	materials_cache = {}
 	face_offset = 0
