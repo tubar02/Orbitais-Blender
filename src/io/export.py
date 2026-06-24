@@ -5,9 +5,9 @@ from skimage.measure import marching_cubes
 from src.grid.space import Space
 import src.io.paths as io
 
-def save_to_file(space: Space, mask: np.ndarray, nome_arq: str):
+def save_point_cloud(space: Space, mask: np.ndarray, nome_arq: str):
 	points = np.column_stack((space.X[mask], space.Y[mask], space.Z[mask]))
-	file_path = io.get_path(f"{nome_arq}.npy")
+	file_path = io.get_path(f"{nome_arq}.npy", io.POINT_CLOUD_DIR)
 	np.savetxt(file_path, points, delimiter=",")
 
 def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray):
@@ -25,7 +25,7 @@ def save_obj(space: Space, func: np.ndarray, nome_arq: str, level: float):
 	verts[:, 1] += space.y.min()
 	verts[:, 2] += space.z.min()
 
-	file_path = io.get_path(f"{nome_arq}.obj")
+	file_path = io.get_path(f"{nome_arq}.obj", io.SINGLE_OBJ_DIR)
 	write_obj(file_path, verts, faces)
 
 def save_batch(space: Space, func: np.ndarray, nome_dir: str, layers: int = 10, start_percent: float = 0.01):
@@ -34,6 +34,9 @@ def save_batch(space: Space, func: np.ndarray, nome_dir: str, layers: int = 10, 
 
 	dx, dy, dz = space.div
 
+	dir_path = io.get_path(f"{nome_dir}", io.BATCH_OBJ_DIR)
+	io.ensure_dir(dir_path)
+
 	for level, percent in zip(levels, percents):
 		verts, faces, _, _ = marching_cubes(func, level=level, spacing=(dx, dy, dz))
 
@@ -41,8 +44,6 @@ def save_batch(space: Space, func: np.ndarray, nome_dir: str, layers: int = 10, 
 		verts[:, 1] += space.y.min()
 		verts[:, 2] += space.z.min()
 
-		dir_path = io.get_path(f"{nome_dir}")
-		io.ensure_dir(dir_path)
 		file_path = dir_path / f"lvl{percent}.obj"
 		write_obj(file_path, verts, faces)
 
