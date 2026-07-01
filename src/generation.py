@@ -39,24 +39,39 @@ def create_wavefunction(space: sp.Space, n: int, l: int, m: int) -> np.ndarray:
 def calculate_density(wavefunction: np.ndarray, real: bool = False, m: int = 0) -> np.ndarray:
 	return den.probability_density(wavefunction, real, m)
 
-def generate_orbital(space: sp.Space, n: int, l: int, m: int, real: bool = True) -> tuple[np.ndarray, np.ndarray]:
-	atualiza_space(space, n)
-	wavefunction = create_wavefunction(space, n, l, m)
-	density = calculate_density(wavefunction, real=real, m=m)
+def generate_orbital(space: sp.Space, n: int, l: int, m: int, real: bool = True, verbose: bool = True) -> tuple[np.ndarray, np.ndarray]:
+	if verbose:
+		atualiza_space(space, n)
+		wavefunction = create_wavefunction(space, n, l, m)
+		density = calculate_density(wavefunction, real=real, m=m)
+	else:
+		space.static_space_update(n)
+		wavefunction = orb.hydrogen_wavefunction(n, l, m, space)
+		density = den.probability_density(wavefunction, real=real, m=m)
 	return wavefunction, density
 
+def orbital_tasks(n_max: int):
+	for n in range(1, n_max + 1):
+		for l in range(0, n):
+			for m in range(-l, l + 1):
+				yield n, l, m
+
 def auto_orbitals(n_max: int, percent: float, space: sp.Space):
-	n = 1
-	l = m = 0
-	for n in trange(1, n_max + 1, desc=f"Gerando orbitais", colour="green"):
-		atualiza_space(space, n)
-		for l in trange(0, n, desc=f"Gerando orbitais de n={n}", colour="cyan", leave=False):
-			for m in trange(-l, l + 1, desc=f"Gerando orbital n={n}, l={l}", colour="magenta", leave=False):
-				wavefunction = create_wavefunction(space, n, l, m)
-				density = calculate_density(wavefunction, real=True, m=m)
-				level = percent * np.max(density)
-				xp.save_obj(space, density, f"orbital_n{n}_l{l}_m{m}", level=level, leave=False)
-	print(f"Gerados orbitais de n=1 a n={n_max}")
+	tasks = list(orbital_tasks(n_max))
+	current_n = None
+
+	with tqdm(tasks, "Gerando orbitais", colour="green") as pbar:
+		for n, l, m in pbar:
+			if n != current_n:
+				space.static_space_update(n)
+				current_n = n
+
+			pbar.set_postfix_str(f"n = {n}, l = {l}, m = {m}")
+
+			wavefunction = orb.hydrogen_wavefunction(n, l, m, space)
+			density = den.probability_density(wavefunction, real=True, m=m)
+			level = percent * np.max(density)
+			xp.save_obj	(space, density, f"orbital_n{n}_l{l}_m{m}", level, leave=False)
 
 def main():
 	auto_orbitals(n_max=4, percent=0.01, space=create_space())
