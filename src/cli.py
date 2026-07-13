@@ -1,5 +1,6 @@
 import numpy as np
 
+import src.cli_save as sv
 import src.grid.space as sp
 import src.io.export as xp
 import src.physics.atomic_orbitals as orb
@@ -50,12 +51,10 @@ def main():
 		
 		print("Deseja salvar a função de onda em um arquivo? (s/n)")
 		if input().lower() == 's':
-			mode = int(input("\nEscolha o modo\n1: Isossuperfície única\n2: Variação da porcentagem\nDigite o número do modo: "))
-			if mode == 1:
-				level = int(input("Digite a porcentagem do valor máximo para a isossuperfície (0-100): ")) / 100 * np.max(density)
-				xp.save_obj(space, density, f"orbital_n{n}_l{l}_m{m}", level)
-			elif mode == 2:
-				xp.save_batch(space, density, f"orbital_n{n}_l{l}_m{m}")
+			mode = sv.ask_save_mode()
+			kwargs = sv.ask_save_kwargs(mode, density)
+			args = (space, f"orbital_n{n}_l{l}_m{m}")
+			xp.save_options(mode, *args, **kwargs)
 
 if __name__ == '__main__':
 	main()
