@@ -33,7 +33,7 @@ class Space:
 
 	def apply_marching_cubes(self, func: np.ndarray, level: float):
 		verts, faces, _, _ = marching_cubes(func, level, spacing=self.div)
-		verts[:, 0] = self.x.min() # Ajusta para as coordenadas do espaço
-		verts[:, 1] = self.y.min()
-		verts[:, 2] = self.z.min()
+		verts[:, 0] += self.x.min() # Ajusta para as coordenadas do espaço
+		verts[:, 1] += self.y.min()
+		verts[:, 2] += self.z.min()
 		return verts, faces

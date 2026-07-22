@@ -16,15 +16,15 @@ def get_path(file_name: str, dir_path: Path) -> Path:
 	file = dir_path / file_name
 	return file
 
-def get_data_subdir(dir_name: str):
-	dir_path = get_path(dir_name, DATA_DIR)
+def get_data_subdir(dir_name: str, dir_path: Path):
+	dir_path = get_path(dir_name, dir_path)
 	if not dir_path.is_dir():
 		raise ValueError(f"{dir_name} não é um diretório válido.")
 	for file in dir_path.iterdir():
 		yield file
 
 def main():
-	for file in get_data_subdir("orbital_n2_l1_m0"):
+	for file in get_data_subdir("orbital_n2_l1_m0", BATCH_OBJ_DIR):
 		print(file)
 
 if __name__ == "__main__":

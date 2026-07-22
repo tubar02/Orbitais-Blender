@@ -9,7 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.blender as bl
 
 def main():
-	n, l, m = 3, 2, 0
+	n, l, m = 2, 1, 0
 	dir_name = f"orbital_n{n}_l{l}_m{m}"
 	batch = bl.reader.load_obj_batch_data(dir_name)
 	

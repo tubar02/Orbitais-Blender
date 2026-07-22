@@ -8,7 +8,7 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.io.paths as io
 
 def load_data(file_name: str) -> list[tuple[float, float, float]]:
-	file_path = io.get_path(f"{file_name}.npy")
+	file_path = io.get_path(f"{file_name}.npy", io.POINT_CLOUD_DIR)
 	
 	points = []
 	with open(file_path, 'r') as f:
@@ -22,7 +22,7 @@ def load_obj_data(file_name: str | Path, offset: int | None = None) -> tuple[lis
 	if isinstance(file_name, Path):
 		file_path = file_name
 	else:
-		file_path = io.get_path(f"{file_name}.obj")
+		file_path = io.get_path(f"{file_name}.obj", io.SINGLE_OBJ_DIR)
 
 	verts = []
 	faces = []
@@ -42,7 +42,7 @@ def load_obj_data(file_name: str | Path, offset: int | None = None) -> tuple[lis
 
 def lvl_list(dir_name: str) -> list[int]:
 	levels = []
-	for file in io.get_data_batch(dir_name):
+	for file in io.get_data_subdir(dir_name, io.BATCH_OBJ_DIR):
 		levels.append(int(file.stem.lstrip('lvl')))
 	return levels
 
@@ -50,7 +50,7 @@ def load_obj_batch_data(dir_name: str):
 	batch: dict[int, tuple[list[tuple[float, float, float]], list[tuple[int, int, int]]]] = {}
 	vert_offset = 0
 
-	for file in io.get_data_batch(dir_name):
+	for file in io.get_data_subdir(dir_name, io.BATCH_OBJ_DIR):
 		lvl = int(file.stem.lstrip('lvl'))
 		# Lê o OBJ diretamente do caminho real
 		verts, faces = load_obj_data(file, offset=vert_offset)
