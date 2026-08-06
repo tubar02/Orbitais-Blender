@@ -71,7 +71,7 @@ def auto_orbitals(n_max: int, percent: float, space: sp.Space):
 			wavefunction = orb.hydrogen_wavefunction(n, l, m, space)
 			density = den.probability_density(wavefunction, real=True, m=m)
 			level = percent * np.max(density)
-			xp.save_obj	(space, density, f"orbital_n{n}_l{l}_m{m}", level, leave=False)
+			xp.save_obj	(space, f"orbital_n{n}_l{l}_m{m}", density, level, leave=False)
 
 def main():
 	auto_orbitals(n_max=4, percent=0.01, space=create_space())
