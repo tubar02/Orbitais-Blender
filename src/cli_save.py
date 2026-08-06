@@ -26,13 +26,13 @@ def ask_single_obj_args(density):
 	percent = float(input("Porcentagem do máximo para a isossuperfície (0-100): "))
 	level = percent / 100 * np.max(density)
 
-	return {"func": density, "level": level}
+	return {"scalar_field": density, "level": level}
 
 def ask_batch_obj_args(density):
 	layers = int(input("Número de camadas: "))
 	start_percent = float(input("Porcentagem inicial: ")) / 100
 
-	return {"func": density, "layers": layers, "start_percent": start_percent}
+	return {"scalar_field": density, "layers": layers, "start_percent": start_percent}
 
 ASK_SAVE_ARGS = {
 	"point_cloud": ask_point_cloud_args,

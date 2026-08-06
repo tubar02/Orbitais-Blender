@@ -4,22 +4,22 @@ import numpy as np
 
 from src.grid.space import Space
 
-def scatter3D(space: Space, func: np.ndarray):
+def scatter3D(space: Space, scalar_field: np.ndarray):
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
-	ax.scatter(space.X, space.Y, space.Z, c=func)
+	ax.scatter(space.X, space.Y, space.Z, c=scalar_field)
 	ax.set_xlabel("x")
 	ax.set_ylabel("y")
 	ax.set_zlabel("z")
 	plt.show()
 
-def slice_view(space: Space, func: np.ndarray):# Figura
+def slice_view(space: Space, scalar_field: np.ndarray):# Figura
 	fig, ax = plt.subplots()
 	plt.subplots_adjust(bottom=0.25)
 
 	# Fatia inicial
 	k0 = space.num_div // 2
-	img = ax.imshow(func[:, :, k0], extent=(space.x.min(), space.x.max(), space.y.min(), space.y.max()))
+	img = ax.imshow(scalar_field[:, :, k0], extent=(space.x.min(), space.x.max(), space.y.min(), space.y.max()))
 	ax.set_title(f"z = {space.z[k0]:.2f}")
 	plt.colorbar(img)
 
@@ -30,7 +30,7 @@ def slice_view(space: Space, func: np.ndarray):# Figura
 	# Atualizador
 	def update(val):
 		k = int(slider.val)
-		img.set_data(func[:, :, k])
+		img.set_data(scalar_field[:, :, k])
 		ax.set_title(f"z = {space.z[k]:.2f}")
 		fig.canvas.draw_idle()
 	slider.on_changed(update)

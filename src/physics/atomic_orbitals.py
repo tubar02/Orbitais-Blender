@@ -3,7 +3,7 @@ from scipy.special import sph_harm_y, genlaguerre, factorial
 
 from src.grid.space import Space
 
-A_0 = 1 # Raio de Bohr
+A_0 = 1 # Raio de Bohr (normalizado)
 
 def normalization(n: int, l: int) -> float:
 	# Normalização para as funções de onda atômicas
