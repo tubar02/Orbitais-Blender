@@ -60,7 +60,7 @@ def main():
 			if mode == 1:
 				plt.scatter3D(space, orbital.density)
 			elif mode == 2:
-				plt.slice_view(space, orbital.density)''
+				plt.slice_view(space, orbital.density)
 			elif mode == 3:
 				mask = orbital.density >= 0.01 * np.max(orbital.density)
 				plt.scatter_masked(space, mask)
