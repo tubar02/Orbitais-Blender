@@ -43,21 +43,18 @@ class Orbital:
 		self.wavefunction = radial * angular
 		self.density = np.abs(self.wavefunction) ** 2
 
-	def _normalization(self) -> float:
-		# Normalização para as funções de onda atômicas
+	def _normalization(self) -> float: # Normalização para as funções de onda atômicas
 		normal = np.sqrt((2 / (self.n * A_0)) ** 3 * factorial(self.n - self.l - 1) / (2 * self.n * factorial(self.n + self.l)))
 		return normal
 
-	def _radial_part(self) -> np.ndarray:
-		# Parte radial das funções de onda atômicas
+	def _radial_part(self) -> np.ndarray: # Parte radial das funções de onda atômicas
 		radial = np.zeros_like(self.space.R)
 		normal = self._normalization()
 		laguerre = genlaguerre(self.n - self.l - 1, 2 * self.l + 1)
 		radial = normal * ((2 * self.space.R) / (self.n * A_0)) ** self.l * np.exp(-self.space.R / (self.n * A_0)) * laguerre((2 * self.space.R) /(self.n * A_0))
 		return radial
 
-	def _angular_part(self) -> np.ndarray:
-		# Parte angular das funções de onda atômicas
+	def _angular_part(self) -> np.ndarray: # Parte angular das funções de onda atômicas
 		if self.basis == OrbitalBasis.COMPLEX:
 			return self._complex_angular_part()
 		elif self.basis == OrbitalBasis.REAL:
@@ -65,10 +62,20 @@ class Orbital:
 
 		raise ValueError(f"Base desconhecida: {self.basis}")
 
-	def _complex_angular_part(self) -> np.ndarray:
-		# Parte angular das funções de onda atômicas (complexa)
+	def _complex_angular_part(self) -> np.ndarray: # Parte angular das funções de onda atômicas (complexa)
 		angular = sph_harm_y(self.l, self.m, self.space.THETA, self.space.PHI)
 		return angular
 
-	def _real_angular_part(self) -> np.ndarray:
-		pass
+	def _real_angular_part(self) -> np.ndarray: # Parte angular das funções de onda atômicas (real)
+		if self.m == 0:
+			angular = sph_harm_y(self.l, 0, self.space.THETA, self.space.PHI).real
+			return angular
+
+		abs_m = abs(self.m)
+		complex_harmonic = sph_harm_y(self.l, abs_m, self.space.THETA, self.space.PHI)
+		phase = (-1) ** abs_m
+
+		if self.m > 0:
+			return np.sqrt(2) * phase * np.real(complex_harmonic)
+		else:
+			return np.sqrt(2) * phase * np.imag(complex_harmonic)
