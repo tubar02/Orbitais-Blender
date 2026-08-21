@@ -5,7 +5,6 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 from src.grid.space import Space
-from src.physics.atomic_orbitals import normalization
 
 A_0 = 1 # Raio de Bohr (normalizado)
 
@@ -79,3 +78,8 @@ class Orbital:
 			return np.sqrt(2) * phase * np.real(complex_harmonic)
 		else:
 			return np.sqrt(2) * phase * np.imag(complex_harmonic)
+
+	def change_basis(self, new_basis: OrbitalBasis):
+		if self.basis != new_basis:
+			self.basis = new_basis
+			self._calculate()

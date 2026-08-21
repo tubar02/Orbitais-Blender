@@ -6,8 +6,7 @@ from functools import wraps
 
 import src.grid.space as sp
 import src.io.export as xp
-import src.physics.atomic_orbitals as orb
-import src.physics.density as den
+import src.core.orbital as orb
 
 def acompanha(desc: str | None= None):
 	def deco(func):
@@ -31,24 +30,9 @@ def atualiza_space(space: sp.Space, n: int):
 	space.static_space_update(n)
 	return
 
-@acompanha("Criando função de onda")
-def create_wavefunction(space: sp.Space, n: int, l: int, m: int) -> np.ndarray:
-	return orb.hydrogen_wavefunction(n, l, m, space)
-
-@acompanha("Calculando densidade")
-def calculate_density(wavefunction: np.ndarray, real: bool = False, m: int = 0) -> np.ndarray:
-	return den.probability_density(wavefunction, real, m)
-
-def generate_orbital(space: sp.Space, n: int, l: int, m: int, real: bool = True, verbose: bool = True) -> tuple[np.ndarray, np.ndarray]:
-	if verbose:
-		atualiza_space(space, n)
-		wavefunction = create_wavefunction(space, n, l, m)
-		density = calculate_density(wavefunction, real=real, m=m)
-	else:
-		space.static_space_update(n)
-		wavefunction = orb.hydrogen_wavefunction(n, l, m, space)
-		density = den.probability_density(wavefunction, real=real, m=m)
-	return wavefunction, density
+@acompanha("Criando orbital atômico")
+def create_orbital(space: sp.Space, n: int, l: int, m: int, basis: orb.OrbitalBasis = orb.OrbitalBasis.REAL) -> orb.Orbital:
+	return orb.Orbital(n, l, m, space, basis=basis)
 
 def orbital_tasks(n_max: int):
 	for n in range(1, n_max + 1):
@@ -68,13 +52,23 @@ def auto_orbitals(n_max: int, percent: float, space: sp.Space):
 
 			pbar.set_postfix_str(f"n = {n}, l = {l}, m = {m}")
 
-			wavefunction = orb.hydrogen_wavefunction(n, l, m, space)
-			density = den.probability_density(wavefunction, real=True, m=m)
+			orbital = create_orbital(space, n, l, m)
+			density = orbital.density
 			level = percent * np.max(density)
 			xp.save_obj	(space, f"orbital_n{n}_l{l}_m{m}", density, level, leave=False)
 
 def main():
-	auto_orbitals(n_max=4, percent=0.01, space=create_space())
+	space = create_space()
+
+	n, l, m = 3, 2, 1
+
+	atualiza_space(space, n)
+
+	orbital = create_orbital(space, n, l, m, basis=orb.OrbitalBasis.REAL)
+	xp.save_obj(space, f"testeReal_n{n}_l{l}_m{m}", orbital.density, 0.01 * np.max(orbital.density))
+
+	orbital2 = create_orbital(space, n, l, m, basis=orb.OrbitalBasis.COMPLEX)
+	xp.save_obj(space, f"testeComplex_n{n}_l{l}_m{m}", orbital2.density, 0.01 * np.max(orbital2.density))
 
 if __name__ == "__main__":
 	main()
