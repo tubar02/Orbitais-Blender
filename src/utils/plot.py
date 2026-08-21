@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 import numpy as np
 
-from src.grid.space import Space
+from src.core.space import Space
 
 def scatter3D(space: Space, scalar_field: np.ndarray):
 	fig = plt.figure()

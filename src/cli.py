@@ -1,7 +1,7 @@
 import numpy as np
 
 import src.cli_save as sv
-import src.grid.space as sp
+import src.core.orbital as orb
 import src.io.export as xp
 import src.utils.plot as plt
 import src.generation as gen
@@ -42,24 +42,38 @@ def main():
 		assert 0 <= l < n, "l deve ser um inteiro tal que 0 <= l < n"
 		assert -l <= m <= l, "m deve ser um inteiro tal que -l <= m <= l"
 
-		wavefunction, density = gen.generate_orbital(space, n, l, m)
+		basis = input("Digite o tipo de base (real/complex) (padrão: real): ").strip().lower()
+		if basis not in ["real", "complex", ""]:
+			raise ValueError("Tipo de base inválido. Escolha 'real' ou 'complex'.")
+		basis = basis if basis else "real"
+		if basis == "real":
+			basis_enum = orb.OrbitalBasis.REAL
+		else:
+			basis_enum = orb.OrbitalBasis.COMPLEX
+
+		gen.atualiza_space(space, n)
+		orbital = gen.create_orbital(space, n, l, m, basis=basis_enum)
 
 		print("\nDeseja plotar a função de onda? (s/n)")
 		if input().lower() == 's':
 			mode = int(input("\nEscolha o modo de plotagem\n1: Scatter 3D\n2: Fatias 2D\n3: Isosuperfície\nDigite o número do modo: "))
 			if mode == 1:
-				plt.scatter3D(space, density)
+				plt.scatter3D(space, orbital.density)
 			elif mode == 2:
-				plt.slice_view(space, density)
+				plt.slice_view(space, orbital.density)''
 			elif mode == 3:
-				mask = density >= 0.01 * np.max(density)
+				mask = orbital.density >= 0.01 * np.max(orbital.density)
 				plt.scatter_masked(space, mask)
 		
 		print("\nDeseja salvar a função de onda em um arquivo? (s/n)")
 		if input().lower() == 's':
 			mode = sv.ask_save_mode()
-			kwargs = sv.ask_save_kwargs(mode, density)
-			args = (space, f"orbital_n{n}_l{l}_m{m}")
+			kwargs = sv.ask_save_kwargs(mode, orbital.density)
+
+			name = f"orbital_n{n}_l{l}_m{m}"
+			if basis == "complex":
+				name = f"orbital_complex_n{n}_l{l}_m{m}"
+			args = (space, name)
 			xp.save_options(mode, *args, **kwargs)
 
 if __name__ == '__main__':

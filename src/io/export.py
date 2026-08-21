@@ -2,7 +2,7 @@ from pathlib import Path
 import numpy as np
 from tqdm import tqdm
 
-from src.grid.space import Space
+from src.core.space import Space
 import src.io.paths as io
 
 def save_point_cloud(space: Space, nome_arq: str, mask: np.ndarray):

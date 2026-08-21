@@ -4,9 +4,9 @@ from rich.console import Console
 import time
 from functools import wraps
 
-import src.grid.space as sp
 import src.io.export as xp
 import src.core.orbital as orb
+import src.core.space as sp
 
 def acompanha(desc: str | None= None):
 	def deco(func):

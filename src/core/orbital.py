@@ -4,7 +4,7 @@ from scipy.special import sph_harm_y, genlaguerre, factorial
 from dataclasses import dataclass, field
 from enum import Enum
 
-from src.grid.space import Space
+from src.core.space import Space
 
 A_0 = 1 # Raio de Bohr (normalizado)
 

@@ -10,11 +10,11 @@ import src.blender as bl
 
 def main():
 	n = 3
-	l = 2
+	l = 1
 	m = 1
-	#basis = "Real"
-	basis = "Complex"
-	orbital_name = f"teste{basis}_n{n}_l{l}_m{m}"
+	#prefix = "orbital"
+	prefix = "orbital_complex"
+	orbital_name = f"{prefix}_n{n}_l{l}_m{m}"
 
 	verts, faces = bl.reader.load_obj_data(orbital_name)
 	obj = bl.scene.create_mesh_object(verts, faces, name=orbital_name)
