@@ -11,6 +11,7 @@ def main():
 	print("Selecione a opção desejada:")
 	print("1: Gerar orbitais automaticamente")
 	print("2: Gerar orbital personalizado")
+	print("0: Sair\n")
 	option = int(input("Digite o número da opção: "))
 	print("\n")
 
@@ -75,6 +76,13 @@ def main():
 				name = f"orbital_complex_n{n}_l{l}_m{m}"
 			args = (space, name)
 			xp.save_options(mode, *args, **kwargs)
+
+	elif option == 0:
+		print("Saindo do programa...")
+		return
+
+	else:
+		raise ValueError("Opção inválida.")
 
 if __name__ == '__main__':
 	main()
