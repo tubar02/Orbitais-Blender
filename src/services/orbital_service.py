@@ -5,6 +5,7 @@ from functools import wraps
 
 import src.core.orbital as orb
 import src.core.space as sp
+import src.utils.plot as plt
 
 def acompanha(desc: str | None= None):
 	def deco(func):
@@ -34,10 +35,25 @@ def generate_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis = orb
 	current_n = None
 	for n, l, m in orbital_tasks(n_max):
 		if n != current_n:
-			space.static_space_update(n)
+			space.static_space_update(n	)
 			current_n = n
 
 		yield orb.Orbital(n, l, m, space, basis=basis)
 
-def generate_and_export_orbitals(space: sp.Space, n_max: int):
-	pass
+def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis):
+	orbitals = generate_orbitals(space, n_max, basis)
+	total = sum(n ** 2 for n in range(1, n_max + 1))  # Total de orbitais até n_max
+	with tqdm(orbitals, "Gerando orbitais", total=total, colour="green") as pbar:
+		it = iter(pbar)
+		for n, l, m in orbital_tasks(n_max):
+			pbar.set_postfix_str(f"n = {n}, l = {l}, m = {m}")
+			orbital = next(it)
+			# Aqui você pode adicionar a lógica para exportar o orbital, se necessário
+			plt.slice_view(space, orbital.density)  # Exemplo de plotagem da densidade do orbital
+
+def main():
+	space = sp.Space()
+	generate_and_export_orbitals(space, n_max=4, basis=orb.OrbitalBasis.REAL)
+	
+if __name__ == "__main__":
+	main()
