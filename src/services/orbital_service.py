@@ -2,10 +2,12 @@ from tqdm import tqdm
 from rich.console import Console
 import time
 from functools import wraps
+from typing import Callable
+import numpy as np
 
 import src.core.orbital as orb
 import src.core.space as sp
-import src.utils.plot as plt
+import src.io.export as xp
 
 def acompanha(desc: str | None= None):
 	def deco(func):
@@ -40,7 +42,7 @@ def generate_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis = orb
 
 		yield orb.Orbital(n, l, m, space, basis=basis)
 
-def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis):
+def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis, exporter: Callable[[sp.Space, str, np.ndarray], None] = xp.fake_exporter):
 	orbitals = generate_orbitals(space, n_max, basis)
 	total = sum(n ** 2 for n in range(1, n_max + 1))  # Total de orbitais até n_max
 	with tqdm(orbitals, "Gerando orbitais", total=total, colour="green") as pbar:
@@ -48,8 +50,10 @@ def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.Orbital
 		for n, l, m in orbital_tasks(n_max):
 			pbar.set_postfix_str(f"n = {n}, l = {l}, m = {m}")
 			orbital = next(it)
-			# Aqui você pode adicionar a lógica para exportar o orbital, se necessário
-			plt.slice_view(space, orbital.density)  # Exemplo de plotagem da densidade do orbital
+
+			name = f"orbital_n{n}_l{l}_m{m}"
+			exporter(space, name, orbital.density)
+
 
 def main():
 	space = sp.Space()

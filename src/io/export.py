@@ -5,6 +5,9 @@ from tqdm import tqdm
 from src.core.space import Space
 import src.io.paths as io
 
+def fake_exporter(space: Space, nome_arq: str, scalar_field: np.ndarray):
+	print(f"\nExportando {nome_arq}")
+
 def save_point_cloud(space: Space, nome_arq: str, mask: np.ndarray):
 	points = np.column_stack((space.X[mask], space.Y[mask], space.Z[mask]))
 	file_path = io.get_path(f"{nome_arq}.npy", io.POINT_CLOUD_DIR)

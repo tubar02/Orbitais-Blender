@@ -9,11 +9,11 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.blender as bl
 
 def main():
-	n = 3
+	n = 2
 	l = 1
 	m = 1
-	#prefix = "orbital"
-	prefix = "orbital_complex"
+	prefix = "orbital"
+	#prefix = "orbital_complex"
 	orbital_name = f"{prefix}_n{n}_l{l}_m{m}"
 
 	verts, faces = bl.reader.load_obj_data(orbital_name)

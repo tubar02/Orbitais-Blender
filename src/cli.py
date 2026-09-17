@@ -37,17 +37,20 @@ def main():
 
 	elif option == 2:
 		n, l, m = map(int, input("\nDigite os números quânticos n, l e m (separados por espaço): ").split())
-		print("\n")
 
 		assert n > 0, "n deve ser um inteiro positivo"
 		assert 0 <= l < n, "l deve ser um inteiro tal que 0 <= l < n"
 		assert -l <= m <= l, "m deve ser um inteiro tal que -l <= m <= l"
 
-		basis = input("Digite o tipo de base (real/complex) (padrão: real): ").strip().lower()
-		if basis not in ["real", "complex", ""]:
+		print("\nEscolha o tipo de base: (padrão: real): ")
+		print("1: real")
+		print("2: complex")
+		basis = input("Digite o número da base desejada: ")
+		basis = int(basis) if basis else 1
+		print("\n")
+		if basis not in [1, 2, None]:
 			raise ValueError("Tipo de base inválido. Escolha 'real' ou 'complex'.")
-		basis = basis if basis else "real"
-		if basis == "real":
+		if basis == 1:
 			basis_enum = orb.OrbitalBasis.REAL
 		else:
 			basis_enum = orb.OrbitalBasis.COMPLEX
