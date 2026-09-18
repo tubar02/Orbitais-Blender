@@ -77,7 +77,7 @@ def main():
 			name = f"orbital_n{n}_l{l}_m{m}"
 			if basis == "complex":
 				name = f"orbital_complex_n{n}_l{l}_m{m}"
-			args = (space, name)
+			args = (space, name, orbital.density)
 			xp.save_options(mode, *args, **kwargs)
 
 	elif option == 0:

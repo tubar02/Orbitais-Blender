@@ -20,19 +20,19 @@ def ask_point_cloud_args(scalar_field):
 	decimals = int(input("Casas decimais de tolerância: "))
 	tol = 10 ** (-decimals) * np.max(scalar_field)
 
-	return {"mask": np.abs(scalar_field - level) <= tol}
+	return {"level": level, "tol": tol}
 
 def ask_single_obj_args(scalar_field):
 	percent = float(input("Porcentagem do máximo para a isossuperfície (0-100): "))
 	level = percent / 100 * np.max(scalar_field)
 
-	return {"scalar_field": scalar_field, "level": level}
+	return {"level": level}
 
 def ask_batch_obj_args(scalar_field):
 	layers = int(input("Número de camadas: "))
 	start_percent = float(input("Porcentagem inicial: ")) / 100
 
-	return {"scalar_field": scalar_field, "layers": layers, "start_percent": start_percent}
+	return {"layers": layers, "start_percent": start_percent}
 
 ASK_SAVE_ARGS = {
 	"point_cloud": ask_point_cloud_args,
@@ -41,9 +41,9 @@ ASK_SAVE_ARGS = {
 }
 
 AUTO_SAVE_ARGS = {
-	"point_cloud": {"mask": None},
-	"single_obj": {"scalar_field": None, "level": None},
-	"batch_obj": {"scalar_field": None, "layers": None, "start_percent": None},
+	"point_cloud": {"level": None, "tol": None},
+	"single_obj": {"level": None},
+	"batch_obj": {"layers": None, "start_percent": None},
 }
 
 def ask_save_kwargs(mode: str, scalar_field):

@@ -8,7 +8,8 @@ import src.io.paths as io
 def fake_exporter(space: Space, nome_arq: str, scalar_field: np.ndarray):
 	print(f"\nExportando {nome_arq}")
 
-def save_point_cloud(space: Space, nome_arq: str, mask: np.ndarray):
+def save_point_cloud(space: Space, nome_arq: str, scalar_field: np.ndarray, level: float, tol: float):
+	mask = np.abs(scalar_field - level) < tol
 	points = np.column_stack((space.X[mask], space.Y[mask], space.Z[mask]))
 	file_path = io.get_path(f"{nome_arq}.npy", io.POINT_CLOUD_DIR)
 	np.savetxt(file_path, points, delimiter=",")
@@ -28,7 +29,7 @@ def save_obj(space: Space, nome_arq: str, scalar_field: np.ndarray, level: float
 
 def save_batch(space: Space, nome_dir: str, scalar_field: np.ndarray, layers: int = 10, start_percent: float = 0.01):
 	levels = np.linspace(start_percent * np.max(scalar_field), np.max(scalar_field), layers, endpoint=False)
-	percents = np.round(np.linspace(0.01, 1.0, 10, endpoint=False) * 100).astype(int)
+	percents = np.round(np.linspace(start_percent, 1.0, layers, endpoint=False) * 100).astype(int)
 
 	dir_path = io.get_path(f"{nome_dir}", io.BATCH_OBJ_DIR)
 	io.ensure_dir(dir_path)
@@ -41,16 +42,15 @@ def save_batch(space: Space, nome_dir: str, scalar_field: np.ndarray, layers: in
 SAVE_MODES = {
 	"point_cloud": lambda *args, **ctx: save_point_cloud(
 		*args,
-		mask=ctx["mask"]
+		level=ctx.get("level", 0.01 * np.max(args[2])),
+		tol=ctx.get("tol", 1e-3 * np.max(args[2]))
 	),
 	"single_obj": lambda *args, **ctx: save_obj(
 		*args,
-		scalar_field=ctx["scalar_field"],
-		level=ctx.get("level", 0.01 * np.max(ctx["scalar_field"]))
+		level=ctx.get("level", 0.01 * np.max(args[2]))
 	),
 	"batch_obj": lambda *args, **ctx: save_batch(
 		*args,
-		scalar_field=ctx["scalar_field"],
 		layers=ctx.get("layers", 10),
 		start_percent=ctx.get("start_percent", 0.01)
 	),
