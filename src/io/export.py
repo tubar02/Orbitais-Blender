@@ -8,7 +8,8 @@ import src.io.paths as io
 def fake_exporter(space: Space, nome_arq: str, scalar_field: np.ndarray):
 	print(f"\nExportando {nome_arq}")
 
-def save_point_cloud(space: Space, nome_arq: str, scalar_field: np.ndarray, level: float, tol: float):
+def save_point_cloud(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: float, tol: float):
+	level = percent * np.max(scalar_field)
 	mask = np.abs(scalar_field - level) < tol
 	points = np.column_stack((space.X[mask], space.Y[mask], space.Z[mask]))
 	file_path = io.get_path(f"{nome_arq}.npy", io.POINT_CLOUD_DIR)
@@ -21,7 +22,8 @@ def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: b
 		for face in tqdm(faces, desc=f"Salvando faces em {file_path.name}", colour="green", leave=leave):
 			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
 
-def save_obj(space: Space, nome_arq: str, scalar_field: np.ndarray, level: float, leave: bool = True):
+def save_obj(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: float, leave: bool = True):
+	level = percent * np.max(scalar_field)
 	verts, faces = space.apply_marching_cubes(scalar_field, level)
 
 	file_path = io.get_path(f"{nome_arq}.obj", io.SINGLE_OBJ_DIR)
@@ -42,12 +44,12 @@ def save_batch(space: Space, nome_dir: str, scalar_field: np.ndarray, layers: in
 SAVE_MODES = {
 	"point_cloud": lambda *args, **ctx: save_point_cloud(
 		*args,
-		level=ctx.get("level", 0.01 * np.max(args[2])),
+		percent=ctx.get("percent", 0.01),
 		tol=ctx.get("tol", 1e-3 * np.max(args[2]))
 	),
 	"single_obj": lambda *args, **ctx: save_obj(
 		*args,
-		level=ctx.get("level", 0.01 * np.max(args[2]))
+		percent=ctx.get("percent", 0.01)
 	),
 	"batch_obj": lambda *args, **ctx: save_batch(
 		*args,

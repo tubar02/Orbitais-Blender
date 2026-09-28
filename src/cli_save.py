@@ -14,19 +14,16 @@ def ask_save_mode():
 	return SAVE_MENU[option]
 
 def ask_point_cloud_args(scalar_field):
-	percent = float(input("Porcentagem do máximo para a nuvem (0-100): "))
-	level = percent / 100 * np.max(scalar_field)
+	percent = float(input("Porcentagem do máximo para a nuvem (0-100): ")) / 100
 
 	decimals = int(input("Casas decimais de tolerância: "))
 	tol = 10 ** (-decimals) * np.max(scalar_field)
 
-	return {"level": level, "tol": tol}
+	return {"percent": percent, "tol": tol}
 
 def ask_single_obj_args(scalar_field):
-	percent = float(input("Porcentagem do máximo para a isossuperfície (0-100): "))
-	level = percent / 100 * np.max(scalar_field)
-
-	return {"level": level}
+	percent = float(input("Porcentagem do máximo para a isossuperfície (0-100): ")) / 100
+	return {"percent": percent}
 
 def ask_batch_obj_args(scalar_field):
 	layers = int(input("Número de camadas: "))
