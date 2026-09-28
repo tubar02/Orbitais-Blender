@@ -54,10 +54,13 @@ def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.Orbital
 			name = f"orbital_n{n}_l{l}_m{m}"
 			exporter(space, name, orbital.density)
 
-
 def main():
 	space = sp.Space()
-	generate_and_export_orbitals(space, n_max=4, basis=orb.OrbitalBasis.REAL)
+	mode = "single_obj"
+	#kwargs = sv.ask_save_kwargs(mode)
+	base_exporter = xp.SAVE_MODES[mode]
+	#exporter = partial(base_exporter)
+	generate_and_export_orbitals(space, n_max=4, basis=orb.OrbitalBasis.REAL, exporter=base_exporter)
 	
 if __name__ == "__main__":
 	main()

@@ -23,7 +23,7 @@ def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: b
 		for face in tqdm(faces, desc=f"Salvando faces em {file_path.name}", colour="green", leave=leave):
 			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
 
-def save_obj(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: float, leave: bool = True):
+def save_obj(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: float, leave: bool = False):
 	level = percent * np.max(scalar_field)
 	verts, faces = space.apply_marching_cubes(scalar_field, level)
 
@@ -46,7 +46,7 @@ SAVE_MODES = {
 	"point_cloud": lambda *args, **ctx: save_point_cloud(
 		*args,
 		percent=ctx.get("percent", 0.01),
-		tolerancia=ctx.get("tolerancia", 1e-3 * np.max(args[2]))
+		tolerancia=ctx.get("tolerancia", 1e-3)
 	),
 	"single_obj": lambda *args, **ctx: save_obj(
 		*args,

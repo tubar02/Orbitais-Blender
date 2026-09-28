@@ -37,11 +37,5 @@ ASK_SAVE_ARGS = {
 	"batch_obj": ask_batch_obj_args,
 }
 
-AUTO_SAVE_ARGS = {
-	"point_cloud": {"level": None, "tol": None},
-	"single_obj": {"level": None},
-	"batch_obj": {"layers": None, "start_percent": None},
-}
-
 def ask_save_kwargs(mode: str):
 	return ASK_SAVE_ARGS[mode]()
