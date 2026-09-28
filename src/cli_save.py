@@ -13,19 +13,19 @@ def ask_save_mode():
 	option = int(input("\nDigite o número do modo: "))
 	return SAVE_MENU[option]
 
-def ask_point_cloud_args(scalar_field):
+def ask_point_cloud_args():
 	percent = float(input("Porcentagem do máximo para a nuvem (0-100): ")) / 100
 
 	decimals = int(input("Casas decimais de tolerância: "))
-	tol = 10 ** (-decimals) * np.max(scalar_field)
+	tolerancia = 10 ** (-decimals)
 
-	return {"percent": percent, "tol": tol}
+	return {"percent": percent, "tolerancia": tolerancia}
 
-def ask_single_obj_args(scalar_field):
+def ask_single_obj_args():
 	percent = float(input("Porcentagem do máximo para a isossuperfície (0-100): ")) / 100
 	return {"percent": percent}
 
-def ask_batch_obj_args(scalar_field):
+def ask_batch_obj_args():
 	layers = int(input("Número de camadas: "))
 	start_percent = float(input("Porcentagem inicial: ")) / 100
 
@@ -43,5 +43,5 @@ AUTO_SAVE_ARGS = {
 	"batch_obj": {"layers": None, "start_percent": None},
 }
 
-def ask_save_kwargs(mode: str, scalar_field):
-	return ASK_SAVE_ARGS[mode](scalar_field)
+def ask_save_kwargs(mode: str):
+	return ASK_SAVE_ARGS[mode]()

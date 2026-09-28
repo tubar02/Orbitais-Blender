@@ -72,7 +72,7 @@ def main():
 		print("\nDeseja salvar a função de onda em um arquivo? (s/n)")
 		if input().lower() == 's':
 			mode = sv.ask_save_mode()
-			kwargs = sv.ask_save_kwargs(mode, orbital.density)
+			kwargs = sv.ask_save_kwargs(mode)
 
 			name = f"orbital_n{n}_l{l}_m{m}"
 			if basis == "complex":

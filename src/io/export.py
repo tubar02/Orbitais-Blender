@@ -8,8 +8,9 @@ import src.io.paths as io
 def fake_exporter(space: Space, nome_arq: str, scalar_field: np.ndarray):
 	print(f"\nExportando {nome_arq}")
 
-def save_point_cloud(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: float, tol: float):
+def save_point_cloud(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: float, tolerancia: float):
 	level = percent * np.max(scalar_field)
+	tol = tolerancia * np.max(scalar_field)
 	mask = np.abs(scalar_field - level) < tol
 	points = np.column_stack((space.X[mask], space.Y[mask], space.Z[mask]))
 	file_path = io.get_path(f"{nome_arq}.npy", io.POINT_CLOUD_DIR)
@@ -45,7 +46,7 @@ SAVE_MODES = {
 	"point_cloud": lambda *args, **ctx: save_point_cloud(
 		*args,
 		percent=ctx.get("percent", 0.01),
-		tol=ctx.get("tol", 1e-3 * np.max(args[2]))
+		tolerancia=ctx.get("tolerancia", 1e-3 * np.max(args[2]))
 	),
 	"single_obj": lambda *args, **ctx: save_obj(
 		*args,
