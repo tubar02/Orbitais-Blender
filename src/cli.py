@@ -1,11 +1,11 @@
 import numpy as np
 
 import src.cli_save as sv
+import src.core.space as sp
 import src.core.orbital as orb
 import src.io.export as xp
 import src.services.orbital_service as osrv
 import src.utils.plot as plt
-import src.generation as gen
 
 def main():
 	print("\nBem-vindo ao gerador de orbitais atômicos!\n")
@@ -16,7 +16,7 @@ def main():
 	option = int(input("Digite o número da opção: "))
 	print("\n")
 
-	space = gen.create_space()
+	space = sp.Space()
 
 	if option == 1:
 		n_max = input("\nDigite o valor máximo de n para gerar os orbitais (ex: 4): ")
@@ -51,8 +51,7 @@ def main():
 		else:
 			basis_enum = orb.OrbitalBasis.COMPLEX
 
-		gen.atualiza_space(space, n)
-		orbital = gen.create_orbital(space, n, l, m, basis=basis_enum)
+		orbital = osrv.create_orbital(space, n, l, m, basis=basis_enum)
 
 		print("\nDeseja plotar a função de onda? (s/n)")
 		if input().lower() == 's':
