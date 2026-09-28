@@ -3,6 +3,7 @@ import numpy as np
 import src.cli_save as sv
 import src.core.orbital as orb
 import src.io.export as xp
+import src.services.orbital_service as osrv
 import src.utils.plot as plt
 import src.generation as gen
 
@@ -25,15 +26,10 @@ def main():
 			n_max = int(n_max)
 			assert n_max > 0, "n_max deve ser um inteiro positivo"
 
-		percent = input("Digite a porcentagem do valor máximo para a isossuperfície (0-100) (padrão: 1): ")
-		if not percent:
-			percent = 0.01
-		else:
-			percent = float(percent) / 100
-			assert 0 < percent < 1, "percent deve ser um número entre 0 e 100"
-
+		mode = sv.ask_save_mode()
+		exporter = xp.SAVE_MODES[mode]
 		print("\n")
-		gen.auto_orbitals(n_max=n_max, percent=percent, space=space)
+		osrv.generate_and_export_orbitals(space, n_max=n_max, basis=orb.OrbitalBasis.REAL, exporter=exporter)
 
 	elif option == 2:
 		n, l, m = map(int, input("\nDigite os números quânticos n, l e m (separados por espaço): ").split())

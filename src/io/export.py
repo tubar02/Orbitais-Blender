@@ -30,14 +30,14 @@ def save_obj(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: flo
 	file_path = io.get_path(f"{nome_arq}.obj", io.SINGLE_OBJ_DIR)
 	write_obj(file_path, verts, faces, leave=leave)
 
-def save_batch(space: Space, nome_dir: str, scalar_field: np.ndarray, layers: int = 10, start_percent: float = 0.01):
+def save_batch(space: Space, nome_dir: str, scalar_field: np.ndarray, layers: int = 10, start_percent: float = 0.01, leave: bool = False):
 	levels = np.linspace(start_percent * np.max(scalar_field), np.max(scalar_field), layers, endpoint=False)
 	percents = np.round(np.linspace(start_percent, 1.0, layers, endpoint=False) * 100).astype(int)
 
 	dir_path = io.get_path(f"{nome_dir}", io.BATCH_OBJ_DIR)
 	io.ensure_dir(dir_path)
 
-	for level, percent in tqdm(list(zip(levels, percents)), desc=f"Salvando camadas em {nome_dir}", colour="cyan"):
+	for level, percent in tqdm(list(zip(levels, percents)), desc=f"Salvando camadas em {nome_dir}", colour="cyan", leave=leave):
 		verts, faces = space.apply_marching_cubes(scalar_field, level)
 		file_path = dir_path / f"lvl{percent}.obj"
 		write_obj(file_path, verts, faces, leave=False)

@@ -25,7 +25,8 @@ def acompanha(desc: str | None= None):
 @acompanha("Gerando orbital atômico")
 def create_orbital(space: sp.Space, n: int, l: int, m: int, basis: orb.OrbitalBasis = orb.OrbitalBasis.REAL) -> orb.Orbital:
 	space.static_space_update(n)
-	return orb.Orbital(n, l, m, space, basis=basis)
+	orbital = orb.Orbital(n, l, m, space, basis=basis)
+	return orbital
 
 def orbital_tasks(n_max: int):
 	for n in range(1, n_max + 1):
