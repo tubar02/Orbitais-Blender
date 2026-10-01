@@ -23,6 +23,10 @@ class Orbital:
 	wavefunction: np.ndarray = field(init=False, repr=False)
 	density: np.ndarray = field(init=False, repr=False)
 
+	@property
+	def name(self) -> str:
+		return f"orbital_n{self.n}_l{self.l}_m{self.m}_{self.basis.value}"
+
 	def __post_init__(self):
 		self._validate()
 		self._calculate()

@@ -9,6 +9,17 @@ import src.utils.plot as plt
 
 def main():
 	print("\nBem-vindo ao gerador de orbitais atômicos!\n")
+
+	print("Escolha a base de funções de onda:")
+	print("1: Base real")
+	print("2: Base complexa\n")
+	basis_option = input("Digite o número da base desejada (padrão: 1): ")
+	if not basis_option:
+		basis_option = 1
+	else:
+		basis_option = int(basis_option)
+	basis = orb.OrbitalBasis.REAL if basis_option == 1 else orb.OrbitalBasis.COMPLEX
+
 	print("Selecione a opção desejada:")
 	print("1: Gerar orbitais automaticamente")
 	print("2: Gerar orbital personalizado")
@@ -29,7 +40,7 @@ def main():
 		mode = sv.ask_save_mode()
 		exporter = xp.SAVE_MODES[mode]
 		print("\n")
-		osrv.generate_and_export_orbitals(space, n_max=n_max, basis=orb.OrbitalBasis.REAL, exporter=exporter)
+		osrv.generate_and_export_orbitals(space, n_max=n_max, basis=basis, exporter=exporter)
 
 	elif option == 2:
 		n, l, m = map(int, input("\nDigite os números quânticos n, l e m (separados por espaço): ").split())
@@ -38,20 +49,7 @@ def main():
 		assert 0 <= l < n, "l deve ser um inteiro tal que 0 <= l < n"
 		assert -l <= m <= l, "m deve ser um inteiro tal que -l <= m <= l"
 
-		print("\nEscolha o tipo de base: (padrão: real): ")
-		print("1: real")
-		print("2: complex")
-		basis = input("Digite o número da base desejada: ")
-		basis = int(basis) if basis else 1
-		print("\n")
-		if basis not in [1, 2, None]:
-			raise ValueError("Tipo de base inválido. Escolha 'real' ou 'complex'.")
-		if basis == 1:
-			basis_enum = orb.OrbitalBasis.REAL
-		else:
-			basis_enum = orb.OrbitalBasis.COMPLEX
-
-		orbital = osrv.create_orbital(space, n, l, m, basis=basis_enum)
+		orbital = osrv.create_orbital(space, n, l, m, basis=basis)
 
 		print("\nDeseja plotar a função de onda? (s/n)")
 		if input().lower() == 's':
@@ -68,11 +66,7 @@ def main():
 		if input().lower() == 's':
 			mode = sv.ask_save_mode()
 			kwargs = sv.ask_save_kwargs(mode)
-
-			name = f"orbital_n{n}_l{l}_m{m}"
-			if basis == "complex":
-				name = f"orbital_complex_n{n}_l{l}_m{m}"
-			args = (space, name, orbital.density)
+			args = (space, orbital.name, orbital.density)
 			xp.save_options(mode, *args, **kwargs)
 
 	elif option == 0:
