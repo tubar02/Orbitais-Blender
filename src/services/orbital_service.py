@@ -51,7 +51,7 @@ def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.Orbital
 		for n, l, m in orbital_tasks(n_max):
 			pbar.set_postfix_str(f"n = {n}, l = {l}, m = {m}")
 			orbital = next(it)
-			exporter(space, orbital.name, orbital.density)
+			exporter(orbital)
 
 def main():
 	space = sp.Space()

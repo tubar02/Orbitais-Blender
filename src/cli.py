@@ -20,7 +20,7 @@ def main():
 		basis_option = int(basis_option)
 	basis = orb.OrbitalBasis.REAL if basis_option == 1 else orb.OrbitalBasis.COMPLEX
 
-	print("Selecione a opção desejada:")
+	print("\nSelecione a opção desejada:")
 	print("1: Gerar orbitais automaticamente")
 	print("2: Gerar orbital personalizado")
 	print("0: Sair\n")
@@ -66,8 +66,7 @@ def main():
 		if input().lower() == 's':
 			mode = sv.ask_save_mode()
 			kwargs = sv.ask_save_kwargs(mode)
-			args = (space, orbital.name, orbital.density)
-			xp.save_options(mode, *args, **kwargs)
+			xp.save_options(mode, orbital, **kwargs)
 
 	elif option == 0:
 		print("Saindo do programa...")

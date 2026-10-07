@@ -6,6 +6,7 @@ DATA_DIR = ROOT / "data"
 POINT_CLOUD_DIR = DATA_DIR / "point_cloud"
 SINGLE_OBJ_DIR = DATA_DIR / "single_obj"
 BATCH_OBJ_DIR = DATA_DIR / "batch_obj"
+SIGNED_OBJ_DIR = DATA_DIR / "signed_obj"
 
 def ensure_dir(dir_path: Path):
 	if not dir_path.exists():

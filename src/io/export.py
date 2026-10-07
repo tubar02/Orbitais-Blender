@@ -2,13 +2,17 @@ from pathlib import Path
 import numpy as np
 from tqdm import tqdm
 
-from src.core.space import Space
+import src.core.orbital as orb
 import src.io.paths as io
 
-def fake_exporter(space: Space, nome_arq: str, scalar_field: np.ndarray):
-	print(f"\nExportando {nome_arq}")
+def fake_exporter(orbital: orb.Orbital):
+	print(f"\nExportando {orbital.name}")
 
-def save_point_cloud(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: float, tolerancia: float):
+def save_point_cloud(orbital: orb.Orbital, percent: float, tolerancia: float):
+	scalar_field = orbital.density
+	space = orbital.space
+	nome_arq = orbital.name
+
 	level = percent * np.max(scalar_field)
 	tol = tolerancia * np.max(scalar_field)
 	mask = np.abs(scalar_field - level) < tol
@@ -23,14 +27,22 @@ def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: b
 		for face in tqdm(faces, desc=f"Salvando faces em {file_path.name}", colour="green", leave=leave):
 			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
 
-def save_obj(space: Space, nome_arq: str, scalar_field: np.ndarray, percent: float, leave: bool = False):
+def save_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
+	scalar_field = orbital.density
+	space = orbital.space
+	nome_arq = orbital.name
+
 	level = percent * np.max(scalar_field)
 	verts, faces = space.apply_marching_cubes(scalar_field, level)
 
 	file_path = io.get_path(f"{nome_arq}.obj", io.SINGLE_OBJ_DIR)
 	write_obj(file_path, verts, faces, leave=leave)
 
-def save_batch(space: Space, nome_dir: str, scalar_field: np.ndarray, layers: int = 10, start_percent: float = 0.01, leave: bool = False):
+def save_batch(orbital: orb.Orbital, layers: int = 10, start_percent: float = 0.01, leave: bool = False):
+	scalar_field = orbital.density
+	space = orbital.space
+	nome_dir = orbital.name
+
 	levels = np.linspace(start_percent * np.max(scalar_field), np.max(scalar_field), layers, endpoint=False)
 	percents = np.round(np.linspace(start_percent, 1.0, layers, endpoint=False) * 100).astype(int)
 
