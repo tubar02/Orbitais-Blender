@@ -54,6 +54,25 @@ def save_batch(orbital: orb.Orbital, layers: int = 10, start_percent: float = 0.
 		file_path = dir_path / f"lvl{percent}.obj"
 		write_obj(file_path, verts, faces, leave=False)
 
+def save_signed_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
+	density = orbital.density
+	space = orbital.space
+	nome_dir = orbital.name
+
+	level = percent * np.max(density)
+	positive_field = np.where(orbital.wavefunction > 0, density, 0)
+	negative_field = np.where(orbital.wavefunction < 0, density, 0)
+	verts_pos, faces_pos = space.apply_marching_cubes(positive_field, level)
+	verts_neg, faces_neg = space.apply_marching_cubes(negative_field, level)
+
+	dir_path = io.get_path(f"{nome_dir}", io.SIGNED_OBJ_DIR)
+	io.ensure_dir(dir_path)
+
+	file_path_pos = dir_path / "pos.obj"
+	write_obj(file_path_pos, verts_pos, faces_pos, leave=leave)
+	file_path_neg = dir_path / "neg.obj"
+	write_obj(file_path_neg, verts_neg, faces_neg, leave=leave)
+
 SAVE_MODES = {
 	"point_cloud": lambda *args, **ctx: save_point_cloud(
 		*args,
@@ -68,6 +87,10 @@ SAVE_MODES = {
 		*args,
 		layers=ctx.get("layers", 10),
 		start_percent=ctx.get("start_percent", 0.01)
+	),
+	"signed_obj": lambda *args, **ctx: save_signed_obj(
+		*args,
+		percent=ctx.get("percent", 0.01)
 	),
 }
 
