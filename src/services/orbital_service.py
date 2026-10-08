@@ -43,7 +43,7 @@ def generate_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis = orb
 
 		yield orb.Orbital(n, l, m, space, basis=basis)
 
-def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis, exporter: Callable[[sp.Space, str, np.ndarray], None] = xp.fake_exporter):
+def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis, exporter: Callable[[orb.Orbital], None] = xp.fake_exporter):
 	orbitals = generate_orbitals(space, n_max, basis)
 	total = sum(n ** 2 for n in range(1, n_max + 1))  # Total de orbitais até n_max
 	with tqdm(orbitals, "Gerando orbitais", total=total, colour="green") as pbar:

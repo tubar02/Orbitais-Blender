@@ -9,7 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.blender as bl
 
 def main():
-	n, l, m = 2, 1, -1
+	n, l, m = 2, 0, 0
 	suffix = "real"
 	dir_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
 	batch = bl.reader.load_signed_obj_data(dir_name)
