@@ -12,7 +12,7 @@ def main():
 	n, l, m = 2, 0, 0
 	suffix = "real"
 	dir_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
-	batch = bl.reader.load_signed_obj_data(dir_name)
+	batch = bl.reader.read_signed_obj_data(dir_name)
 
 	all_verts, all_faces = [], []
 	for sign in batch.keys():

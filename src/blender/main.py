@@ -15,11 +15,11 @@ def main():
 	suffix = "real"
 	orbital_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
 	
-	verts, faces = bl.reader.load_obj_data(orbital_name)
+	verts, faces = bl.reader.read_obj_data(orbital_name)
 	obj = bl.scene.create_mesh_object(verts, faces, name=orbital_name)
 	bl.scene.smooth_object(obj)
 	'''
-	points = bl.reader.load_data(orbital_name)
+	points = bl.reader.read_data(orbital_name)
 	bl.scene.create_point_cloud(points, name=orbital_name)
 	'''
 

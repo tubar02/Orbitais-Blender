@@ -27,7 +27,7 @@ def main(n_max: int = 4):
 			for m in bl.layout.m_order(l):
 				file_name = f"orbital_n{n}_l{l}_m{m}"
 				try:
-					verts, faces = bl.reader.load_obj_data(file_name)
+					verts, faces = bl.reader.read_obj_data(file_name)
 				except FileNotFoundError:
 					print(f"Arquivo não encontrado: {file_name}.obj")
 					continue

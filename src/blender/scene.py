@@ -50,3 +50,23 @@ def sphere_instancing(points, radius=0.1, name="SphereInstance"):
 		instance = sphere.copy()
 		instance.location = point
 		bpy.context.collection.objects.link(instance)
+
+def create_mesh_from_parts(parts, name):
+    all_verts = []
+    all_faces = []
+    face_ranges = {}
+
+    for part in parts:
+        vertex_offset = len(all_verts)
+        face_start = len(all_faces)
+
+        all_verts.extend(part["vertices"])
+
+        for face in part["faces"]:
+            all_faces.append(tuple(index + vertex_offset for index in face))
+
+        face_ranges[part["name"]] = range(face_start, len(all_faces))
+
+    obj = create_mesh_object(all_verts, all_faces, name=name)
+
+    return obj, face_ranges

@@ -1,6 +1,5 @@
 from pathlib import Path
 import sys
-import bpy
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(PROJECT_ROOT) not in sys.path:
@@ -12,9 +11,9 @@ def main():
 	n, l, m = 3, 2, -1
 	suffix = "real"
 	dir_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
-	batch = bl.reader.load_obj_batch_data(dir_name)
+	batch = bl.reader.read_obj_batch_data(dir_name)
 	
-	levels  = bl.reader.lvl_list(dir_name) # Níveis para normalizar cores
+	levels  = bl.misc.lvl_list(dir_name) # Níveis para normalizar cores
 	min_level, max_level = min(levels), max(levels)
 
 	all_verts, all_faces = [], []

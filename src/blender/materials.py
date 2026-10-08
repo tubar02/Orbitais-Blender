@@ -44,4 +44,17 @@ def create_orbital_material(name: str, color: tuple[float, float, float], alpha:
 	
 	return mat
 
-SIGNED_COLOR = {"blue": (0.0, 0.0, 1.0), "red": (1.0, 0.0, 0.0)}
+SIGNED_COLOR = {"red": (1.0, 0.0, 0.0), "blue": (0.0, 0.0, 1.0)}
+
+def batch_material_specs(parts):
+	specs = {}
+	for part in parts:
+		norm_level = 1
+
+
+def signed_material_specs(parts):
+	colors = {"neg": (0.0, 0.0, 1.0), "pos": (1.0, 0.0, 0.0)}
+	specs = {}
+	for part in parts:
+		specs[part["name"]] = {"color": colors[part["name"]], "alpha": 1.0}
+	return specs
