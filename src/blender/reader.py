@@ -58,3 +58,16 @@ def load_obj_batch_data(dir_name: str):
 		vert_offset += len(verts)
 
 	return batch
+
+def load_signed_obj_data(dir_name: str):
+	batch: dict[str, tuple[list[tuple[float, float, float]], list[tuple[int, int, int]]]] = {}
+	vert_offset = 0
+
+	for file in io.get_data_subdir(dir_name, io.SIGNED_OBJ_DIR):
+		sign = str(file.stem)
+		# Lê o OBJ diretamente do caminho real
+		verts, faces = load_obj_data(file, offset=vert_offset)
+		batch[sign] = (verts, faces)
+		vert_offset += len(verts)
+
+	return batch

@@ -43,3 +43,5 @@ def create_orbital_material(name: str, color: tuple[float, float, float], alpha:
 	links.new(bsdf.outputs['BSDF'], output_node.inputs['Surface'])
 	
 	return mat
+
+SIGNED_COLOR = {"blue": (0.0, 0.0, 1.0), "red": (1.0, 0.0, 0.0)}
