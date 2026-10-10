@@ -8,7 +8,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import src.blender as bl
 
-def main(n_max: int = 4):
+def main(n_max: int = 4, suffix = "real"):
 	rows = {}
 	for n in range(1, n_max + 1):
 		n_col = bl.scene.make_collection(f"n_{n}")
@@ -25,7 +25,7 @@ def main(n_max: int = 4):
 				n_col.children.link(l_col)
 
 			for m in bl.layout.m_order(l):
-				file_name = f"orbital_n{n}_l{l}_m{m}"
+				file_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
 				try:
 					verts, faces = bl.reader.read_obj_data(file_name)
 				except FileNotFoundError:
@@ -39,4 +39,4 @@ def main(n_max: int = 4):
 				print(f"Carregado: {file_name}.obj")
 	bl.layout.arrange_orbital_grid(rows)
 
-main()
+main(3)
