@@ -9,18 +9,11 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.blender as bl
 
 def main():
-	n = 2
-	l = 1
-	m = 0
+	n, l, m = 3, 2, -1
 	suffix = "real"
 	orbital_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
-	
-	verts, faces = bl.reader.read_obj_data(orbital_name)
-	obj = bl.scene.create_mesh_object(verts, faces, name=orbital_name)
-	bl.scene.smooth_object(obj)
-	'''
-	points = bl.reader.read_data(orbital_name)
-	bl.scene.create_point_cloud(points, name=orbital_name)
-	'''
+	mode = "batch_obj"
+
+	bl.loader.load_single_orbital(orbital_name, mode)
 
 main()
