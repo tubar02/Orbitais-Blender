@@ -47,10 +47,17 @@ def create_orbital_material(name: str, color: tuple[float, float, float], alpha:
 SIGNED_COLOR = {"red": (1.0, 0.0, 0.0), "blue": (0.0, 0.0, 1.0)}
 
 def batch_material_specs(parts):
-	specs = {}
-	for part in parts:
-		norm_level = 1
+	levels = [int(part["name"].lstrip("lvl")) for part in parts]
+	min_level, max_level = min(levels), max(levels)
 
+	specs = {}
+	for part, lvl in zip(parts, levels):
+		norm_lvl = (lvl - min_level) / (max_level - min_level) if max_level != min_level else 0
+		color = interpolate_color(norm_lvl)
+		alpha = 0.3 + 0.7 * norm_lvl  # mais transparente para níveis baixos
+		specs[part["name"]] = {"color": color, "alpha": alpha}
+
+	return specs
 
 def signed_material_specs(parts):
 	colors = {"neg": (0.0, 0.0, 1.0), "pos": (1.0, 0.0, 0.0)}

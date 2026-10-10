@@ -9,11 +9,11 @@ import src.blender as bl
 import src.io.paths as io
 
 def main():
-	n, l, m = 2, 1, 0
+	n, l, m = 3, 2, -1
 	suffix = "real"
 	dir_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
-	dir_path = io.SIGNED_OBJ_DIR
-	mode = "signed"
+	dir_path = io.BATCH_OBJ_DIR
+	mode = "batch"  # or "signed"
 
 	parts = bl.reader.read_obj_parts(dir_name, dir_path)
 	obj, face_ranges = bl.scene.create_mesh_from_parts(parts, dir_name)
