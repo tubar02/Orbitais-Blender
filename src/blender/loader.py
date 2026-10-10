@@ -15,7 +15,7 @@ def main():
 	dir_path = io.SIGNED_OBJ_DIR
 	mode = "signed"
 
-	parts = bl.reader.read_obj_parts(dir_path, dir_name)
+	parts = bl.reader.read_obj_parts(dir_name, dir_path)
 	obj, face_ranges = bl.scene.create_mesh_from_parts(parts, dir_name)
 
 	if mode == "signed":
@@ -23,6 +23,7 @@ def main():
 	elif mode == "batch":
 		specs = bl.materials.batch_material_specs(parts)
 
-	
+	bl.materials.apply_materials_from_specs(obj, specs, face_ranges)
+	bl.scene.smooth_object(obj)
 
-# main()
+main()
