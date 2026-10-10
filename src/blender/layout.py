@@ -1,5 +1,3 @@
-import bpy
-
 def m_order(l: int) -> list[int]:
 	order = [0]
 	for m in range(1, l + 1):
