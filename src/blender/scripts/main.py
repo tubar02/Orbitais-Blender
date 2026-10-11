@@ -11,8 +11,8 @@ def main():
 	n, l, m = 1, 0, 0
 	suffix = "real"
 	orbital_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
-	mode = "point_cloud"
+	mode = "signed_obj"
 
-	bl.loader.load_single_orbital(orbital_name, mode)
+	obj = bl.loader.load_single_orbital(orbital_name, mode)
 
 main()

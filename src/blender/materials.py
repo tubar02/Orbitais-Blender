@@ -65,7 +65,6 @@ def signed_material_specs(parts):
 	return specs
 
 def apply_materials_from_specs(obj, specs, face_ranges):
-	print(f"Applying materials to object: {obj.name}")
 	for part_name in specs:
 		if part_name not in face_ranges:
 			continue
@@ -79,4 +78,4 @@ def apply_materials_from_specs(obj, specs, face_ranges):
 		for face_idx in face_ranges[part_name]:
 			obj.data.polygons[face_idx].material_index = mat_idx
 
-		obj.data.update()
+	obj.data.update()

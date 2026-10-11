@@ -76,7 +76,7 @@ SAVE_MODES = {
 	"point_cloud": lambda *args, **ctx: save_point_cloud(
 		*args,
 		percent=ctx.get("percent", 0.01),
-		tolerancia=ctx.get("tolerancia", 1e-3)
+		tolerancia=ctx.get("tolerancia", 1e-4)
 	),
 	"single_obj": lambda *args, **ctx: save_obj(
 		*args,

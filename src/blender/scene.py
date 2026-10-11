@@ -26,6 +26,14 @@ def move_to_collection(obj, collection):
 		col.objects.unlink(obj)
 
 	collection.objects.link(obj)
+
+def move_collection_to_collection(child_col, parent_col):
+	if child_col.name not in parent_col.children:
+		try:
+			bpy.context.scene.collection.children.unlink(child_col)
+		except Exception:
+			pass
+		parent_col.children.link(child_col)
 	
 def smooth_object(obj):
 	bpy.context.view_layer.objects.active = obj
@@ -40,6 +48,7 @@ def create_point_cloud(points, name="PointCloud"):
 
 	mesh.from_pydata(points, [], [])
 	mesh.update()
+	return obj
 
 def sphere_instancing(points, radius=0.1, name="SphereInstance"):
 	bpy.ops.mesh.primitive_uv_sphere_add(radius=radius, location=(0, 0, 0))
