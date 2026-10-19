@@ -59,8 +59,7 @@ def main():
 			elif mode == 2:
 				plt.slice_view(space, orbital.density)
 			elif mode == 3:
-				mask = orbital.density >= 0.01 * np.max(orbital.density)
-				plt.scatter_masked(space, mask)
+				plt.scatter_masked(space, orbital.density)
 		
 		print("\nDeseja salvar a função de onda em um arquivo? (s/n)")
 		if input().lower() == 's':

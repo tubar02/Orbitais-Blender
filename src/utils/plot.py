@@ -36,7 +36,8 @@ def slice_view(space: Space, scalar_field: np.ndarray):# Figura
 	slider.on_changed(update)
 	plt.show()
 
-def scatter_masked(space: Space, mask: np.ndarray):
+def scatter_masked(space: Space, scalar_field: np.ndarray):
+	mask = np.abs(scalar_field - 0.01 * np.max(scalar_field)) < 1e-6 * np.max(scalar_field)
 	x_plot, y_plot, z_plot = space.X[mask], space.Y[mask], space.Z[mask]
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')

@@ -3,7 +3,6 @@ from rich.console import Console
 import time
 from functools import wraps
 from typing import Callable
-import numpy as np
 
 import src.core.orbital as orb
 import src.core.space as sp

@@ -1,5 +1,3 @@
-import numpy as np
-
 SAVE_MENU = {
 	1: "point_cloud",
 	2: "single_obj",
