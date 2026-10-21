@@ -24,11 +24,11 @@ public class Rotation : MonoBehaviour
         }
         else if (rotMod == 2)
         {
-            transform.Rotate(0, rotationStep, 0);
+			transform.Rotate(rotationStep, 0, 0);
         }
         else if (rotMod == 3)
         {
-            transform.Rotate(rotationStep, 0, 0);
+            transform.Rotate(0, rotationStep, 0);
         }
         else 
         {
