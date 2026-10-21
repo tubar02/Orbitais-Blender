@@ -33,6 +33,7 @@ public class Rotation : MonoBehaviour
         else 
         {
             rotMod = 1;
+			rotationStep = 0f;
         }
 
         angle += rotationStep;
