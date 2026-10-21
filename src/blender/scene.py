@@ -40,6 +40,11 @@ def smooth_object(obj):
 	obj.select_set(True)
 	bpy.ops.object.shade_smooth()
 	obj.select_set(False)
+
+def select_object(obj):
+	bpy.ops.object.select_all(action='DESELECT')
+	obj.select_set(True)
+	bpy.context.view_layer.objects.active = obj
 	
 def create_point_cloud(points, name="PointCloud"):
 	mesh = bpy.data.meshes.new(f"{name}Mesh")

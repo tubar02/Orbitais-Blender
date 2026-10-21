@@ -8,6 +8,8 @@ SINGLE_OBJ_DIR = DATA_DIR / "single_obj"
 BATCH_OBJ_DIR = DATA_DIR / "batch_obj"
 SIGNED_OBJ_DIR = DATA_DIR / "signed_obj"
 
+UNITY_DATA_DIR = ROOT / "unity" / "Assets" / "Orbitals"
+
 def ensure_dir(dir_path: Path):
 	if not dir_path.exists():
 		dir_path.mkdir(parents=True, exist_ok=True)
