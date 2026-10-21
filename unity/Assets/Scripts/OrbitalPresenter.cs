@@ -10,7 +10,7 @@ public class OrbitalEntry
 	public int m;
 	public string basis;
 	public string mode;
-	public GameObject orbitalPrefab;
+	public GameObject prefab;
 }
 
 public class OrbitalPresenter : MonoBehaviour
@@ -39,25 +39,17 @@ public class OrbitalPresenter : MonoBehaviour
 			string.Equals(e.mode, mode, StringComparison.OrdinalIgnoreCase)
 		);
 
-		if (entry != null)
+		if (entry == null || entry.prefab == null)
 		{
-			if (currentOrbital != null)
-			{
-				Destroy(currentOrbital);
-			}
-
-			currentOrbital = Instantiate(entry.orbitalPrefab, transform);
-			currentOrbital.transform.localScale = Vector3.one * targetSize;
-
-			Rotation rotationScript = currentOrbital.GetComponent<Rotation>();
-			if (rotationScript != null)
-			{
-				rotationScript.rotationSpeed = rotationSpeed;
-			}
+			Debug.LogError($"Orbital não cadastrado: n={n}, l={l}, m={m}, basis={basis}, mode={mode}");
+			return;
 		}
-		else
+
+		if (currentOrbital != null)
 		{
-			Debug.LogWarning($"Orbital not found: n={n}, l={l}, m={m}, basis={basis}, mode={mode}");
+			Destroy(currentOrbital);
 		}
+
+		
 	}
 }
