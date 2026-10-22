@@ -23,9 +23,9 @@ def load_single_orbital(orbital_name, mode):
 		parts = bl.reader.read_obj_parts(orbital_name, dir_path)
 		obj, face_ranges = bl.scene.create_mesh_from_parts(parts, orbital_name)
 
-		if mode == "signed_obj":
+		if mode == "signed":
 			specs = bl.materials.signed_material_specs(parts)
-		elif mode == "batch_obj":
+		elif mode == "batch":
 			specs = bl.materials.batch_material_specs(parts)
 
 		bl.materials.apply_materials_from_specs(obj, specs, face_ranges)
