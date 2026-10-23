@@ -4,9 +4,9 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
 
 POINT_CLOUD_DIR = DATA_DIR / "point_cloud"
-SINGLE_OBJ_DIR = DATA_DIR / "single_obj"
-BATCH_OBJ_DIR = DATA_DIR / "batch_obj"
-SIGNED_OBJ_DIR = DATA_DIR / "signed_obj"
+SINGLE_OBJ_DIR = DATA_DIR / "single"
+BATCH_OBJ_DIR = DATA_DIR / "batch"
+SIGNED_OBJ_DIR = DATA_DIR / "signed"
 
 UNITY_DATA_DIR = ROOT / "unity" / "Assets" / "Orbitals"
 

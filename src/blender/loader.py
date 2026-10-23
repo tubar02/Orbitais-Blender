@@ -13,7 +13,7 @@ def load_single_orbital(orbital_name, mode):
 		points = bl.reader.read_data(orbital_name)
 		obj = bl.scene.create_point_cloud(points, name=orbital_name)
 
-	elif mode == "single_obj":
+	elif mode == "single":
 		verts, faces = bl.reader.read_obj_data(orbital_name)
 		obj = bl.scene.create_mesh_object(verts, faces, name=orbital_name)
 		bl.scene.smooth_object(obj)

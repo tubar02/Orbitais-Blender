@@ -25,7 +25,6 @@ def main():
 	print("2: Gerar orbital personalizado")
 	print("0: Sair\n")
 	option = int(input("Digite o número da opção: "))
-	print("\n")
 
 	space = sp.Space()
 
