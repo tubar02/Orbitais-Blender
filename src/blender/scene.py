@@ -38,7 +38,7 @@ def move_collection_to_collection(child_col, parent_col):
 def organize_collections(orbitals):
 	for (n, l, _, _), obj in orbitals.items():
 		n_col = make_collection(f"n_{n}")
-		l_col = make_collection(f"l_{l}")
+		l_col = make_collection(f"n_{n}_l_{l}")
 		move_collection_to_collection(l_col, n_col)
 		move_to_collection(obj, l_col)
 	
