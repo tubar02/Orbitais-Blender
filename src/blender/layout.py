@@ -4,6 +4,17 @@ def m_order(l: int) -> list[int]:
 		order.extend([-m, m])
 	return order
 
+def group_orbitals(orbitals: dict):
+	rows = {}
+	keys = sorted(orbitals, key=lambda key: (
+		key[0], key[1], m_order(key[1]).index(key[2]), key[3]
+	))
+
+	for n, l, m, basis in keys:
+		obj = orbitals[(n, l, m, basis)]
+		rows.setdefault(n, {}).setdefault(l, []).append(obj)
+	return rows
+
 def arrange_orbital_grid(rows, margin_x=8, margin_y=30, margin_l=18):
 	y_cursor = 0
 

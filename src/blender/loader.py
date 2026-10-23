@@ -32,3 +32,13 @@ def load_single_orbital(orbital_name, mode):
 		bl.scene.smooth_object(obj)
 		
 	return obj
+
+def load_all_orbitals(basis, mode):
+	orbitals = {}
+	dir_path = io.DATA_DIR / mode
+	available = bl.reader.discover_orbitals(basis, dir_path)
+
+	for n, l, m, orb_basis, name in available:
+		obj = load_single_orbital(name, mode)
+		orbitals[(n, l, m, orb_basis)] = obj
+	return orbitals

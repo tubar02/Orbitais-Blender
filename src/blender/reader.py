@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 import sys
 
@@ -47,3 +48,20 @@ def read_obj_parts(dir_name: str, dir_path: Path):
         parts.append({"name": file_path.stem, "vertices": verts, "faces": faces,})
 
     return parts
+
+ORBITAL_PATTERN = re.compile(r"orbital_n(\d+)_l(\d+)_m(-?\d+)_(real|complex)")
+
+def discover_orbitals(basis: str, dir_path: Path):
+	entries = (p for p in dir_path.iterdir())
+	orbitals = []
+
+	for entry in entries:
+		match = ORBITAL_PATTERN.fullmatch(entry.stem)
+		n, l, m = map(int, match.groups()[:3])
+		orb_basis = match.group(4)
+
+		if orb_basis != basis:
+			continue
+
+		orbitals.append((n, l, m, orb_basis, entry.stem))
+	return sorted(orbitals)

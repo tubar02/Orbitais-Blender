@@ -28,12 +28,19 @@ def move_to_collection(obj, collection):
 	collection.objects.link(obj)
 
 def move_collection_to_collection(child_col, parent_col):
-	if child_col.name not in parent_col.children:
+	if not any(col == child_col for col in parent_col.children):
 		try:
 			bpy.context.scene.collection.children.unlink(child_col)
 		except Exception:
 			pass
 		parent_col.children.link(child_col)
+
+def organize_collections(orbitals):
+	for (n, l, _, _), obj in orbitals.items():
+		n_col = make_collection(f"n_{n}")
+		l_col = make_collection(f"l_{l}")
+		move_collection_to_collection(l_col, n_col)
+		move_to_collection(obj, l_col)
 	
 def smooth_object(obj):
 	bpy.context.view_layer.objects.active = obj
