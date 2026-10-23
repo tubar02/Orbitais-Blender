@@ -23,4 +23,8 @@ def export_fbx(obj, orbital_name, mode):
 	return output_path
 
 def export_many_fbx(orbitals: dict, mode: str):
-	pass
+	for key in orbitals:
+		n, l, m, basis = key
+		obj = orbitals[key]
+		orbital_name = f"orbital_n{n}_l{l}_m{m}_{basis}"
+		export_fbx(obj, orbital_name, mode)

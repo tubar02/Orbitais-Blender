@@ -12,5 +12,6 @@ def main(mode: str, basis: str):
 	rows = bl.layout.group_orbitals(orbitals)
 	bl.layout.arrange_orbital_grid(rows)
 	bl.scene.organize_collections(orbitals)
+	bl.exporter.export_many_fbx(orbitals, mode)
 
 main("signed", "real")
