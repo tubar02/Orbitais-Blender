@@ -28,11 +28,11 @@ public class OrbitalPresenter : MonoBehaviour
 	[SerializeField] private List<OrbitalEntry> orbitalEntries = new();
 
 	[Header("Orbital inicial")]
-	[SerializeField] private int initialN = 3;
-	[SerializeField] private int initialL = 2;
-	[SerializeField] private int initialM = 0;
-	[SerializeField] private string initialBasis = "real";
-	[SerializeField] private string initialMode = "signed";
+	[SerializeField] private int selectedN = 3;
+	[SerializeField] private int selectedL = 2;
+	[SerializeField] private int selectedM = 0;
+	[SerializeField] private string selectedBasis = "real";
+	[SerializeField] private string selectedMode = "signed";
 
 	[Header("Apresentação")]
 	[SerializeField] private float scaleMultiplier = 1f;
@@ -45,8 +45,19 @@ public class OrbitalPresenter : MonoBehaviour
 #if UNITY_EDITOR
 		UpdateCatalog();
 #endif 
-		LoadOrbital(initialN, initialL, initialM, initialBasis, initialMode);
-	}'
+		LoadOrbital(selectedN, selectedL, selectedM, selectedBasis, selectedMode);
+	}
+
+	[ContextMenu("Carregar orbital selecionado")]
+	public void LoadSelectedOrbital()
+	{
+		if (!Application.isPlaying)
+		{
+			Debug.LogWarning("Entre no Play Mode para carregar um orbital.");
+			return;
+		}
+		LoadOrbital(selectedN, selectedL, selectedM, selectedBasis, selectedMode);
+	}
 
 	public void LoadOrbital(int n, int l, int m, string basis, string mode)
 	{
