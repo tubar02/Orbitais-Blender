@@ -98,7 +98,69 @@ public class OrbitalPresenter : MonoBehaviour
 	[ContextMenu("Atualizar catálogo")]
 	private void UpdateCatalog()
 	{
-		return;
+		const string folder = "Assets/Orbitals";
+
+		Regex pattern = new Regex(@"^orbital_n(\d+)_l(\d+)_m(-?\d+)_" +
+			@"(real|complex)_(single|batch|signed)$", RegexOptions.IgnoreCase);
+
+		string[] guids = AssetDatabase.FindAssets("", new[] { folder });
+		List<OrbitalEntry> entries = new();
+		foreach (string guid in guids)
+		{
+			string path = AssetDatabase.GUIDToAssetPath(guid);
+			string name = Path.GetFileNameWithoutExtension(path);
+			Match match = pattern.Match(name);
+			if (!match.Success)
+			{
+				Debug.LogWarning($"Nome de orbital não padronizado: {name}");
+				continue;
+			}
+
+			GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+			OrbitalEntry entry = new OrbitalEntry
+			{
+				n = int.Parse(match.Groups[1].Value),
+				l = int.Parse(match.Groups[2].Value),
+				m = int.Parse(match.Groups[3].Value),
+				basis = match.Groups[4].Value.ToLowerInvariant(),
+				mode = match.Groups[5].Value.ToLowerInvariant(),
+				prefab = model
+			};
+			entries.Add(entry);
+		}
+
+		// Mantém uma ordem previsível.
+		entries.Sort((a, b) =>
+		{
+			int result = a.n.CompareTo(b.n);
+			if (result != 0) return result;
+
+			result = a.l.CompareTo(b.l);
+			if (result != 0) return result;
+
+			result = a.m.CompareTo(b.m);
+			if (result != 0) return result;
+
+			result = string.CompareOrdinal(
+				a.basis, b.basis
+			);
+			if (result != 0) return result;
+
+			return string.CompareOrdinal(
+				a.mode, b.mode
+			);
+		});
+		orbitalEntries = entries;
+
+		if (!Application.isPlaying)
+		{
+			EditorUtility.SetDirty(this);
+			if (gameObject.scene.IsValid())
+			{
+				EditorSceneManager.MarkSceneDirty(gameObject.scene);
+			}
+		}
+		Debug.Log($"Catálogo atualizado: {entries.Count} orbitais.");
 	}
 #endif
 }
