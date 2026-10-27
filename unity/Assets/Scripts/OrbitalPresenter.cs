@@ -35,8 +35,8 @@ public class OrbitalPresenter : MonoBehaviour
 	[SerializeField] private string selectedMode = "signed";
 
 	[Header("Apresentação")]
-	[SerializeField] private float scaleMultiplier = 1f;
-	[SerializeField] private float rotationSpeed = 90f;
+	[SerializeField, Range(0.1f, 0.95f)] private float screenFill = 0.85f;
+	[SerializeField] private Camera targetCamera;
 
 	private GameObject currentOrbital;
 
@@ -45,7 +45,7 @@ public class OrbitalPresenter : MonoBehaviour
 #if UNITY_EDITOR
 		UpdateCatalog();
 #endif 
-		LoadOrbital(selectedN, selectedL, selectedM, selectedBasis, selectedMode);
+		LoadSelectedOrbital();
 	}
 
 	[ContextMenu("Carregar orbital selecionado")]
@@ -73,25 +73,71 @@ public class OrbitalPresenter : MonoBehaviour
 			return;
 		}
 
-		GameObject nextOrbital = Instantiate(entry.prefab, transform);
-		nextOrbital.transform.localPosition = Vector3.zero;
-		nextOrbital.transform.localScale = entry.prefab.transform.localScale * scaleMultiplier;
+		GameObject pivot = new GameObject("OrbitalPivot");
+		pivot.transform.SetParent(transform, false);
 
-		Rotation rotation = nextOrbital.GetComponent<Rotation>();
-		if (rotation == null)
-		{
-			rotation = nextOrbital.AddComponent<Rotation>();
-		}
-		rotation.rotationSpeed = rotationSpeed;
+		GameObject nextOrbital = Instantiate(entry.prefab, pivot.transform);
+		FitOrbitalToCamera(pivot, nextOrbital);
+		nextOrbital.transform.localPosition = Vector3.zero;
+
+		Rotation rotation = pivot.AddComponent<Rotation>();
+		rotation.rotationSpeed = 90f;
 
 		if (currentOrbital != null)
 		{
 			currentOrbital.SetActive(false);
 			Destroy(currentOrbital);
 		}	
-		currentOrbital = nextOrbital;
+		currentOrbital = pivot;
 
 		Debug.Log($"Orbital carregado: {entry.prefab.name}");
+	}
+
+	private void FitOrbitalToCamera(GameObject pivot, GameObject model)
+	{
+		Camera cam = targetCamera != null ? targetCamera : Camera.main;
+		if (cam == null)
+		{
+			Debug.LogError("Nenhuma câmera encontrada.");
+			return;
+		}
+
+		Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
+		if (renderers.Length == 0)
+		{
+			Debug.LogWarning("Orbital sem Renderer.");
+			return;
+		}
+
+		// Bounding box que engloba todas as malhas.
+		Bounds bounds = renderers[0].bounds;
+		foreach (Renderer renderer in renderers)
+		{
+			bounds.Encapsulate(renderer.bounds);
+		}
+
+		// Move a geometria para o centro do pivô.
+		model.transform.position += pivot.transform.position - bounds.center;
+
+		// Raio de uma esfera que envolve a bounding box.
+		float radius = bounds.extents.magnitude;
+
+		if (radius <= 0f)
+			return;
+
+		// Distância do pivô à câmera.
+		Vector3 cameraToPivot = pivot.transform.position - cam.transform.position;
+		float distance = Vector3.Dot(cameraToPivot,	cam.transform.forward);
+
+		// Menor campo de visão, vertical ou horizontal.
+		float verticalHalfFov = cam.fieldOfView * Mathf.Deg2Rad / 2f;
+		float horizontalHalfFov = Mathf.Atan(Mathf.Tan(verticalHalfFov) * cam.aspect);
+		float halfFov = Mathf.Min(verticalHalfFov, horizontalHalfFov);
+
+		// Escala segura para a rotação.
+		float targetRadius = distance * Mathf.Sin(halfFov) * screenFill;
+		float scaleFactor = targetRadius / radius;
+		pivot.transform.localScale *= scaleFactor;
 	}
 
 #if UNITY_EDITOR

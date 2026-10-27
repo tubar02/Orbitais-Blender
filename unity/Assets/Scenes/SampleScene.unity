@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -13.26}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -508,7 +508,7 @@ Transform:
   m_GameObject: {fileID: 1487184012}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12.2}
+  m_LocalPosition: {x: 0, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -617,13 +617,67 @@ MonoBehaviour:
     basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: 3f6e1288f4be2e149b6cad368892926c, type: 3}
-  selectedN: 2
-  selectedL: 1
+  - n: 3
+    l: 0
+    m: 0
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: 991b85772112cfc4bb38b295fd883e55, type: 3}
+  - n: 3
+    l: 1
+    m: -1
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: b992346d1fb2bcd43b6162212cc63f53, type: 3}
+  - n: 3
+    l: 1
+    m: 0
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: fdf6f48dbec780a42aca8e7c9c18afc7, type: 3}
+  - n: 3
+    l: 1
+    m: 1
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: f1f2a383042d20841bec006ba861a768, type: 3}
+  - n: 3
+    l: 2
+    m: -2
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: ed696eb376c99834d99aa844c5c78843, type: 3}
+  - n: 3
+    l: 2
+    m: -1
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: 91db369b64c31db41a62ba14685a75b6, type: 3}
+  - n: 3
+    l: 2
+    m: 0
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: b4dabca11cd43a1418f631024250f70a, type: 3}
+  - n: 3
+    l: 2
+    m: 1
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: 2881a7d921344b5498bd7f117d3773eb, type: 3}
+  - n: 3
+    l: 2
+    m: 2
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: 26318ddcc7f8f444c8f68e9439336839, type: 3}
+  selectedN: 3
+  selectedL: 2
   selectedM: 0
   selectedBasis: real
   selectedMode: signed
-  scaleMultiplier: 1
-  rotationSpeed: 90
+  screenFill: 0.8
+  targetCamera: {fileID: 0}
 --- !u!1 &1956983885
 GameObject:
   m_ObjectHideFlags: 0
