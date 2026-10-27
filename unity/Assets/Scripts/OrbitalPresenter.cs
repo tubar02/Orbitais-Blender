@@ -39,7 +39,6 @@ public class OrbitalPresenter : MonoBehaviour
 	[SerializeField] private float rotationSpeed = 90f;
 
 	private GameObject currentOrbital;
-	private int currentIndex = -1;
 
 	private void Start()
 	{
@@ -47,7 +46,7 @@ public class OrbitalPresenter : MonoBehaviour
 		UpdateCatalog();
 #endif 
 		LoadOrbital(initialN, initialL, initialM, initialBasis, initialMode);
-	}
+	}'
 
 	public void LoadOrbital(int n, int l, int m, string basis, string mode)
 	{
@@ -63,15 +62,25 @@ public class OrbitalPresenter : MonoBehaviour
 			return;
 		}
 
-		if (currentOrbital != null)
-		{
-			Destroy(currentOrbital);
-		}
-
 		GameObject nextOrbital = Instantiate(entry.prefab, transform);
 		nextOrbital.transform.localPosition = Vector3.zero;
 		nextOrbital.transform.localScale = entry.prefab.transform.localScale * scaleMultiplier;
-		
+
+		Rotation rotation = nextOrbital.GetComponent<Rotation>();
+		if (rotation == null)
+		{
+			rotation = nextOrbital.AddComponent<Rotation>();
+		}
+		rotation.rotationSpeed = rotationSpeed;
+
+		if (currentOrbital != null)
+		{
+			currentOrbital.SetActive(false);
+			Destroy(currentOrbital);
+		}	
+		currentOrbital = nextOrbital;
+
+		Debug.Log($"Orbital carregado: {entry.prefab.name}");
 	}
 
 #if UNITY_EDITOR
