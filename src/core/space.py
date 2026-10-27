@@ -31,8 +31,8 @@ class Space:
 		self.tam_espaco = 5 + (n - 1) * 10
 		self._update()
 
-	def apply_marching_cubes(self, scalar_field: np.ndarray, level: float):
-		verts, faces, _, _ = marching_cubes(scalar_field, level, spacing=self.div)
+	def apply_marching_cubes(self, scalar_field: np.ndarray, level: float, gradient_direction: str = "ascent"):
+		verts, faces, _, _ = marching_cubes(scalar_field, level, spacing=self.div, gradient_direction=gradient_direction)
 		verts[:, 0] += self.x.min() # Ajusta para as coordenadas do espaço
 		verts[:, 1] += self.y.min()
 		verts[:, 2] += self.z.min()

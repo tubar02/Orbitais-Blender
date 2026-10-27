@@ -66,7 +66,8 @@ def save_signed_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
 	for sign, level in [("pos", amplitude), ("neg", -amplitude)]:
 		if not (wavefunction.min() <= level <= wavefunction.max()):
 			continue  # Pula se o nível não estiver dentro do intervalo da função de onda
-		verts, faces = space.apply_marching_cubes(wavefunction, level)
+		direction = "ascent" if sign == "pos" else "descent"
+		verts, faces = space.apply_marching_cubes(wavefunction, level, direction)
 		dir_path = io.get_path(f"{orbital.name}", io.SIGNED_OBJ_DIR)
 		io.ensure_dir(dir_path)
 		file_path = dir_path / f"{sign}.obj"

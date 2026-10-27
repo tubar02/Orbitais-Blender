@@ -8,7 +8,7 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.blender as bl
 
 def main():
-	n, l, m = 3, 2, 1
+	n, l, m = 3, 1, 1
 	suffix = "real"
 	orbital_name = f"orbital_n{n}_l{l}_m{m}_{suffix}"
 	mode = "signed"

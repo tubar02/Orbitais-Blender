@@ -35,7 +35,7 @@ public class OrbitalPresenter : MonoBehaviour
 	[SerializeField] private string selectedMode = "signed";
 
 	[Header("Apresentação")]
-	[SerializeField, Range(0.1f, 0.95f)] private float screenFill = 0.85f;
+	[SerializeField, Range(0.1f, 0.95f)] private float screenFill = 0.95f;
 	[SerializeField] private Camera targetCamera;
 
 	private GameObject currentOrbital;
@@ -78,7 +78,6 @@ public class OrbitalPresenter : MonoBehaviour
 
 		GameObject nextOrbital = Instantiate(entry.prefab, pivot.transform);
 		FitOrbitalToCamera(pivot, nextOrbital);
-		nextOrbital.transform.localPosition = Vector3.zero;
 
 		Rotation rotation = pivot.AddComponent<Rotation>();
 		rotation.rotationSpeed = 90f;
