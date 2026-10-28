@@ -94,6 +94,12 @@ public class OrbitalPresenter : MonoBehaviour
 
 	public Rotation CurrentRotation => currentOrbital != null ? currentOrbital.GetComponent<Rotation>() : null;
 
+	public List<OrbitalEntry> GetOrbitals(string basis, string mode)
+	{
+		return orbitalEntries.FindAll(entry => string.Equals(entry.basis, basis, StringComparison.OrdinalIgnoreCase) 
+			&& string.Equals(entry.mode, mode, StringComparison.OrdinalIgnoreCase) && entry.prefab != null);
+	}
+
 	private void FitOrbitalToCamera(GameObject pivot, GameObject model)
 	{
 		Camera cam = targetCamera != null ? targetCamera : Camera.main;

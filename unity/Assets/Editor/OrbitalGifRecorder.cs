@@ -12,6 +12,8 @@ public static class OrbitalGifRecorder
 	private const int Resolution = 1080;
 
 	private static RecorderController controller;
+	private const string SelectedBasis = "real";
+	private const string SelectedMode = "signed";
 
 	[MenuItem("Tools/Orbitais/Gravar GIF")]
 	public static void RecordGif()
@@ -28,22 +30,6 @@ public static class OrbitalGifRecorder
 			return;
 		}
 
-		string outputDir = Path.Combine(Application.dataPath, "Recordings");
-
-		// Configura o Movie Recorder
-		MovieRecorderSettings movieSettings = ScriptableObject.CreateInstance<MovieRecorderSettings>();
-		movieSettings.name = "Orbital GIF";
-		movieSettings.Enabled = true;
-		movieSettings.EncoderSettings = new GifEncoderSettings{Quality = 90u, Loop = true};
-		movieSettings.ImageInputSettings = new GameViewInputSettings{OutputWidth = Resolution,OutputHeight = Resolution};
-		movieSettings.OutputFile = Path.Combine(outputDir, "orbital_teste");
-
-		// Configura a sessão
-		RecorderControllerSettings controllerSettings =	ScriptableObject.CreateInstance<RecorderControllerSettings>();
-		controllerSettings.AddRecorderSettings(movieSettings);
-		controllerSettings.FrameRate = FPS;
-		controllerSettings.CapFrameRate = true;
-
 		OrbitalPresenter presenter = UnityEngine.Object.FindAnyObjectByType<OrbitalPresenter>();
 		if (presenter == null)
 		{
@@ -56,12 +42,10 @@ public static class OrbitalGifRecorder
 			Debug.LogError("Nenhuma rotação válida encontrada.");
 			return;
 		}
-		float duration = 3f * 360f / rotation.rotationSpeed;
-		controllerSettings.SetRecordModeToTimeInterval(0f, duration);
-		Debug.Log($"TESTE");
-
+		
 		// Inicia a gravação
-		controller = new RecorderController(controllerSettings);
+		float duration = 3f * 360f / rotation.rotationSpeed;
+		controller = CreateRecorder("orbital_teste", duration);
 		controller.PrepareRecording();
 		if (controller.StartRecording())
 		{
@@ -77,5 +61,42 @@ public static class OrbitalGifRecorder
 	private static bool ValidateRecordGif()
 	{
 		return EditorApplication.isPlaying;
+	}
+
+	[MenuItem("Tools/Orbitais/Gravar lote de Gifs")]
+	public static void RecordBatch()
+	{
+
+	}
+
+	
+	private static RecorderController CreateRecorder(string fileName, float duration, bool manual = false)
+	{
+		string outputDir = Path.Combine(Application.dataPath, "Recordings");
+		Directory.CreateDirectory(outputDir);
+		
+		MovieRecorderSettings movieSettings = ScriptableObject.CreateInstance<MovieRecorderSettings>();
+		movieSettings.name = "Orbital GIF";
+		movieSettings.Enabled = true;
+		movieSettings.EncoderSettings = new GifEncoderSettings{Quality = 90u, Loop = true};
+		movieSettings.ImageInputSettings = new GameViewInputSettings{OutputWidth = Resolution,OutputHeight = Resolution};
+		movieSettings.OutputFile = Path.Combine(outputDir, fileName);
+
+		RecorderControllerSettings controllerSettings =	ScriptableObject.CreateInstance<RecorderControllerSettings>();
+		controllerSettings.AddRecorderSettings(movieSettings);
+		controllerSettings.FrameRate = FPS;
+		controllerSettings.CapFrameRate = true;
+		
+
+		if (manual)
+		{
+			controllerSettings.SetRecordModeToManual();
+		}
+		else
+		{
+			controllerSettings.SetRecordModeToTimeInterval(0f, duration);
+		}
+
+		return new RecorderController(controllerSettings);
 	}
 }
