@@ -92,6 +92,8 @@ public class OrbitalPresenter : MonoBehaviour
 		Debug.Log($"Orbital carregado: {entry.prefab.name}");
 	}
 
+	public Rotation CurrentRotation => currentOrbital != null ? currentOrbital.GetComponent<Rotation>() : null;
+
 	private void FitOrbitalToCamera(GameObject pivot, GameObject model)
 	{
 		Camera cam = targetCamera != null ? targetCamera : Camera.main;

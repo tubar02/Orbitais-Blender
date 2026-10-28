@@ -8,9 +8,8 @@ using UnityEngine;
 
 public static class OrbitalGifRecorder
 {
-	private const int FPS = 60;
-	private const int Duration = 12;
-	private const int Resolution = 1024;
+	private const int FPS = 50;
+	private const int Resolution = 1080;
 
 	private static RecorderController controller;
 
@@ -44,17 +43,29 @@ public static class OrbitalGifRecorder
 		controllerSettings.AddRecorderSettings(movieSettings);
 		controllerSettings.FrameRate = FPS;
 		controllerSettings.CapFrameRate = true;
-		int totalFrames = FPS * Duration;
-		controllerSettings.SetRecordModeToFrameInterval(0, totalFrames - 1);
+
+		OrbitalPresenter presenter = UnityEngine.Object.FindAnyObjectByType<OrbitalPresenter>();
+		if (presenter == null)
+		{
+			Debug.LogError("Nenhum OrbitalPresenter encontrado.");
+			return;
+		}
+		Rotation rotation = presenter.CurrentRotation;
+		if (rotation == null || rotation.rotationSpeed <= 0f)
+		{
+			Debug.LogError("Nenhuma rotação válida encontrada.");
+			return;
+		}
+		float duration = 3f * 360f / rotation.rotationSpeed;
+		controllerSettings.SetRecordModeToTimeInterval(0f, duration);
+		Debug.Log($"TESTE");
 
 		// Inicia a gravação
 		controller = new RecorderController(controllerSettings);
 		controller.PrepareRecording();
 		if (controller.StartRecording())
 		{
-			Debug.Log(
-				$"Iniciando gravação GIF: {totalFrames} frames"
-			);
+			Debug.Log($"Iniciando gravação GIF: {duration} segundos");
 		}
 		else
 		{
