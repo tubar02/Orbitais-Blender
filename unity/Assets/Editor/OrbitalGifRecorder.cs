@@ -11,7 +11,7 @@ public static class OrbitalGifRecorder
 {
 	private const int FPS = 50;
 	private const int Resolution = 1080;
-	private static OrbitalPresenter presenter = UnityEngine.Object.FindAnyObjectByType<OrbitalPresenter>();
+	private static OrbitalPresenter presenter;
 	private static RecorderController controller;
 
 	private const string BatchBasis = "real";
@@ -59,14 +59,14 @@ public static class OrbitalGifRecorder
 	}
 
 	[MenuItem("Tools/Orbitais/Gravar lote de Gifs")]
-	public static bool RecordBatch()
+	public static void RecordBatch()
 	{
 		if (CheckRecordCond()) return;
 
 		batchOrbitals = presenter.GetOrbitals(BatchBasis, BatchMode);
-		if (batchOrbitals.count == 0)
+		if (batchOrbitals.Count == 0)
 		{
-			Debug.LogWarning($"Nenhum orbital encontrado: {BatchBasis}/{Batch_Mode}");
+			Debug.LogWarning($"Nenhum orbital encontrado: {BatchBasis}/{BatchMode}");
 			return;
 		}
 
@@ -82,7 +82,13 @@ public static class OrbitalGifRecorder
 		Debug.Log($"Iniciando lote: {batchOrbitals.Count} orbitais ({BatchBasis}/{BatchMode})");
 	}
 
-	private static bool CheckRecordCond(bool? batch = null)
+	[MenuItem("Tools/Orbitais/Gravar lote de Gifs", true)]
+	private static bool ValidateRecordBatch()
+	{
+		return EditorApplication.isPlaying && !batchActive && (controller == null || !controller.IsRecording());
+	}
+
+	private static bool CheckRecordCond()
 	{
 		if (!EditorApplication.isPlaying)
 		{
@@ -90,23 +96,19 @@ public static class OrbitalGifRecorder
 			return true;
 		}
 
-		if (batch || (controller != null && controller.IsRecording()))
+		if (batchActive || (controller != null && controller.IsRecording()))
 		{
 			Debug.LogWarning("Uma gravação já está em andamento.");
 			return true;
 		}
-	
+
+		presenter = UnityEngine.Object.FindAnyObjectByType<OrbitalPresenter>();
 		if (presenter == null)
 		{
 			Debug.LogError("Nenhum OrbitalPresenter encontrado.");
 			return true;
 		}
 		return false;
-	}
-	
-	private static void UpdateBatch()
-	{
-		
 	}
 
 	private static RecorderController CreateRecorder(string fileName, float duration, bool manual = false)
@@ -137,5 +139,118 @@ public static class OrbitalGifRecorder
 		}
 
 		return new RecorderController(controllerSettings);
+	}
+
+	private static void UpdateBatch()
+	{
+		// Interrompe se sair do Play Mode.
+		if (!EditorApplication.isPlaying || presenter == null)
+		{
+			FinishBatch();
+			return;
+		}
+
+		// Há outro orbital para começar?
+		if (startNextOrbital)
+		{
+			startNextOrbital = false;
+			StartNextOrbital();
+			return;
+		}
+
+		// Se não estamos gravando, não há nada a acompanhar.
+		if (!batchRecording)
+			return;
+
+		// Confirma que o Recorder continua ativo.
+		if (controller == null || !controller.IsRecording())
+		{
+			Debug.LogError("A gravação foi interrompida.");
+			FinishBatch();
+			return;
+		}
+
+		// Mede quanto tempo simulado passou.
+		float elapsed = Time.time - recordingStart;
+
+		if (elapsed < recordingDuration)
+			return;
+
+		// Duração alcançada: encerra a gravação atual.
+		controller.StopRecording();
+
+		controller = null;
+		batchRecording = false;
+
+		Debug.Log($"GIF {batchIndex + 1} finalizado.");
+
+		// Avança para o próximo orbital.
+		batchIndex++;
+		startNextOrbital = true;
+	}
+	
+	private static void StartNextOrbital()
+	{
+		// Não há mais orbitais?
+		if (batchIndex >= batchOrbitals.Count)
+		{
+			Debug.Log("Lote concluído!");
+			FinishBatch();
+			return;
+		}
+
+		OrbitalEntry entry = batchOrbitals[batchIndex];
+		presenter.LoadOrbital(entry.n, entry.l, entry.m, entry.basis, entry.mode);
+		Rotation rotation = presenter.CurrentRotation;
+		if (rotation == null || rotation.rotationSpeed <= 0f)
+		{
+			Debug.LogError("Rotação inválida.");
+			FinishBatch();
+			return;
+		}
+		recordingDuration = 3f * 360f / rotation.rotationSpeed;
+		string fileName = $"orbital_n{entry.n}_l{entry.l}_m{entry.m}_{entry.basis}_{entry.mode}";
+
+		try
+		{
+			controller = CreateRecorder(fileName, recordingDuration, manual: true);
+			controller.PrepareRecording();
+
+			if (!controller.StartRecording())
+			{
+				Debug.LogError($"Falha ao gravar {fileName}");
+				FinishBatch();
+				return;
+			}
+
+			recordingStart = Time.time;
+			batchRecording = true;
+			Debug.Log($"Gravando {batchIndex + 1}/{batchOrbitals.Count}: {fileName}");
+		}
+		catch (System.Exception exception)
+		{
+			Debug.LogException(exception);
+			FinishBatch();
+		}
+	}
+
+	
+	private static void FinishBatch()
+	{
+		// Para de receber chamadas do Editor.
+		EditorApplication.update -= UpdateBatch;
+
+		// Encerra a gravação, caso ainda esteja ativa.
+		if (controller != null && controller.IsRecording())
+		{
+			controller.StopRecording();
+		}
+
+		controller = null;
+		batchOrbitals = null;
+		batchIndex = 0;
+		batchActive = false;
+		batchRecording = false;
+		startNextOrbital = false;
 	}
 }
