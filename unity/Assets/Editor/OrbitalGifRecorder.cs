@@ -41,7 +41,7 @@ public static class OrbitalGifRecorder
 	[MenuItem("Tools/Orbitais/Gravar GIF", true)]
 	private static bool ValidateRecordGif()
 	{
-		return EditorApplication.isPlaying;
+		return EditorApplication.isPlaying && !batchActive && (controller == null || !controller.IsRecording());
 	}
 
 	public static void RecordBatch(string basis, string mode)
