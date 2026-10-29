@@ -58,12 +58,6 @@ public static class OrbitalGifRecorder
 		StartSequence(orbitals);
 	}
 
-	[MenuItem("Tools/Orbitais/Gravar lote de Gifs", true)]
-	private static bool ValidateRecordBatch()
-	{
-		return EditorApplication.isPlaying && !batchActive && (controller == null || !controller.IsRecording());
-	}
-
 	private static bool CheckRecordCond()
 	{
 		if (!EditorApplication.isPlaying)
