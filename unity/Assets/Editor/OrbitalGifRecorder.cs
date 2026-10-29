@@ -22,6 +22,8 @@ public static class OrbitalGifRecorder
 	private static bool batchRecording;
 	private static bool startNextOrbital;
 
+	public static event System.Action<bool> RecordingFinished;
+
 	[MenuItem("Tools/Orbitais/Gravar GIF")]
 	public static void RecordGif()
 	{
@@ -44,18 +46,19 @@ public static class OrbitalGifRecorder
 		return EditorApplication.isPlaying && !batchActive && (controller == null || !controller.IsRecording());
 	}
 
-	public static void RecordBatch(string basis, string mode)
+	public static bool RecordBatch(string basis, string mode)
 	{
-		if (CheckRecordCond()) return;
+		if (CheckRecordCond()) return false;
 
 		List<OrbitalEntry> orbitals = presenter.GetOrbitals(basis, mode);
 		if (orbitals.Count == 0)
 		{
 			Debug.LogWarning($"Nenhum orbital encontrado: {basis}/{mode}");
-			return;
+			return false;
 		}
 
 		StartSequence(orbitals);
+		return true;
 	}
 
 	private static bool CheckRecordCond()
@@ -180,7 +183,7 @@ public static class OrbitalGifRecorder
 		if (batchIndex >= batchOrbitals.Count)
 		{
 			Debug.Log("Lote concluído!");
-			FinishBatch();
+			FinishBatch(true);
 			return;
 		}
 
@@ -220,7 +223,7 @@ public static class OrbitalGifRecorder
 	}
 
 	
-	private static void FinishBatch()
+	private static void FinishBatch(bool success = false)
 	{
 		// Para de receber chamadas do Editor.
 		EditorApplication.update -= UpdateBatch;
@@ -237,5 +240,7 @@ public static class OrbitalGifRecorder
 		batchActive = false;
 		batchRecording = false;
 		startNextOrbital = false;
+
+		RecordingFinished?.Invoke(success);
 	}
 }

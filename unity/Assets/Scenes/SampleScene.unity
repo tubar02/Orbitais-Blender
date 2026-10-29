@@ -537,12 +537,6 @@ MonoBehaviour:
     l: 0
     m: 0
     basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: 426a8f56b1cb88f4bacab5392966bc7f, type: 3}
-  - n: 1
-    l: 0
-    m: 0
-    basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: 229290c4477c6904e8054aafc3013ef1, type: 3}
   - n: 2
@@ -551,12 +545,6 @@ MonoBehaviour:
     basis: real
     mode: batch
     prefab: {fileID: 919132149155446097, guid: a96f73ca8477f534293e2f8e597ae879, type: 3}
-  - n: 2
-    l: 0
-    m: 0
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: 4e986a9e4126f1645ac8b0d0e264abe4, type: 3}
   - n: 2
     l: 0
     m: 0
@@ -573,20 +561,8 @@ MonoBehaviour:
     l: 1
     m: -1
     basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: b1e97e2a6e9c08048b2294c6d1454f57, type: 3}
-  - n: 2
-    l: 1
-    m: -1
-    basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: a2e8bc75af28971448be80199b8d9495, type: 3}
-  - n: 2
-    l: 1
-    m: 0
-    basis: real
-    mode: batch
-    prefab: {fileID: 919132149155446097, guid: c94529c5581327d4d875fb2c40282e8a, type: 3}
   - n: 2
     l: 1
     m: 0
@@ -609,44 +585,14 @@ MonoBehaviour:
     l: 1
     m: 1
     basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: 5b520cc7fc33e294ea9a524867ae84a3, type: 3}
-  - n: 2
-    l: 1
-    m: 1
-    basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: 3f6e1288f4be2e149b6cad368892926c, type: 3}
-  - n: 3
-    l: 0
-    m: 0
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: 991b85772112cfc4bb38b295fd883e55, type: 3}
-  - n: 3
-    l: 1
-    m: -1
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: b992346d1fb2bcd43b6162212cc63f53, type: 3}
   - n: 3
     l: 1
     m: 0
     basis: real
     mode: signed
     prefab: {fileID: 919132149155446097, guid: fdf6f48dbec780a42aca8e7c9c18afc7, type: 3}
-  - n: 3
-    l: 1
-    m: 1
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: f1f2a383042d20841bec006ba861a768, type: 3}
-  - n: 3
-    l: 2
-    m: -2
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: ed696eb376c99834d99aa844c5c78843, type: 3}
   - n: 3
     l: 2
     m: -1
@@ -659,18 +605,6 @@ MonoBehaviour:
     basis: real
     mode: signed
     prefab: {fileID: 919132149155446097, guid: b4dabca11cd43a1418f631024250f70a, type: 3}
-  - n: 3
-    l: 2
-    m: 1
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: 2881a7d921344b5498bd7f117d3773eb, type: 3}
-  - n: 3
-    l: 2
-    m: 2
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: 26318ddcc7f8f444c8f68e9439336839, type: 3}
   selectedN: 2
   selectedL: 1
   selectedM: 1

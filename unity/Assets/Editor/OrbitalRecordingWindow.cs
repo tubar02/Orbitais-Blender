@@ -20,20 +20,12 @@ public class OrbitalRecordingWindow : EditorWindow
 	{
 		EditorGUILayout.LabelField("Gravação de orbitais", EditorStyles.boldLabel);
 		basisIndex = EditorGUILayout.Popup("Base", basisIndex, bases);
-		modeIndex = EditorGUILayout.Popup("Modo", modeIndex,modes);
+		modeIndex = EditorGUILayout.Popup("Modo", modeIndex, modes);
 		EditorGUILayout.Space();
 
-		using (new EditorGUI.DisabledScope(!EditorApplication.isPlaying))
+		if (GUILayout.Button("Gravar lote"))
 		{
-			if (GUILayout.Button("Gravar lote"))
-			{
-				OrbitalGifRecorder.RecordBatch(bases[basisIndex], modes[modeIndex]);
-			}
-		}
-
-		if (!EditorApplication.isPlaying)
-		{
-			EditorGUILayout.HelpBox("Entre em Play Mode para iniciar a gravação.", MessageType.Info);
+			OrbitalRecordingRunner.StartBatch(bases[basisIndex], modes[modeIndex]);
 		}
 	}
 }
