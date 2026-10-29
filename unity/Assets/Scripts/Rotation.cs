@@ -32,10 +32,10 @@ public class Rotation : MonoBehaviour
 
 		Vector3 axis = axisIndex switch
 		{
-			0 => Vector3.forward,
+			0 => Vector3.up,
 			1 => Vector3.right,
-			2 => Vector3.up,
-			_ => Vector3.forward
+			2 => Vector3.forward,
+			_ => Vector3.up
 		};
 
 		transform.localRotation = initialRotation * Quaternion.AngleAxis(angle, axis);
