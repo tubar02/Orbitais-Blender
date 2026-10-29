@@ -243,4 +243,13 @@ public static class OrbitalGifRecorder
 
 		RecordingFinished?.Invoke(success);
 	}
+
+	public static void CancelRecording()
+	{
+		if (!batchActive) return;
+
+		Debug.LogWarning("Gravação cancelada pelo usuário.");
+
+		FinishBatch(false);
+	}
 }

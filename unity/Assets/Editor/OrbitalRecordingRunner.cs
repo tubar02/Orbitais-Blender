@@ -57,8 +57,10 @@ public static class OrbitalRecordingRunner
 		{
 			EditorApplication.update -= WaitForPresenter;
 			OrbitalGifRecorder.RecordingFinished -= OnRecordingFinished;
+			OrbitalGifRecorder.CancelRecording();
 
 			SessionState.SetBool(PendingKey, false);
+			SessionState.SetBool(AutoExitKey, false);
 			running = false;
 		}
 	}
