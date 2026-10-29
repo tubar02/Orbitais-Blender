@@ -27,7 +27,7 @@ public class OrbitalPresenter : MonoBehaviour
 	[Header("Catálogo de orbitais")]
 	[SerializeField] private List<OrbitalEntry> orbitalEntries = new();
 
-	[Header("Orbital inicial")]
+	[Header("Orbital selecionado")]
 	[SerializeField] private int selectedN = 3;
 	[SerializeField] private int selectedL = 2;
 	[SerializeField] private int selectedM = 0;
@@ -72,6 +72,7 @@ public class OrbitalPresenter : MonoBehaviour
 			Debug.LogError($"Orbital não encontrado: n={n}, l={l}, m={m}, basis={basis}, mode={mode}");
 			return;
 		}
+		CurrentEntry = entry;
 
 		GameObject pivot = new GameObject("OrbitalPivot");
 		pivot.transform.SetParent(transform, false);
@@ -91,6 +92,8 @@ public class OrbitalPresenter : MonoBehaviour
 
 		Debug.Log($"Orbital carregado: {entry.prefab.name}");
 	}
+
+	public OrbitalEntry CurrentEntry { get; private set; }
 
 	public Rotation CurrentRotation => currentOrbital != null ? currentOrbital.GetComponent<Rotation>() : null;
 

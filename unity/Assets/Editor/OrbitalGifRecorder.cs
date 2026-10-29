@@ -9,19 +9,15 @@ using UnityEngine;
 
 public static class OrbitalGifRecorder
 {
-	private const int FPS = 50;
-	private const int Resolution = 1080;
-	private static OrbitalPresenter presenter;
 	private static RecorderController controller;
-
-	private const string BatchBasis = "real";
-	private const string BatchMode = "signed";
-	private static List<OrbitalEntry> batchOrbitals;
-	private static int batchIndex;
-
+	private const int FPS = 50;
+	private const int Resolution = 1080;	
 	private static float recordingStart;
 	private static float recordingDuration;
 
+	private static OrbitalPresenter presenter;
+	private static List<OrbitalEntry> batchOrbitals;
+	private static int batchIndex;
 	private static bool batchActive;
 	private static bool batchRecording;
 	private static bool startNextOrbital;
@@ -31,25 +27,15 @@ public static class OrbitalGifRecorder
 	{
 		if (CheckRecordCond()) return;
 
-		Rotation rotation = presenter.CurrentRotation;
-		if (rotation == null || rotation.rotationSpeed <= 0f)
+		OrbitalEntry entry = presenter.CurrentEntry;
+
+		if (entry == null)
 		{
-			Debug.LogError("Nenhuma rotação válida encontrada.");
+			Debug.LogError("Nenhum orbital carregado.");
 			return;
 		}
-		
-		// Inicia a gravação
-		float duration = 3f * 360f / rotation.rotationSpeed;
-		controller = CreateRecorder("orbital_teste", duration);
-		controller.PrepareRecording();
-		if (controller.StartRecording())
-		{
-			Debug.Log($"Iniciando gravação GIF: {duration} segundos");
-		}
-		else
-		{
-			Debug.LogError("Não foi possível iniciar a gravação.");
-		}
+
+		StartSequence(new List<OrbitalEntry> { entry });
 	}
 
 	[MenuItem("Tools/Orbitais/Gravar GIF", true)]
@@ -58,28 +44,18 @@ public static class OrbitalGifRecorder
 		return EditorApplication.isPlaying;
 	}
 
-	[MenuItem("Tools/Orbitais/Gravar lote de Gifs")]
-	public static void RecordBatch()
+	public static void RecordBatch(string basis, string mode)
 	{
 		if (CheckRecordCond()) return;
 
-		batchOrbitals = presenter.GetOrbitals(BatchBasis, BatchMode);
-		if (batchOrbitals.Count == 0)
+		List<OrbitalEntry> orbitals = presenter.GetOrbitals(basis, mode);
+		if (orbitals.Count == 0)
 		{
-			Debug.LogWarning($"Nenhum orbital encontrado: {BatchBasis}/{BatchMode}");
+			Debug.LogWarning($"Nenhum orbital encontrado: {basis}/{mode}");
 			return;
 		}
 
-		batchIndex = 0;
-		batchActive = true;
-		batchRecording = false;
-		startNextOrbital = true;
-
-		// Inscreve o método no ciclo de atualização do Editor.
-		EditorApplication.update -= UpdateBatch;
-		EditorApplication.update += UpdateBatch;
-
-		Debug.Log($"Iniciando lote: {batchOrbitals.Count} orbitais ({BatchBasis}/{BatchMode})");
+		StartSequence(orbitals);
 	}
 
 	[MenuItem("Tools/Orbitais/Gravar lote de Gifs", true)]
@@ -139,6 +115,21 @@ public static class OrbitalGifRecorder
 		}
 
 		return new RecorderController(controllerSettings);
+	}
+
+	private static void StartSequence(List<OrbitalEntry> orbitals)
+	{
+		batchOrbitals = orbitals;
+		batchIndex = 0;
+		batchActive = true;
+		batchRecording = false;
+		startNextOrbital = true;
+
+		// Inscreve o método no ciclo de atualização do Editor.
+		EditorApplication.update -= UpdateBatch;
+		EditorApplication.update += UpdateBatch;
+
+		Debug.Log($"Iniciando gravação de {batchOrbitals.Count} orbital(is).");
 	}
 
 	private static void UpdateBatch()

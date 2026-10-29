@@ -671,12 +671,12 @@ MonoBehaviour:
     basis: real
     mode: signed
     prefab: {fileID: 919132149155446097, guid: 26318ddcc7f8f444c8f68e9439336839, type: 3}
-  selectedN: 3
-  selectedL: 2
-  selectedM: 0
+  selectedN: 2
+  selectedL: 1
+  selectedM: 1
   selectedBasis: real
-  selectedMode: signed
-  screenFill: 0.8
+  selectedMode: batch
+  screenFill: 0.311
   targetCamera: {fileID: 0}
 --- !u!1 &1956983885
 GameObject:
