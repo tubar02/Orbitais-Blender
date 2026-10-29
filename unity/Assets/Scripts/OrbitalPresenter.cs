@@ -36,6 +36,7 @@ public class OrbitalPresenter : MonoBehaviour
 
 	[Header("Apresentação")]
 	[SerializeField, Range(0.1f, 0.95f)] private float screenFill = 0.95f;
+	[SerializeField] private float rotationSpeed = 90f;
 	[SerializeField] private Camera targetCamera;
 
 	private GameObject currentOrbital;
@@ -81,7 +82,7 @@ public class OrbitalPresenter : MonoBehaviour
 		FitOrbitalToCamera(pivot, nextOrbital);
 
 		Rotation rotation = pivot.AddComponent<Rotation>();
-		rotation.rotationSpeed = 90f;
+		rotation.rotationSpeed = rotationSpeed;
 
 		if (currentOrbital != null)
 		{

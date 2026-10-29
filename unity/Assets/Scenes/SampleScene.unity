@@ -676,7 +676,8 @@ MonoBehaviour:
   selectedM: 1
   selectedBasis: real
   selectedMode: batch
-  screenFill: 0.311
+  screenFill: 0.95
+  rotationSpeed: 90
   targetCamera: {fileID: 0}
 --- !u!1 &1956983885
 GameObject:
