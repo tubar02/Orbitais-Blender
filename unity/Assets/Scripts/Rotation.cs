@@ -2,47 +2,42 @@ using UnityEngine;
 
 public class Rotation : MonoBehaviour
 {
-    public float rotationSpeed;
+	public float rotationSpeed = 90f;
 
-    private int rotMod = 1;
-    private float angle = 0f;
-    private Quaternion initialRotation;
+	private float elapsedTime = 0f;
+	private float rotationDuration;
+	private float totalDuration;
 
-    void Start()
-    {
-        initialRotation = transform.rotation;
-    }
+	private Quaternion initialRotation;
 
-    // Update is called once per frame
-    void Update()
-    {
-        float rotationStep = rotationSpeed * Time.deltaTime;
+	void Start()
+	{
+		initialRotation = transform.localRotation;
 
-        if (rotMod == 1)
-        {
-            transform.Rotate(0, 0, rotationStep);
-        }
-        else if (rotMod == 2)
-        {
-			transform.Rotate(rotationStep, 0, 0);
-        }
-        else if (rotMod == 3)
-        {
-            transform.Rotate(0, rotationStep, 0);
-        }
-        else 
-        {
-            rotMod = 1;
-			rotationStep = 0f;
-        }
+		rotationDuration = 360f / rotationSpeed;
+		totalDuration = 3f * rotationDuration;
+	}
 
-        angle += rotationStep;
+	void Update()
+	{
+		if (rotationSpeed <= 0f)
+			return;
 
-        if (angle >= 360f)
-        {   
-            transform.rotation = initialRotation;
-            angle = 0f;
-            rotMod++;
-        }
-    }
+		elapsedTime += Time.deltaTime;
+
+		float cycleTime = elapsedTime % totalDuration;
+		int axisIndex = Mathf.FloorToInt(cycleTime / rotationDuration);
+		float axisTime = cycleTime % rotationDuration;
+		float angle = rotationSpeed * axisTime;
+
+		Vector3 axis = axisIndex switch
+		{
+			0 => Vector3.forward,
+			1 => Vector3.right,
+			2 => Vector3.up,
+			_ => Vector3.forward
+		};
+
+		transform.localRotation = initialRotation * Quaternion.AngleAxis(angle, axis);
+	}
 }
