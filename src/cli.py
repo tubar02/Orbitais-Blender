@@ -29,6 +29,13 @@ def main():
 	space = sp.Space()
 
 	if option == 1:
+		n_min = input("\nDigite o valor mínimo de n para gerar os orbitais (ex: 1): ")
+		if not n_min:
+			n_min = 1
+		else:
+			n_min = int(n_min)
+			assert n_min > 0, "n_min deve ser um inteiro positivo"
+
 		n_max = input("\nDigite o valor máximo de n para gerar os orbitais (ex: 4): ")
 		if not n_max:
 			n_max = 4
@@ -39,7 +46,7 @@ def main():
 		mode = sv.ask_save_mode()
 		exporter = xp.SAVE_MODES[mode]
 		print("\n")
-		osrv.generate_and_export_orbitals(space, n_max=n_max, basis=basis, exporter=exporter)
+		osrv.generate_and_export_orbitals(space, n_max=n_max, basis=basis, n_min=n_min, exporter=exporter)
 
 	elif option == 2:
 		n, l, m = map(int, input("\nDigite os números quânticos n, l e m (separados por espaço): ").split())

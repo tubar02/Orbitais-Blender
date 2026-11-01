@@ -27,27 +27,30 @@ def create_orbital(space: sp.Space, n: int, l: int, m: int, basis: orb.OrbitalBa
 	orbital = orb.Orbital(n, l, m, space, basis=basis)
 	return orbital
 
-def orbital_tasks(n_max: int):
-	for n in range(1, n_max + 1):
+def orbital_tasks(n_max: int, n_min: int = 1):
+	if not (1 <= n_min <= n_max):
+		raise ValueError("O intervalo deve satisfazer 1 <= n_min <= n_max.")
+
+	for n in range(n_min, n_max + 1):
 		for l in range(0, n):
 			for m in range(-l, l + 1):
 				yield n, l, m
 
-def generate_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis = orb.OrbitalBasis.REAL):
+def generate_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis = orb.OrbitalBasis.REAL, n_min: int = 1):
 	current_n = None
-	for n, l, m in orbital_tasks(n_max):
+	for n, l, m in orbital_tasks(n_max, n_min):
 		if n != current_n:
 			space.static_space_update(n	)
 			current_n = n
 
 		yield orb.Orbital(n, l, m, space, basis=basis)
 
-def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis, exporter: Callable[[orb.Orbital], None] = xp.fake_exporter):
-	orbitals = generate_orbitals(space, n_max, basis)
-	total = sum(n ** 2 for n in range(1, n_max + 1))  # Total de orbitais até n_max
+def generate_and_export_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis, n_min: int = 1, exporter: Callable[[orb.Orbital], None] = xp.fake_exporter):
+	orbitals = generate_orbitals(space, n_max, basis, n_min)
+	total = sum(n ** 2 for n in range(n_min, n_max + 1))  # Total de orbitais até n_max
 	with tqdm(orbitals, "Gerando orbitais", total=total, colour="green") as pbar:
 		it = iter(pbar)
-		for n, l, m in orbital_tasks(n_max):
+		for n, l, m in orbital_tasks(n_max, n_min):
 			pbar.set_postfix_str(f"n = {n}, l = {l}, m = {m}")
 			orbital = next(it)
 			exporter(orbital)

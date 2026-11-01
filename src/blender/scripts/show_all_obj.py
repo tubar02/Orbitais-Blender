@@ -14,4 +14,4 @@ def main(mode: str, basis: str):
 	bl.scene.organize_collections(orbitals)
 	bl.exporter.export_many_fbx(orbitals, mode)
 
-main("signed", "real")
+main("multilayer", "real")
