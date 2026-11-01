@@ -531,32 +531,14 @@ MonoBehaviour:
     l: 0
     m: 0
     basis: real
-    mode: batch
-    prefab: {fileID: 919132149155446097, guid: de738b1c7a208eb4fae4948fadefcf09, type: 3}
-  - n: 1
-    l: 0
-    m: 0
-    basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: 229290c4477c6904e8054aafc3013ef1, type: 3}
   - n: 2
     l: 0
     m: 0
     basis: real
-    mode: batch
-    prefab: {fileID: 919132149155446097, guid: a96f73ca8477f534293e2f8e597ae879, type: 3}
-  - n: 2
-    l: 0
-    m: 0
-    basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: 3fd36c71acb2ff04293bd641d815cba0, type: 3}
-  - n: 2
-    l: 1
-    m: -1
-    basis: real
-    mode: batch
-    prefab: {fileID: 919132149155446097, guid: 35df315ba03091040ba0223024a9ae31, type: 3}
   - n: 2
     l: 1
     m: -1
@@ -579,12 +561,6 @@ MonoBehaviour:
     l: 1
     m: 1
     basis: real
-    mode: batch
-    prefab: {fileID: 919132149155446097, guid: b69b2f73d59efdc4e95a20d35120e13d, type: 3}
-  - n: 2
-    l: 1
-    m: 1
-    basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: 3f6e1288f4be2e149b6cad368892926c, type: 3}
   - n: 3
@@ -603,13 +579,19 @@ MonoBehaviour:
     l: 2
     m: 0
     basis: real
+    mode: multilayer
+    prefab: {fileID: 919132149155446097, guid: 09d25bd3ed24d8e48add1269f3f31775, type: 3}
+  - n: 3
+    l: 2
+    m: 0
+    basis: real
     mode: signed
     prefab: {fileID: 919132149155446097, guid: b4dabca11cd43a1418f631024250f70a, type: 3}
-  selectedN: 2
+  selectedN: 3
   selectedL: 1
-  selectedM: 1
+  selectedM: 0
   selectedBasis: real
-  selectedMode: batch
+  selectedMode: signed
   screenFill: 0.95
   rotationSpeed: 90
   targetCamera: {fileID: 0}

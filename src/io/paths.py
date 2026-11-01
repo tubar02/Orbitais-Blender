@@ -5,7 +5,7 @@ DATA_DIR = ROOT / "data"
 
 POINT_CLOUD_DIR = DATA_DIR / "point_cloud"
 SINGLE_OBJ_DIR = DATA_DIR / "single"
-BATCH_OBJ_DIR = DATA_DIR / "batch"
+MULTILAYER_OBJ_DIR = DATA_DIR / "multilayer"
 SIGNED_OBJ_DIR = DATA_DIR / "signed"
 
 UNITY_DATA_DIR = ROOT / "unity" / "Assets" / "Orbitals"
@@ -27,7 +27,7 @@ def get_data_subdir(dir_name: str, dir_path: Path):
 		yield file
 
 def main():
-	for file in get_data_subdir("orbital_n2_l1_m0", BATCH_OBJ_DIR):
+	for file in get_data_subdir("orbital_n2_l1_m0", MULTILAYER_OBJ_DIR):
 		print(file)
 
 if __name__ == "__main__":

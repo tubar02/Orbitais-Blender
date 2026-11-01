@@ -38,7 +38,7 @@ def save_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
 	file_path = io.get_path(f"{nome_arq}.obj", io.SINGLE_OBJ_DIR)
 	write_obj(file_path, verts, faces, leave=leave)
 
-def save_batch(orbital: orb.Orbital, layers: int = 10, start_percent: float = 0.01, leave: bool = False):
+def save_multilayer_obj(orbital: orb.Orbital, layers: int = 10, start_percent: float = 0.01, leave: bool = False):
 	scalar_field = orbital.density
 	space = orbital.space
 	nome_dir = orbital.name
@@ -46,7 +46,7 @@ def save_batch(orbital: orb.Orbital, layers: int = 10, start_percent: float = 0.
 	levels = np.linspace(start_percent * np.max(scalar_field), np.max(scalar_field), layers, endpoint=False)
 	percents = np.round(np.linspace(start_percent, 1.0, layers, endpoint=False) * 100).astype(int)
 
-	dir_path = io.get_path(f"{nome_dir}", io.BATCH_OBJ_DIR)
+	dir_path = io.get_path(f"{nome_dir}", io.MULTILAYER_OBJ_DIR)
 	io.ensure_dir(dir_path)
 
 	for level, percent in tqdm(list(zip(levels, percents)), desc=f"Salvando camadas em {nome_dir}", colour="cyan", leave=leave):
@@ -83,7 +83,7 @@ SAVE_MODES = {
 		*args,
 		percent=ctx.get("percent", 0.01)
 	),
-	"batch_obj": lambda *args, **ctx: save_batch(
+	"multilayer_obj": lambda *args, **ctx: save_multilayer_obj(
 		*args,
 		layers=ctx.get("layers", 10),
 		start_percent=ctx.get("start_percent", 0.01)

@@ -44,7 +44,7 @@ def create_orbital_material(name: str, color: tuple[float, float, float], alpha:
 	
 	return mat
 
-def batch_material_specs(parts):
+def multilayer_material_specs(parts):
 	levels = [int(part["name"].lstrip("lvl")) for part in parts]
 	min_level, max_level = min(levels), max(levels)
 

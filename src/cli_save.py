@@ -1,7 +1,7 @@
 SAVE_MENU = {
 	1: "point_cloud",
 	2: "single_obj",
-	3: "batch_obj",
+	3: "multilayer_obj",
 	4: "signed_obj",
 }
 
@@ -24,7 +24,7 @@ def ask_single_obj_args():
 	percent = float(input("Porcentagem do máximo para a isossuperfície (0-100): ")) / 100
 	return {"percent": percent}
 
-def ask_batch_obj_args():
+def ask_multilayer_obj_args():
 	layers = int(input("Número de camadas: "))
 	start_percent = float(input("Porcentagem inicial: ")) / 100
 
@@ -37,7 +37,7 @@ def ask_signed_obj_args():
 ASK_SAVE_ARGS = {
 	"point_cloud": ask_point_cloud_args,
 	"single_obj": ask_single_obj_args,
-	"batch_obj": ask_batch_obj_args,
+	"multilayer_obj": ask_multilayer_obj_args,
 	"signed_obj": ask_signed_obj_args,
 }
 
