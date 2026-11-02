@@ -8,14 +8,38 @@ import src.io.paths as io
 def fake_exporter(orbital: orb.Orbital):
 	print(f"\nExportando {orbital.name}")
 
+def _validate_percent(percent: float) -> None:
+	if not np.isfinite(percent) or not (0 < percent < 1):
+		raise ValueError("O valor de percent deve estar entre 0 e 1.")
+
+def _validate_point_cloud(percent: float, tolerancia: float) -> None:
+	_validate_percent(percent)
+	if not np.isfinite(tolerancia) or tolerancia <= 0:
+		raise ValueError("O valor de tolerancia deve ser um número positivo finito.")
+
+def _validate_multilayer(layers: int, start_percent:float) -> np.ndarray:
+	if not isinstance(layers, int) or layers < 1:
+		raise ValueError("O número de camadas deve ser um inteiro positivo.")
+	_validate_percent(start_percent)
+
+	percents = np.round(np.linspace(start_percent, 1.0, layers, endpoint=False) * 100).astype(int)
+	if len(np.unique(percents)) != layers:
+		raise ValueError("A quantidade de camadas produz nomes repetidos.")
+
+	return percents
+
 def save_point_cloud(orbital: orb.Orbital, percent: float, tolerancia: float):
 	scalar_field = orbital.density
 	space = orbital.space
 	nome_arq = orbital.name
 
+	_validate_point_cloud(percent, tolerancia)
 	level = percent * np.max(scalar_field)
 	tol = tolerancia * np.max(scalar_field)
 	mask = np.abs(scalar_field - level) < tol
+	if not np.any(mask):
+		raise ValueError("Nenhum ponto encontrado dentro da tolerância especificada.")
+
 	points = np.column_stack((space.X[mask], space.Y[mask], space.Z[mask]))
 	file_path = io.get_path(f"{nome_arq}.npy", io.POINT_CLOUD_DIR)
 	np.savetxt(file_path, points, delimiter=",")
@@ -28,6 +52,8 @@ def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: b
 			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
 
 def save_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
+	_validate_percent(percent)
+
 	scalar_field = orbital.density
 	space = orbital.space
 	nome_arq = orbital.name
@@ -43,8 +69,8 @@ def save_multilayer_obj(orbital: orb.Orbital, layers: int = 10, start_percent: f
 	space = orbital.space
 	nome_dir = orbital.name
 
+	percents = _validate_multilayer(layers, start_percent)
 	levels = np.linspace(start_percent * np.max(scalar_field), np.max(scalar_field), layers, endpoint=False)
-	percents = np.round(np.linspace(start_percent, 1.0, layers, endpoint=False) * 100).astype(int)
 
 	dir_path = io.get_path(f"{nome_dir}", io.MULTILAYER_OBJ_DIR)
 	io.ensure_dir(dir_path)
@@ -55,6 +81,8 @@ def save_multilayer_obj(orbital: orb.Orbital, layers: int = 10, start_percent: f
 		write_obj(file_path, verts, faces, leave=False)
 
 def save_signed_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
+	_validate_percent(percent)
+
 	if orbital.basis != orb.OrbitalBasis.REAL:
 		raise ValueError("O modo 'signed_obj' só é aplicável a orbitais com base REAL.")
 

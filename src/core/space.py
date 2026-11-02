@@ -2,7 +2,22 @@ import numpy as np
 from skimage.measure import marching_cubes
 
 class Space:
+	def _validate(self):
+		if not isinstance(self.num_div, int) or self.num_div < 2:
+			raise ValueError("num_div deve ser um inteiro >= 2.")
+
+		if not np.isfinite(self.tam_espaco) or self.tam_espaco <= 0:
+			raise ValueError("tam_espaco deve ser positivo e finito.")
+
+		if np.shape(self.origem) != (3,):
+			raise ValueError("origem deve conter três coordenadas.")
+
+		if not np.all(np.isfinite(self.origem)):
+			raise ValueError("As coordenadas da origem devem ser finitas.")
+
 	def _update(self):
+		self._validate()
+		
 		self.x: np.ndarray = np.linspace(self.origem[0] - self.tam_espaco, self.origem[0] + self.tam_espaco, self.num_div)
 		self.y: np.ndarray = np.linspace(self.origem[1] - self.tam_espaco, self.origem[1] + self.tam_espaco, self.num_div)
 		self.z: np.ndarray = np.linspace(self.origem[2] - self.tam_espaco, self.origem[2] + self.tam_espaco, self.num_div)
@@ -32,6 +47,16 @@ class Space:
 		self._update()
 
 	def apply_marching_cubes(self, scalar_field: np.ndarray, level: float, gradient_direction: str = "ascent"):
+		if scalar_field.shape != self.R.shape:
+			raise ValueError("O campo escalar deve ter a mesma forma que o espaço.")
+
+		if not np.all(np.isfinite(scalar_field)):
+			raise ValueError("O campo escalar deve conter apenas valores finitos.")
+
+		min_value, max_value = np.min(scalar_field), np.max(scalar_field)
+		if not (min_value < level < max_value):
+			raise ValueError(f"O nível {level} deve estar entre o valor mínimo {min_value} e o valor máximo {max_value} do campo escalar.")
+
 		verts, faces, _, _ = marching_cubes(scalar_field, level, spacing=self.div, gradient_direction=gradient_direction)
 		verts[:, 0] += self.x.min() # Ajusta para as coordenadas do espaço
 		verts[:, 1] += self.y.min()
