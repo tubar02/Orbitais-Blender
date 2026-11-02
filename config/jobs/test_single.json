@@ -1,0 +1,11 @@
+{
+"name": "test_single",
+"selection": {
+	"type": "single",
+	"n": 1,
+	"l": 0,
+	"m": 0
+},
+"basis": ["real"],
+"representations": ["single"]
+}
