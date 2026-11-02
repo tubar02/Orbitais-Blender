@@ -37,17 +37,22 @@ def read_obj_data(file_name: str | Path) -> tuple[list[tuple[float, float, float
 				_, v1, v2, v3 = line.strip().split()
 				faces.append((int(v1) - 1, int(v2) - 1, int(v3) - 1))
 
+	if not verts:
+		raise ValueError(f"OBJ sem vértices: {file_path}")
+	if not faces:
+		raise ValueError(f"OBJ sem faces: {file_path}")
+
 	return verts, faces
 
 def read_obj_parts(dir_name: str, dir_path: Path):
-    parts = []
+	parts = []
+	files = sorted(io.get_data_subdir(dir_name, dir_path), key=lambda p: p.name)
+	for file_path in files:
+		verts, faces = read_obj_data(file_path)
 
-    for file_path in io.get_data_subdir(dir_name, dir_path):
-        verts, faces = read_obj_data(file_path)
+		parts.append({"name": file_path.stem, "vertices": verts, "faces": faces,})
 
-        parts.append({"name": file_path.stem, "vertices": verts, "faces": faces,})
-
-    return parts
+	return parts
 
 ORBITAL_PATTERN = re.compile(r"orbital_n(\d+)_l(\d+)_m(-?\d+)_(real|complex)")
 
@@ -57,6 +62,9 @@ def discover_orbitals(basis: str, dir_path: Path):
 
 	for entry in entries:
 		match = ORBITAL_PATTERN.fullmatch(entry.stem)
+		if match is None:
+			continue
+
 		n, l, m = map(int, match.groups()[:3])
 		orb_basis = match.group(4)
 

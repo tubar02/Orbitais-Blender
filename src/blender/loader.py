@@ -8,7 +8,12 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.blender as bl
 import src.io.paths as io
 
+VALID_MODES = {"point_cloud", "single", "multilayer", "signed"}
+
 def load_single_orbital(orbital_name, mode):
+	if mode not in VALID_MODES:
+		raise ValueError(f"Modo de representação inválido: {mode}")
+
 	if mode == "point_cloud":
 		points = bl.reader.read_data(orbital_name)
 		obj = bl.scene.create_point_cloud(points, name=orbital_name)
