@@ -3,14 +3,17 @@
 	"basis": ["real"],
 	"percent": 0.01,
 	"representation_params": {
-	"point_cloud": {
-		"tolerancia": 0.0001
+		"point_cloud": {
+			"tolerancia": 0.0001
+		},
+		"single": {},
+		"multilayer": {
+			"layers": 10
+		},
+		"signed": {}
 	},
-	"single": {},
-	"multilayer": {
-		"layers": 10
-	},
-	"signed": {}
+	"space": {
+		"num_div": null
 	}
 },
 "blender": {

@@ -93,6 +93,11 @@ def validate_job(job: dict, defaults: dict) -> None:
 
 def validate_resolved_job(resolved: dict) -> None:
 	"""Valida os parâmetros efetivos das etapas."""
+	num_div = resolved["space"]["num_div"]
+	if num_div is not None:
+		if type(num_div) is not int or num_div < 2:
+			raise ValueError("space.num_div deve ser inteiro >= 2 ou null.")
+
 	for mode, params in resolved["representations"].items():
 		_percent(params["percent"], f"{mode}.percent")
 

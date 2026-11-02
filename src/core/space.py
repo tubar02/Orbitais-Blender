@@ -37,12 +37,15 @@ class Space:
 		self.origem: tuple[float, float, float] = origem
 		self._update()
 	
-	def static_space_update(self, n: int):
-		if n < 4:
-			self.num_div = 500
+	def static_space_update(self, n: int, num_div: int | None = None):
+		if num_div is None:
+			if n < 4:
+				self.num_div = 500
+			else:
+				self.num_div = 500 + (n - 3) * 100
 		else:
-			self.num_div = 500 + (n - 3) * 100
-		
+			self.num_div = num_div
+
 		self.tam_espaco = 5 + (n - 1) * 10
 		self._update()
 

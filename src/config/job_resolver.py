@@ -39,6 +39,7 @@ def resolve_job(defaults: dict, job: dict) -> dict:
 		"selection": deepcopy(job["selection"]),
 		"basis": deepcopy(basis),
 		"representations": resolved_representations,
+		"space": deepcopy(config["scientific"]["space"]),
 		"blender": deepcopy(config["blender"]),
 		"unity": deepcopy(config["unity"])
 	}

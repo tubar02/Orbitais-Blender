@@ -36,7 +36,8 @@ def execute_scientific(run_dir: Path) -> None:
 		n=selection["n"],
 		l=selection["l"],
 		m=selection["m"],
-		basis=basis
+		basis=basis,
+		num_div=job["space"]["num_div"]
 	)
 
 	output_dir = run_dir / "scientific" / "single"
