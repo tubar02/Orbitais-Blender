@@ -1,0 +1,199 @@
+[
+    {
+        "id": "5376ca69f972b593",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "20bea0367630439d",
+        "type": "inject",
+        "z": "5376ca69f972b593",
+        "name": "Gerar orbital 1s",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test_single",
+        "payloadType": "str",
+        "x": 180,
+        "y": 280,
+        "wires": [
+            [
+                "c99a843c87259530"
+            ]
+        ]
+    },
+    {
+        "id": "c99a843c87259530",
+        "type": "exec",
+        "z": "5376ca69f972b593",
+        "command": "python -m src.runners.prepare_run",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 440,
+        "y": 280,
+        "wires": [
+            [
+                "da741f622ceb777d"
+            ],
+            [
+                "08d084e2ce857a80"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "da741f622ceb777d",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Preparar execução científica",
+        "func": "const result = JSON.parse(msg.payload);\n\nif (!result.ok) {\n    node.error(result.error || \"Falha ao preparar Run\", msg);\n    return null;\n}\n\nmsg.run_id = result.run_id;\nmsg.run_dir = result.run_dir;\n\n// Argumento que será acrescentado ao próximo comando.\nmsg.payload = `\"${result.run_dir}\"`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 280,
+        "wires": [
+            [
+                "073d8ddff9379f82"
+            ]
+        ]
+    },
+    {
+        "id": "073d8ddff9379f82",
+        "type": "exec",
+        "z": "5376ca69f972b593",
+        "command": "python -m src.runners.scientific_runner --run",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 890,
+        "y": 420,
+        "wires": [
+            [
+                "d250f4eb8ad41ff5"
+            ],
+            [
+                "cc18a3bb6e2c326e"
+            ],
+            [
+                "5f1cb9abb9127546"
+            ]
+        ]
+    },
+    {
+        "id": "d250f4eb8ad41ff5",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "Resultado científico",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "cc18a3bb6e2c326e",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "Erros científicos",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "08d084e2ce857a80",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5f1cb9abb9127546",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Verificar científico",
+        "func": "const result = msg.payload;\n\nif (result.code !== 0) {\n    node.error(\n        `Etapa científica falhou: código ${result.code}`,\n        msg\n    );\n    return null;\n}\n\nif (!msg.run_dir) {\n    node.error(\"Caminho da Run não encontrado.\", msg);\n    return null;\n}\n\nmsg.payload = `--run \"${msg.run_dir}\" --save-blend`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 480,
+        "wires": [
+            [
+                "09ee625014864b75"
+            ]
+        ]
+    },
+    {
+        "id": "09ee625014864b75",
+        "type": "exec",
+        "z": "5376ca69f972b593",
+        "command": "\"D:\\1\\steamapps\\common\\Blender\\blender.exe\" --background --python-exit-code 1 --python \"C:\\Users\\Tiago\\Desktop\\Thiagao\\Faculdade\\Disciplinas\\TCC\\Orbitais\\src\\runners\\blender_runner.py\" --",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Blender Runner",
+        "x": 1440,
+        "y": 480,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    }
+]
