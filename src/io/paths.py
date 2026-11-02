@@ -10,6 +10,11 @@ SIGNED_OBJ_DIR = DATA_DIR / "signed"
 
 UNITY_DATA_DIR = ROOT / "unity" / "Assets" / "Orbitals"
 
+CONFIG_DIR = ROOT / "config"
+DEFAULTS_PATH = CONFIG_DIR / "defaults.json"
+JOBS_DIR = CONFIG_DIR / "jobs"
+RUNS_DIR = ROOT / "runs"
+
 def ensure_dir(dir_path: Path):
 	if not dir_path.exists():
 		dir_path.mkdir(parents=True, exist_ok=True)
