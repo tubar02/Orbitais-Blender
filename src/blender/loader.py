@@ -10,7 +10,7 @@ import src.io.paths as io
 
 VALID_MODES = {"point_cloud", "single", "multilayer", "signed"}
 
-def load_single_orbital(orbital_name, mode):
+def load_single_orbital(orbital_name, mode, input_dir: Path | None = None):
 	if mode not in VALID_MODES:
 		raise ValueError(f"Modo de representação inválido: {mode}")
 
@@ -19,12 +19,13 @@ def load_single_orbital(orbital_name, mode):
 		obj = bl.scene.create_point_cloud(points, name=orbital_name)
 
 	elif mode == "single":
-		verts, faces = bl.reader.read_obj_data(orbital_name)
+		file_path = (input_dir / f"{orbital_name}.obj" if input_dir is not None else orbital_name)
+		verts, faces = bl.reader.read_obj_data(file_path)
 		obj = bl.scene.create_mesh_object(verts, faces, name=orbital_name)
 		bl.scene.smooth_object(obj)
 
 	else: 
-		dir_path = io.DATA_DIR / mode
+		dir_path = input_dir if input_dir is not None else io.DATA_DIR / mode
 		parts = bl.reader.read_obj_parts(orbital_name, dir_path)
 		obj, face_ranges = bl.scene.create_mesh_from_parts(parts, orbital_name)
 

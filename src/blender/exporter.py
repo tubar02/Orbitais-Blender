@@ -9,16 +9,19 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.io.paths as io
 import src.blender as bl
 
-def export_fbx(obj, orbital_name, mode):
+def export_fbx(obj, orbital_name, mode, output_dir: Path | None = None, global_scale: float = 1.0):
 	file_name = f"{orbital_name}_{mode}.fbx"
-	output_path = io.get_path(file_name, io.UNITY_DATA_DIR)
+	target_dir = (output_dir if output_dir is not None else io.UNITY_DATA_DIR)
+	output_path = io.get_path(file_name, target_dir)
 
 	bl.scene.select_object(obj)
 	result = bpy.ops.export_scene.fbx(filepath=str(output_path), 
-	                                  use_selection=True, global_scale=1.0)
+	                                  use_selection=True, global_scale=global_scale)
 
 	if "FINISHED" not in result:
-		raise RuntimeError(f"Failed to export {file_name} to FBX format.")
+		raise RuntimeError(f"Falha ao exportar {file_name} para FBX.")
+	if not output_path.is_file() or output_path.stat().st_size == 0:
+		raise RuntimeError(f"FBX ausente ou vazio: {output_path}")
 	
 	return output_path
 
