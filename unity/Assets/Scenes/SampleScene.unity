@@ -537,14 +537,32 @@ MonoBehaviour:
     l: 0
     m: 0
     basis: real
+    mode: multilayer
+    prefab: {fileID: 919132149155446097, guid: 0db854e42e556fa4e815252e7d731b79, type: 3}
+  - n: 2
+    l: 0
+    m: 0
+    basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: 3fd36c71acb2ff04293bd641d815cba0, type: 3}
   - n: 2
     l: 1
     m: -1
     basis: real
+    mode: multilayer
+    prefab: {fileID: 919132149155446097, guid: 1e4bb6ad465768d4591e2fe72b5295f5, type: 3}
+  - n: 2
+    l: 1
+    m: -1
+    basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: a2e8bc75af28971448be80199b8d9495, type: 3}
+  - n: 2
+    l: 1
+    m: 0
+    basis: real
+    mode: multilayer
+    prefab: {fileID: 919132149155446097, guid: 40d824a1afb834c45ba76447412cce72, type: 3}
   - n: 2
     l: 1
     m: 0
@@ -557,6 +575,12 @@ MonoBehaviour:
     basis: real
     mode: single
     prefab: {fileID: 919132149155446097, guid: 21aa437f205d5db4791d4f61ca51cb2f, type: 3}
+  - n: 2
+    l: 1
+    m: 1
+    basis: real
+    mode: multilayer
+    prefab: {fileID: 919132149155446097, guid: 3320b6b376f283249985cfe9f8887e72, type: 3}
   - n: 2
     l: 1
     m: 1

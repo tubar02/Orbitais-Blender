@@ -188,7 +188,12 @@ public static class OrbitalGifRecorder
 		}
 
 		OrbitalEntry entry = batchOrbitals[batchIndex];
-		presenter.LoadOrbital(entry.n, entry.l, entry.m, entry.basis, entry.mode);
+		if (!presenter.LoadOrbital(entry.n, entry.l, entry.m, entry.basis, entry.mode))
+		{
+			Debug.LogError($"Falha ao carregar orbital para gravação");
+			FinishBatch(false);
+			return;
+		}
 		Rotation rotation = presenter.CurrentRotation;
 		if (rotation == null || rotation.rotationSpeed <= 0f)
 		{

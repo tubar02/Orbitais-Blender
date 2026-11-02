@@ -60,7 +60,7 @@ public class OrbitalPresenter : MonoBehaviour
 		LoadOrbital(selectedN, selectedL, selectedM, selectedBasis, selectedMode);
 	}
 
-	public void LoadOrbital(int n, int l, int m, string basis, string mode)
+	public bool LoadOrbital(int n, int l, int m, string basis, string mode)
 	{
 		OrbitalEntry entry = orbitalEntries.Find(
 			e => e.n == n && e.l == l && e.m == m && 
@@ -71,7 +71,7 @@ public class OrbitalPresenter : MonoBehaviour
 		if (entry == null || entry.prefab == null)
 		{
 			Debug.LogError($"Orbital não encontrado: n={n}, l={l}, m={m}, basis={basis}, mode={mode}");
-			return;
+			return false;
 		}
 		CurrentEntry = entry;
 
@@ -92,6 +92,7 @@ public class OrbitalPresenter : MonoBehaviour
 		currentOrbital = pivot;
 
 		Debug.Log($"Orbital carregado: {entry.prefab.name}");
+		return true;
 	}
 
 	public OrbitalEntry CurrentEntry { get; private set; }
