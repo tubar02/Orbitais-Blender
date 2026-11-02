@@ -1,5 +1,7 @@
 from copy import deepcopy
 
+import src.config.job_validator as val
+
 def deep_merge(base: dict, override: dict) -> dict:
 	result = deepcopy(base)
 
@@ -12,6 +14,8 @@ def deep_merge(base: dict, override: dict) -> dict:
 	return result
 
 def resolve_job(defaults: dict, job: dict) -> dict:
+	val.validate_job(job, defaults)
+
 	config = deep_merge(defaults, job.get("overrides", {}))
 
 	basis = job.get("basis", config["scientific"]["basis"])
@@ -30,7 +34,7 @@ def resolve_job(defaults: dict, job: dict) -> dict:
 
 		resolved_representations[mode] = params
 
-	return {
+	resolved = {
 		"name": job["name"],
 		"selection": deepcopy(job["selection"]),
 		"basis": deepcopy(basis),
@@ -38,3 +42,5 @@ def resolve_job(defaults: dict, job: dict) -> dict:
 		"blender": deepcopy(config["blender"]),
 		"unity": deepcopy(config["unity"])
 	}
+	val.validate_resolved_job(resolved)
+	return resolved
