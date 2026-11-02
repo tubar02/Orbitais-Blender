@@ -51,7 +51,7 @@ def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: b
 		for face in tqdm(faces, desc=f"Salvando faces em {file_path.name}", colour="green", leave=leave):
 			f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
 
-def save_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
+def save_obj(orbital: orb.Orbital, percent: float, leave: bool = False, output_dir: Path | None = None):
 	_validate_percent(percent)
 
 	scalar_field = orbital.density
@@ -61,10 +61,11 @@ def save_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
 	level = percent * np.max(scalar_field)
 	verts, faces = space.apply_marching_cubes(scalar_field, level)
 
-	file_path = io.get_path(f"{nome_arq}.obj", io.SINGLE_OBJ_DIR)
+	target_dir = output_dir if output_dir is not None else io.SINGLE_OBJ_DIR
+	file_path = io.get_path(f"{nome_arq}.obj", target_dir)
 	write_obj(file_path, verts, faces, leave=leave)
 
-def save_multilayer_obj(orbital: orb.Orbital, layers: int = 10, start_percent: float = 0.01, leave: bool = False):
+def save_multilayer_obj(orbital: orb.Orbital, layers: int = 10, start_percent: float = 0.01, leave: bool = False, output_dir: Path | None = None):
 	scalar_field = orbital.density
 	space = orbital.space
 	nome_dir = orbital.name
@@ -72,7 +73,8 @@ def save_multilayer_obj(orbital: orb.Orbital, layers: int = 10, start_percent: f
 	percents = _validate_multilayer(layers, start_percent)
 	levels = np.linspace(start_percent * np.max(scalar_field), np.max(scalar_field), layers, endpoint=False)
 
-	dir_path = io.get_path(f"{nome_dir}", io.MULTILAYER_OBJ_DIR)
+	target_dir = output_dir if output_dir is not None else io.MULTILAYER_OBJ_DIR
+	dir_path = io.get_path(f"{nome_dir}", target_dir)
 	io.ensure_dir(dir_path)
 
 	for level, percent in tqdm(list(zip(levels, percents)), desc=f"Salvando camadas em {nome_dir}", colour="cyan", leave=leave):
@@ -80,7 +82,7 @@ def save_multilayer_obj(orbital: orb.Orbital, layers: int = 10, start_percent: f
 		file_path = dir_path / f"lvl{percent}.obj"
 		write_obj(file_path, verts, faces, leave=False)
 
-def save_signed_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
+def save_signed_obj(orbital: orb.Orbital, percent: float, leave: bool = False, output_dir: Path | None = None):
 	_validate_percent(percent)
 
 	if orbital.basis != orb.OrbitalBasis.REAL:
@@ -91,13 +93,14 @@ def save_signed_obj(orbital: orb.Orbital, percent: float, leave: bool = False):
 	density_level = percent * np.max(density)
 	amplitude = np.sqrt(density_level)
 
+	target_dir = output_dir if output_dir is not None else io.SIGNED_OBJ_DIR
+	dir_path = io.get_path(f"{orbital.name}", target_dir)
+	io.ensure_dir(dir_path)
 	for sign, level in [("pos", amplitude), ("neg", -amplitude)]:
 		if not (wavefunction.min() <= level <= wavefunction.max()):
 			continue  # Pula se o nível não estiver dentro do intervalo da função de onda
 		direction = "ascent" if sign == "pos" else "descent"
 		verts, faces = space.apply_marching_cubes(wavefunction, level, direction)
-		dir_path = io.get_path(f"{orbital.name}", io.SIGNED_OBJ_DIR)
-		io.ensure_dir(dir_path)
 		file_path = dir_path / f"{sign}.obj"
 		write_obj(file_path, verts, faces, leave=leave)
 
