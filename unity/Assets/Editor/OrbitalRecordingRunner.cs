@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -76,7 +78,7 @@ public static class OrbitalRecordingRunner
 	{
 		if (!EditorApplication.isPlaying) return;
 
-		OrbitalPresenter presenter = Object.FindAnyObjectByType<OrbitalPresenter>();
+		OrbitalPresenter presenter = UnityEngine.Object.FindAnyObjectByType<OrbitalPresenter>();
 
 		// Espera a inicialização do Presenter.
 		if (presenter == null || presenter.CurrentEntry == null)
@@ -140,5 +142,42 @@ public static class OrbitalRecordingRunner
 		bool autoExit = SessionState.GetBool(AutoExitKey, false);
 		if (autoExit && EditorApplication.isPlaying) EditorApplication.isPlaying = false;
 		SessionState.SetBool(AutoExitKey, false);
+	}
+	
+	[MenuItem("Tools/Orbitais/Importar e gravar Run")]
+	public static void StartRunFromMenu()
+	{
+		string runDir = EditorUtility.OpenFolderPanel(
+			"Selecione a Run para gravar",
+			"",
+			""
+		);
+
+		if (string.IsNullOrEmpty(runDir))
+			return;
+
+		try
+		{
+			StartRun(runDir);
+		}
+		catch (Exception exception)
+		{
+			Debug.LogException(exception);
+		}
+	}
+
+	public static void StartRun(string runDir)
+	{
+		if (running || SessionState.GetBool(PendingKey, false))
+			throw new InvalidOperationException("Já existe uma gravação solicitada.");
+
+		if (!Directory.Exists(runDir))
+			throw new DirectoryNotFoundException(runDir);
+
+		// Importa os FBX e configura a Run ativa.
+		OrbitalRunImporter.ImportRun(runDir);
+
+		// Primeira versão: um orbital real, modo single.
+		StartBatch("real", "single");
 	}
 }
