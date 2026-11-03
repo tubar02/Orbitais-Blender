@@ -39,7 +39,7 @@ public static class OrbitalRunImporter
 		if (!Directory.Exists(blenderDir))
 			throw new DirectoryNotFoundException($"Diretório 'blender' não encontrado na Run: {blenderDir}");
 
-		string[] supportedModes = {"single", "signed"};
+		string[] supportedModes = {"single", "signed", "multilayer"};
 		string [] modes = supportedModes.Where(mode =>
 		{
 			string folder = Path.Combine(blenderDir, mode);
@@ -57,7 +57,7 @@ public static class OrbitalRunImporter
 		{
 			string name = Path.GetFileNameWithoutExtension(file);
 
-			Match match = Regex.Match(name,	@"^orbital_n\d+_l\d+_m-?\d+_(real|complex)_(single|signed)$", RegexOptions.IgnoreCase);
+			Match match = Regex.Match(name,	@"^orbital_n\d+_l\d+_m-?\d+_(real|complex)_(single|signed|multilayer)$", RegexOptions.IgnoreCase);
 
 			if (!match.Success)
 				throw new Exception($"Nome de FBX inválido: {name}");

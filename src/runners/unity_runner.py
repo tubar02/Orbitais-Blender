@@ -16,7 +16,7 @@ def expected_orbitals(job: dict) -> dict[str, list[str]]:
 	if len(bases) != 1:
 		raise ValueError("Unity runner aceita só uma base")
 
-	if not modes or set(modes) - {"single", "signed"}:
+	if not modes or set(modes) - {"single", "signed", "multilayer"}:
 		raise ValueError(f"Representações inválidas: {modes}")
 
 	basis = bases[0]
@@ -135,7 +135,7 @@ def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--run", type=Path, required=True)
 	parser.add_argument("--resume", action="store_true", help="Retoma a etapa Unity de uma Run con falha.")
-	
+
 	args = parser.parse_args()
 	run_dir = args.run.resolve()
 

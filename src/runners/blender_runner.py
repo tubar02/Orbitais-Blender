@@ -14,13 +14,13 @@ import src.blender as bl
 import src.io.json_io as json_io
 import src.services.run_service as runs
 
-def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: str) -> None:
+def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: str, layers: int | None = None) -> None:
 	if not input_dir.is_dir():
 		raise FileNotFoundError(input_dir)
 
 	if mode == "single":
 		expected = {input_dir / f"{name}.obj" for name in orbital_names}
-	elif mode == "signed":
+	elif mode in {"signed", "multilayer"}:
 		expected = {input_dir / name for name in orbital_names}
 	else:
 		raise ValueError(f"Modo inválido: {mode}")
@@ -43,12 +43,24 @@ def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: 
 				raise RuntimeError(f"Pasta inválida: {entry}")
 
 			parts = list(entry.iterdir())
+			names = {p.name for p in parts}
 
-			if (not parts or not {p.name for p in parts} <= {"pos.obj", "neg.obj"}):
-				raise RuntimeError(f"Partes signed inválidas: {entry}")
+			if mode == "signed":
+				valid = (bool(parts) and names <= {"pos.obj", "neg.obj"})
+			else:
+				valid = (
+					layers is not None
+					and len(parts) == layers
+					and all(
+						p.suffix == ".obj"
+						and p.stem.startswith("lvl")
+						and p.stem[3:].isdigit()
+						for p in parts
+					)
+				)
 
-			if any(not p.is_file() or p.stat().st_size == 0 for p in parts):
-				raise RuntimeError(f"OBJ signed inválido: {entry}")
+			if not valid:
+				raise RuntimeError(f"Partes {mode} inválidas: {entry}")
 
 def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	job = json_io.load_json(run_dir / "job.json")
@@ -59,7 +71,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	if len(bases) != 1:
 		raise ValueError("Blender ainda aceita apenas uma base.")
 
-	if not modes or set(modes) - {"single", "signed"}:
+	if not modes or set(modes) - {"single", "signed", "multilayer"}:
 		raise ValueError(f"Representações inválida: {modes}")
 
 	basis = bases[0]
@@ -75,7 +87,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	output_dir = run_dir / "blender"
 
 	for mode in modes:
-		validate_scientific_inputs(run_dir / "scientific" / mode, orbital_names, mode)
+		validate_scientific_inputs(run_dir / "scientific" / mode, orbital_names, mode, layers=job["representations"][mode].get("layers"))
 			
 	# Cena limpa
 	bpy.ops.object.select_all(action="SELECT")

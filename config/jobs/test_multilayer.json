@@ -1,0 +1,23 @@
+{
+    "name": "test_multilayer",
+    "selection": {
+        "type": "single",
+        "n": 3,
+        "l": 2,
+        "m": 0
+    },
+    "basis": ["real"],
+    "representations": ["single", "signed", "multilayer"],
+    "overrides": {
+        "scientific": {
+            "space": {
+                "num_div": 50
+            },
+            "representation_params": {
+                "multilayer": {
+                    "layers": 3
+                }
+            }
+        }
+    }
+}

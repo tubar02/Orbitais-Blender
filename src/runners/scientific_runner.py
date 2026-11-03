@@ -20,7 +20,7 @@ def execute_scientific(run_dir: Path) -> None:
 	if len(bases) != 1:
 		raise ValueError("O runner ainda aceita apenas uma base.")
 
-	supported_modes = {"single", "signed"}
+	supported_modes = {"single", "signed", "multilayer"}
 	if not representations or set(representations) - supported_modes:
 		raise ValueError(f"Representações inválidas: {representations}. Suportadas: {supported_modes}")
 
@@ -51,6 +51,17 @@ def execute_scientific(run_dir: Path) -> None:
 
 				if (not files or any(file.stem not in {"pos", "neg"} for file in files)):
 					raise RuntimeError(f"Superfícies signed inválidas: {parts_dir}")
+			elif mode == "multilayer":
+				xp.save_multilayer_obj(orbital, layers=params["layers"], start_percent=params["percent"], output_dir=output_dir)
+				parts_dir = output_dir / orbital.name
+				files = sorted(parts_dir.glob("*.obj"))
+
+				if (
+					len(files) != params["layers"] or 
+					any(not file.stem.startswith("lvl") or 
+					    not file.stem[:3].isdigit() for file in files)
+				):
+					raise RuntimeError(f"Camadas multilayers inválidas: {parts_dir}")
 
 			for file in files:
 				if (not file.is_file() or file.stat().st_size == 0):

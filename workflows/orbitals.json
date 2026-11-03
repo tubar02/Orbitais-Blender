@@ -11,7 +11,7 @@
         "id": "20bea0367630439d",
         "type": "inject",
         "z": "5376ca69f972b593",
-        "name": "Gerar dual",
+        "name": "Gerar job",
         "props": [
             {
                 "p": "payload"
@@ -26,7 +26,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "test_dual",
+        "payload": "test_multilayer",
         "payloadType": "str",
         "x": 160,
         "y": 260,
