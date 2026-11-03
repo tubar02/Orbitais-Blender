@@ -8,48 +8,49 @@ import src.io.json_io as json_io
 import src.io.paths as paths
 import src.services.run_service as runs
 
-def expected_orbitals(job: dict) -> list[str]:
-	representations = job["representations"]
+def expected_orbitals(job: dict) -> dict[str, list[str]]:
 	bases = job["basis"]
+	modes = list(job["representations"])
 
-	if len(bases) != 1 or len(representations) != 1:
-		raise ValueError("Unity runner aceita uma base e uma representação por Run")
+	if len(bases) != 1:
+		raise ValueError("Unity runner aceita só uma base")
+
+	if not modes or set(modes) - {"single", "signed"}:
+		raise ValueError(f"Representações inválidas: {modes}")
 
 	basis = bases[0]
-	mode = next(iter(representations))
-
-	if mode not in {"single", "signed"}:
-		raise ValueError(f"Representação não suportada: {mode}")
-
-	if mode == "signed" and basis != "real":
+	if "signed" in modes and basis != "real":
 		raise ValueError("signed exige base real.")
 
-	selection = job["selection"]
-	return [sel.orbital_stem(n, l, m, basis, mode=mode) for n, l, m in sel.iter_orbitals(selection)]
+	tasks = list(sel.iter_orbitals(job["selection"]))
+	if not tasks:
+		raise RuntimeError("Nenhum orbital solicitado")
+
+	orbitals_by_mode = {}
+	for mode in modes:
+		orbital_names = [sel.orbital_stem(n, l, m, basis, mode=mode) for n, l, m in tasks]
+		orbitals_by_mode[mode] = orbital_names
+	return orbitals_by_mode 
 
 def execute_unity(run_dir: Path) -> list[Path]:
 	job = json_io.load_json(run_dir / "job.json")
-	orbital_names = expected_orbitals(job)
-	mode = next(iter(job["representations"]))
-
-	if not orbital_names:
-		raise RuntimeError("Nenhum orbital solicitado.")
+	orbitals_by_mode = expected_orbitals(job)
 
 	# Verifica todos os FBXs antes de abrir o Unity.
-	input_dir = run_dir / "blender" / mode
+	for mode, names in orbitals_by_mode.items():
+		input_dir = run_dir / "blender" / mode
+		expected_fbx = {input_dir / f"{name}.fbx" for name in names}
+		actual_fbx = set(input_dir.glob("*.fbx"))
 
-	expected_fbx = {input_dir / f"{name}.fbx" for name in orbital_names}
-	actual_fbx = set(input_dir.glob("*.fbx"))
+		if actual_fbx != expected_fbx:
+			raise RuntimeError(
+				"FBXs inconsistentes. "
+				f"Ausentes: {sorted(p.name for p in expected_fbx - actual_fbx)}. "
+				f"Inesperados: {sorted(p.name for p in actual_fbx - expected_fbx)}."
+			)
 
-	if actual_fbx != expected_fbx:
-		raise RuntimeError(
-			"FBXs inconsistentes. "
-			f"Ausentes: {sorted(p.name for p in expected_fbx - actual_fbx)}. "
-			f"Inesperados: {sorted(p.name for p in actual_fbx - expected_fbx)}."
-		)
-
-	if any(p.stat().st_size == 0 for p in expected_fbx):
-		raise RuntimeError("Há arquivos FBX vazios.")
+		if any(p.stat().st_size == 0 for p in expected_fbx):
+			raise RuntimeError("Há arquivos FBX vazios.")
 
 	unity_exe = os.environ.get("UNITY_EXE")
 
@@ -74,35 +75,42 @@ def execute_unity(run_dir: Path) -> list[Path]:
 		"-orbitalsRun", str(run_dir),
 	]
 
-	print(f"Iniciando Unity para {len(orbital_names)} orbitais...",	flush=True)
+	unity_log = run_dir / "unity" / "Editor.log"
+	command.extend(["-logFile", str(unity_log)])
 
-	result = subprocess.run(command, timeout=900, check=False)
+	count = sum(len(names) for names in orbitals_by_mode.values())
+	print(f"Iniciando Unity para {count} modelos...",	flush=True)
+
+	result = subprocess.run(command, timeout=3600, check=False)
 
 	if result.returncode != 0:
 		raise RuntimeError(f"Unity encerrou com código {result.returncode}")
 
 	# Verifica todos os GIFs produzidos.
-	output_dir = run_dir / "unity" / mode
+	gif_files = []
 
-	expected_gif = {output_dir / f"{name}.gif" for name in orbital_names}
-	actual_gif = set(output_dir.glob("*.gif"))
+	for mode, names in orbitals_by_mode.items():
+		output_dir = run_dir / "unity" / mode
+		expected_gif = {output_dir / f"{name}.gif" for name in names}
+		actual_gif = set(output_dir.glob("*.gif"))
 
-	if actual_gif != expected_gif:
-		raise RuntimeError(
-			"GIFs inconsistentes. "
-			f"Ausentes: {sorted(p.name for p in expected_gif - actual_gif)}. "
-			f"Inesperados: {sorted(p.name for p in actual_gif - expected_gif)}."
-		)
+		if actual_gif != expected_gif:
+			raise RuntimeError(
+				"GIFs inconsistentes. "
+				f"Ausentes: {sorted(p.name for p in expected_gif - actual_gif)}. "
+				f"Inesperados: {sorted(p.name for p in actual_gif - expected_gif)}."
+			)
 
-	for gif in expected_gif:
-		if gif.stat().st_size <= 6:
-			raise RuntimeError(f"GIF vazio: {gif}")
+		for gif in expected_gif:
+			if gif.stat().st_size <= 6:
+				raise RuntimeError(f"GIF vazio: {gif}")
 
-		with gif.open("rb") as file:
-			signature = file.read(6)
+			with gif.open("rb") as file:
+				signature = file.read(6)
 
-		if signature not in (b"GIF87a", b"GIF89a"):
-			raise RuntimeError(f"Assinatura GIF inválida: {gif}")
+			if signature not in (b"GIF87a", b"GIF89a"):
+				raise RuntimeError(f"Assinatura GIF inválida: {gif}")
+		gif_files.extend(expected_gif)
 
 	return sorted(expected_gif)
 

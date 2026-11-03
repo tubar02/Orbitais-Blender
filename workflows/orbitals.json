@@ -11,7 +11,7 @@
         "id": "20bea0367630439d",
         "type": "inject",
         "z": "5376ca69f972b593",
-        "name": "Gerar signed",
+        "name": "Gerar dual",
         "props": [
             {
                 "p": "payload"
@@ -26,9 +26,9 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "test_signed",
+        "payload": "test_dual",
         "payloadType": "str",
-        "x": 130,
+        "x": 160,
         "y": 260,
         "wires": [
             [

@@ -28,27 +28,28 @@ public static class OrbitalRecordingRunner
 
 	public static void StartBatch(string basis, string mode)
 	{
+		StartBatch(basis, new[] {mode});
+	}
+
+	public static void StartBatch(string basis, string[] modes)
+	{
 		if (running || SessionState.GetBool(PendingKey, false))
 		{
 			Debug.LogWarning("Já existe uma execução solicitada.");
 			return;
 		}
 
+		if (modes == null || modes.Length == 0) throw new ArgumentException("Nenhuma representação solicitada.");
+
 		// Salva os argumentos antes de mudar de modo.
 		SessionState.SetString(BasisKey, basis);
-		SessionState.SetString(ModeKey, mode);
+		SessionState.SetString(ModeKey, string.Join(",", modes));
 		SessionState.SetBool(PendingKey, true);
 		bool shouldAutoExit = !EditorApplication.isPlaying;
 		SessionState.SetBool(AutoExitKey, shouldAutoExit);
 
-		if (EditorApplication.isPlaying)
-		{
-			StartWhenReady();
-		}
-		else
-		{
-			EditorApplication.isPlaying = true;
-		}
+		if (EditorApplication.isPlaying) StartWhenReady();
+		else EditorApplication.isPlaying = true;
 	}
 
 	private static void OnPlayModeChanged(PlayModeStateChange state)
@@ -107,7 +108,7 @@ public static class OrbitalRecordingRunner
 		EditorApplication.update -= WaitForPresenter;
 
 		string basis = SessionState.GetString(BasisKey, "real");
-		string mode = SessionState.GetString(ModeKey, "signed");
+		string[] modes = SessionState.GetString(ModeKey, "").Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
 
 		SessionState.SetBool(PendingKey, false);
 
@@ -116,9 +117,12 @@ public static class OrbitalRecordingRunner
 		OrbitalGifRecorder.RecordingFinished -= OnRecordingFinished;
 		OrbitalGifRecorder.RecordingFinished += OnRecordingFinished;
 
-		Debug.Log($"Runner iniciou a gravação: {basis}/{mode}");
+		Debug.Log(
+			$"Runner iniciou a gravação: " +
+			$"{basis}/{string.Join(",", modes)}"
+		);
 
-		if (!OrbitalGifRecorder.RecordBatch(basis, mode))
+		if (!OrbitalGifRecorder.RecordBatch(basis, modes))
 		{
 			Debug.LogError("Não foi possível iniciar o lote.");
 			CancelRun();
@@ -226,27 +230,23 @@ public static class OrbitalRecordingRunner
 
 		if (exitCode == 0)
 		{
-			string mode = SessionState.GetString(ModeKey, "single");
-			string outputDir = Path.Combine(runDir, "unity", mode);
+			string[] modes = SessionState.GetString(ModeKey, "single").Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
+			bool valid = modes.Length > 0;
 
-			string[] gifs = Directory.Exists(outputDir)	? Directory.GetFiles(outputDir, "*.gif") : Array.Empty<string>();
-
-			bool valid = gifs.Length > 0;
-
-			foreach (string gif in gifs)
+			foreach (string mode in modes)
 			{
-				if (new FileInfo(gif).Length == 0)
+				string outputDir = Path.Combine(runDir, "unity", mode);
+				string[] gifs = Directory.Exists(outputDir)	? Directory.GetFiles(outputDir, "*.gif") : Array.Empty<string>();
+
+				if (gifs.Length == 0 || Array.Exists(gifs, gif => new FileInfo(gif).Length == 0))
 				{
+					Debug.LogError($"GIFs ausentes ou vazios: {mode}");
 					valid = false;
 					break;
 				}
-			}
+			}			
 
-			if (!valid)
-			{
-				Debug.LogError("Gravação finalizada, mas nenhum GIF válido foi encontrado.");
-				exitCode = 1;
-			}
+			if (!valid)	exitCode = 1;
 		}
 
 		Debug.Log($"Unity finalizado. Código: {exitCode}");
@@ -267,7 +267,7 @@ public static class OrbitalRecordingRunner
 			throw new DirectoryNotFoundException(runDir);
 
 		// Importa os FBX e configura a Run ativa.
-		var (basis, mode) = OrbitalRunImporter.ImportRun(runDir);
-		StartBatch(basis, mode);
+		var (basis, modes) = OrbitalRunImporter.ImportRun(runDir);
+		StartBatch(basis, modes);
 	}
 }

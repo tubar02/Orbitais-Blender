@@ -65,13 +65,31 @@ public static class OrbitalGifRecorder
 
 	public static bool RecordBatch(string basis, string mode)
 	{
+		return RecordBatch(basis, new[] {mode});
+	}
+
+	public static bool RecordBatch(string basis, string[] modes)
+	{
 		if (CheckRecordCond()) return false;
 
-		List<OrbitalEntry> orbitals = presenter.GetOrbitals(basis, mode);
-		if (orbitals.Count == 0)
+		if (modes == null || modes.Length == 0)
 		{
-			Debug.LogWarning($"Nenhum orbital encontrado: {basis}/{mode}");
+			Debug.LogError("Nenhuma representação solicitada.");
 			return false;
+		}
+
+		List<OrbitalEntry> orbitals = new();
+		foreach (string mode in modes)
+		{
+			List<OrbitalEntry> entries = presenter.GetOrbitals(basis, mode);
+
+			if (entries.Count == 0)
+			{
+				Debug.LogError("Nenhum orbital encontrado: {basis}/{mode}");
+				return false;
+			}
+
+			orbitals.AddRange(entries);
 		}
 
 		StartSequence(orbitals);
