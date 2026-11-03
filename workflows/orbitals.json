@@ -11,7 +11,7 @@
         "id": "20bea0367630439d",
         "type": "inject",
         "z": "5376ca69f972b593",
-        "name": "Gerar orbital 1s",
+        "name": "Gerar intervalo",
         "props": [
             {
                 "p": "payload"

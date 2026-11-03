@@ -17,38 +17,48 @@ def execute_scientific(run_dir: Path) -> None:
 	representations = job["representations"]
 
 	# Por enquanto, uma base e o modo single.
-	if len(bases) != 1 or list(representations) != ["single"]:
-		raise ValueError("O runner ainda aceita apenas uma base e a representação single.")
+	if len(bases) != 1:
+		raise ValueError("O runner ainda aceita apenas uma base.")
+
+	supported_modes = {"single", "signed"}
+	if not representations or set(representations) - supported_modes:
+		raise ValueError(f"Representações inválidas: {representations}. Suportadas: {supported_modes}")
 
 	basis = orb.OrbitalBasis(bases[0])
-	params = representations["single"]
+	if ("signed" in representations and basis != orb.OrbitalBasis.REAL):
+		raise ValueError("signed exige base real.")
+	
 	num_div = job["space"]["num_div"]
-
-	# Transforma a seleção em uma sequência de orbitais.
-	tasks = sel.iter_orbitals(selection)
-
-	output_dir = run_dir / "scientific" / "single"
-	output_dir.mkdir(parents=True, exist_ok=True)
-
 	count = 0
 
-	for n, l, m in tasks:
+	for n, l, m in sel.iter_orbitals(selection):
 		print(f"Gerando orbital n={n}, l={l}, m={m}", flush=True)
 
 		space = sp.Space()
 
 		orbital = orbital_service.create_orbital(space,	n=n, l=l, m=m, basis=basis,	num_div=num_div)
 
-		xp.save_obj(orbital, percent=params["percent"],	output_dir=output_dir)
+		for mode, params in representations.items():
+			output_dir = run_dir / "scientific" / mode
 
-		output_file = output_dir / f"{orbital.name}.obj"
+			if mode == "single":
+				xp.save_obj(orbital, percent=params["percent"], output_dir=output_dir)
+				files = [output_dir / f"{orbital.name}.obj"]
+			elif mode == "signed":
+				xp.save_signed_obj(orbital, percent=params["percent"], output_dir=output_dir)
+				parts_dir = output_dir / orbital.name
+				files = sorted(parts_dir.glob("*.obj"))
 
-		if (not output_file.is_file() or output_file.stat().st_size == 0):
-			raise RuntimeError(f"OBJ inválido: {output_file}")
+				if (not files or any(file.stem not in {"pos", "neg"} for file in files)):
+					raise RuntimeError(f"Superfícies signed inválidas: {parts_dir}")
+
+			for file in files:
+				if (not file.is_file() or file.stat().st_size == 0):
+					raise RuntimeError(f"OBJ inválido: {file}")
+				
+			print(f"{orbital.name} modo {mode} concluído.", flush=True)
 
 		count += 1
-		print(f"Orbital {orbital.name} concluído.", flush=True)
-
 		# Libera as referências ao orbital e à grade.
 		del orbital, space
 
