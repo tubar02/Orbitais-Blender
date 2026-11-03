@@ -154,7 +154,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 390,
-        "y": 360,
+        "y": 340,
         "wires": []
     },
     {
@@ -390,7 +390,7 @@
         "id": "d6544a1f6d71f07e",
         "type": "inject",
         "z": "5376ca69f972b593",
-        "name": "Retomar Run",
+        "name": "Retomar Unity",
         "props": [
             {
                 "p": "payload"
@@ -405,7 +405,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "run_20261103_094459_083da6f2",
+        "payload": "run_20261103_215325_db7f8896",
         "payloadType": "str",
         "x": 890,
         "y": 420,
@@ -419,7 +419,7 @@
         "id": "05c5de7ec959a6a8",
         "type": "function",
         "z": "5376ca69f972b593",
-        "name": "Preparar retomada",
+        "name": "Preparar retomada unity",
         "func": "const runId = String(msg.payload).trim();\n\n// Aceita somente IDs no formato utilizado pelo projeto.\nconst pattern = /^run_\\d{8}_\\d{6}_[a-fA-F0-9]{8}$/;\n\nif (!pattern.test(runId)) {\n    node.error(`ID de Run inválido: ${runId}`, msg);\n    return null;\n}\n\nmsg.run_id = runId;\nmsg.run_dir = `runs/${runId}`;\n\n// O nó Unity Runner já possui:\n// python -m src.runners.unity_runner --run\nmsg.payload = `\"${msg.run_dir}\" --resume`;\n\nnode.status({\n    fill: \"blue\",\n    shape: \"dot\",\n    text: `Retomando ${runId}`\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
@@ -427,11 +427,109 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1110,
+        "x": 1130,
         "y": 420,
         "wires": [
             [
                 "5ccc998394e86ad2"
+            ]
+        ]
+    },
+    {
+        "id": "41a24434094597db",
+        "type": "inject",
+        "z": "5376ca69f972b593",
+        "name": "Retomar Científico",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "7587077c67e21cf0"
+            ]
+        ]
+    },
+    {
+        "id": "7587077c67e21cf0",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Preparar retomada científica",
+        "func": "const runId = String(msg.payload).trim();\n\nif (!/^run_\\d{8}_\\d{6}_[a-fA-F0-9]{8}$/.test(runId)) {\n    node.error(`ID de Run inválido: ${runId}`, msg);\n    return null;\n}\n\nmsg.run_id = runId;\nmsg.run_dir = `runs/${runId}`;\n\nmsg.payload = `\"${msg.run_dir}\" --resume`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 180,
+        "wires": [
+            [
+                "073d8ddff9379f82"
+            ]
+        ]
+    },
+    {
+        "id": "3dba753a98282560",
+        "type": "inject",
+        "z": "5376ca69f972b593",
+        "name": "Retomar Blender",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 380,
+        "y": 420,
+        "wires": [
+            [
+                "7b9cb3dde2627343"
+            ]
+        ]
+    },
+    {
+        "id": "7b9cb3dde2627343",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Preparar retomada blender",
+        "func": "const runId = String(msg.payload).trim();\n\nif (!/^run_\\d{8}_\\d{6}_[a-fA-F0-9]{8}$/.test(runId)) {\n    node.error(`ID de Run inválido: ${runId}`, msg);\n    return null;\n}\n\nmsg.run_id = runId;\nmsg.run_dir = `runs/${runId}`;\n\nmsg.payload =\n    `--run \"${msg.run_dir}\" --save-blend --resume`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 420,
+        "wires": [
+            [
+                "09ee625014864b75"
             ]
         ]
     }

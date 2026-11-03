@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
+import shutil
 
 import src.io.paths as paths
 import src.io.json_io as json_io
@@ -132,17 +133,42 @@ def cancel_run(run_dir: Path) -> None:
 
 	_save_run(run_dir, data)
 
-def retry_failed_unity(run_dir: Path) -> None:
+def retry_failed_stage(run_dir: Path, stage: str) -> None:
+	if stage not in STAGE_ORDER:
+		raise ValueError(f"Etapa desconhecida: {stage}")
+
 	data = _load_run(run_dir)
+	index = STAGE_ORDER.index(stage)
 
-	if (data["status"] != "failed" or data["stages"]["unity"] != "failed" or data["current_stage"] is not None):
-		raise ValueError("Somente Runs que falharam na etapa Unity podem ser retomadas por este comando.")
+	if (
+		data["status"] != "failed"
+		or data["stages"][stage] != "failed"
+		or data["current_stage"] is not None
+	):
+		raise ValueError(f"A Run não está com falha na etapa {stage}.")
 
-	if any(data["stages"][stage] != "completed"	for stage in ("scientific", "blender")):
-		raise ValueError("Scientific e Blender precisam estar concluídos.")
+	# Etapas anteriores precisam estar concluídas.
+	for previous in STAGE_ORDER[:index]:
+		if data["stages"][previous] != "completed":
+			raise ValueError(f"Etapa anterior não concluída: {previous}")
+
+	# Etapas posteriores ainda não podem ter começado.
+	for following in STAGE_ORDER[index + 1:]:
+		if data["stages"][following] != "pending":
+			raise ValueError(f"Etapa posterior já iniciada: {following}")
+
+	# Scientific e Blender são refeitos integralmente.
+	# Unity preserva os GIFs concluídos.
+	if stage != "unity":
+		output_dir = Path(run_dir) / stage
+
+		if output_dir.exists():
+			shutil.rmtree(output_dir)
+
+		output_dir.mkdir(parents=True)
 
 	data["status"] = "pending"
-	data["stages"]["unity"] = "pending"
+	data["stages"][stage] = "pending"
 	data["finished_at"] = None
 	data["error"] = None
 

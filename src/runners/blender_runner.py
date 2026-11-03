@@ -122,17 +122,20 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 
 def main():
 	parser = argparse.ArgumentParser()
-
 	parser.add_argument("--run", type=Path, required=True)
 	parser.add_argument("--save-blend", action="store_true")
+	parser.add_argument("--resume", action="store_true")
 
 	# Argumentos depois de -- pertencem ao nosso script,
 	# não à linha de comando do Blender.
 	argv = sys.argv
 	argv = argv[argv.index("--") + 1:] if "--" in argv else []
-
+	
 	args = parser.parse_args(argv)
 	run_dir = args.run.resolve()
+
+	if args.resume:
+		runs.retry_failed_stage(run_dir, "blender")
 
 	try:
 		runs.start_stage(run_dir, "blender")

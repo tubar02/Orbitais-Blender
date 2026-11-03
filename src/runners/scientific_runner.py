@@ -69,11 +69,14 @@ def execute_scientific(run_dir: Path) -> None:
 
 def main() -> None:
 	parser = argparse.ArgumentParser(description="Executa a etapa científica de uma Run.")
-
 	parser.add_argument("--run", type=Path,	required=True, help="Diretório da Run.")
+	parser.add_argument("--resume", action="store_true")
 
 	args = parser.parse_args()
 	run_dir = args.run.resolve()
+
+	if args.resume:
+		run_service.retry_failed_stage(run_dir, "scientific")
 
 	try:
 		run_service.start_stage(run_dir, "scientific")
