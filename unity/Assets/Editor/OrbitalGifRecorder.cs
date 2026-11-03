@@ -101,11 +101,11 @@ public static class OrbitalGifRecorder
 		return false;
 	}
 
-	private static RecorderController CreateRecorder(string fileName, float duration, bool manual = false)
+	private static RecorderController CreateRecorder(string fileName, float duration, string mode, bool manual = false)
 	{
 		string outputDir = string.IsNullOrEmpty(runOutputDir) ? Path.Combine(Application.dataPath, "Recordings") : runOutputDir;
 		Debug.Log($"Gravando GIF em: {outputDir}");
-		outputDir = Path.Combine(outputDir, "single");
+		outputDir = Path.Combine(outputDir, mode);
 		Directory.CreateDirectory(outputDir);
 		
 		MovieRecorderSettings movieSettings = ScriptableObject.CreateInstance<MovieRecorderSettings>();
@@ -225,7 +225,7 @@ public static class OrbitalGifRecorder
 
 		try
 		{
-			controller = CreateRecorder(fileName, recordingDuration, manual: true);
+			controller = CreateRecorder(fileName, recordingDuration, entry.mode, manual: true);
 			controller.PrepareRecording();
 
 			if (!controller.StartRecording())

@@ -226,7 +226,8 @@ public static class OrbitalRecordingRunner
 
 		if (exitCode == 0)
 		{
-			string outputDir = Path.Combine(runDir, "unity", "single");
+			string mode = SessionState.GetString(ModeKey, "single");
+			string outputDir = Path.Combine(runDir, "unity", mode);
 
 			string[] gifs = Directory.Exists(outputDir)	? Directory.GetFiles(outputDir, "*.gif") : Array.Empty<string>();
 
@@ -266,9 +267,7 @@ public static class OrbitalRecordingRunner
 			throw new DirectoryNotFoundException(runDir);
 
 		// Importa os FBX e configura a Run ativa.
-		OrbitalRunImporter.ImportRun(runDir);
-
-		// Primeira versão: um orbital real, modo single.
-		StartBatch("real", "single");
+		var (basis, mode) = OrbitalRunImporter.ImportRun(runDir);
+		StartBatch(basis, mode);
 	}
 }

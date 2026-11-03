@@ -9,23 +9,34 @@ import src.io.paths as paths
 import src.services.run_service as runs
 
 def expected_orbitals(job: dict) -> list[str]:
-	if len(job["basis"]) != 1 or list(job["representations"]) != ["single"]:
-		raise ValueError("Unity runner ainda aceita uma base e o modo single.")
-	
-	selection = job["selection"]
-	basis = job["basis"][0]
+	representations = job["representations"]
+	bases = job["basis"]
 
-	return [sel.orbital_stem(n, l, m, basis, mode="single") for n, l, m in sel.iter_orbitals(selection)]
+	if len(bases) != 1 or len(representations) != 1:
+		raise ValueError("Unity runner aceita uma base e uma representação por Run")
+
+	basis = bases[0]
+	mode = next(iter(representations))
+
+	if mode not in {"single", "signed"}:
+		raise ValueError(f"Representação não suportada: {mode}")
+
+	if mode == "signed" and basis != "real":
+		raise ValueError("signed exige base real.")
+
+	selection = job["selection"]
+	return [sel.orbital_stem(n, l, m, basis, mode=mode) for n, l, m in sel.iter_orbitals(selection)]
 
 def execute_unity(run_dir: Path) -> list[Path]:
 	job = json_io.load_json(run_dir / "job.json")
 	orbital_names = expected_orbitals(job)
+	mode = next(iter(job["representations"]))
 
 	if not orbital_names:
 		raise RuntimeError("Nenhum orbital solicitado.")
 
 	# Verifica todos os FBXs antes de abrir o Unity.
-	input_dir = run_dir / "blender" / "single"
+	input_dir = run_dir / "blender" / mode
 
 	expected_fbx = {input_dir / f"{name}.fbx" for name in orbital_names}
 	actual_fbx = set(input_dir.glob("*.fbx"))
@@ -71,7 +82,7 @@ def execute_unity(run_dir: Path) -> list[Path]:
 		raise RuntimeError(f"Unity encerrou com código {result.returncode}")
 
 	# Verifica todos os GIFs produzidos.
-	output_dir = run_dir / "unity" / "single"
+	output_dir = run_dir / "unity" / mode
 
 	expected_gif = {output_dir / f"{name}.gif" for name in orbital_names}
 	actual_gif = set(output_dir.glob("*.gif"))
