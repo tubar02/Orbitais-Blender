@@ -30,7 +30,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	global_scale = job["blender"]["fbx"]["global_scale"]
 
 	# Nomes esperados a partir do Job.
-	orbital_names = [sel.orbital_stem(n, l, m, basis, mode = "single") for n, l, m in sel.iter_orbitals(selection)]
+	orbital_names = [sel.orbital_stem(n, l, m, basis) for n, l, m in sel.iter_orbitals(selection)]
 
 	if not orbital_names:
 		raise RuntimeError("Nenhum orbital solicitado.")
