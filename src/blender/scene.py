@@ -68,6 +68,38 @@ def create_point_cloud(points, name="PointCloud"):
 	mesh.update()
 	return obj
 
+def create_point_cloud(points, name="PointCloud",  radius=0.12):
+	if not points:
+		raise ValueError("Nuvem de pontos vazia.")
+
+	vertices = []
+	faces = []
+
+	# Cada ponto vira um pequeno octaedro.
+	# Tudo pertence a uma única malha.
+	octa_faces = [
+		(4, 0, 2), (4, 2, 1),
+		(4, 1, 3), (4, 3, 0),
+		(5, 2, 0), (5, 1, 2),
+		(5, 3, 1), (5, 0, 3)
+	]
+
+	for x, y, z in points:
+		offset = len(vertices)
+
+		vertices.extend([
+			(x + radius, y, z),
+			(x - radius, y, z),
+			(x, y + radius, z),
+			(x, y - radius, z),
+			(x, y, z + radius),
+			(x, y, z - radius)
+		])
+
+		faces.extend(tuple(offset + index for index in face) for face in octa_faces)
+
+	return create_mesh_object(vertices, faces, name=name)
+
 def sphere_instancing(points, radius=0.1, name="SphereInstance"):
 	bpy.ops.mesh.primitive_uv_sphere_add(radius=radius, location=(0, 0, 0))
 	sphere = bpy.context.active_object

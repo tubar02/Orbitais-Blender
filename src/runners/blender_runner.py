@@ -22,6 +22,8 @@ def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: 
 		expected = {input_dir / f"{name}.obj" for name in orbital_names}
 	elif mode in {"signed", "multilayer"}:
 		expected = {input_dir / name for name in orbital_names}
+	elif mode == "point_cloud":
+		expected = {input_dir / f"{name}.npy" for name in orbital_names}
 	else:
 		raise ValueError(f"Modo inválido: {mode}")
 
@@ -35,9 +37,9 @@ def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: 
 		)
 
 	for entry in expected:
-		if mode == "single":
+		if mode in {"single", "point_cloud"}:
 			if not entry.is_file() or entry.stat().st_size == 0:
-				raise RuntimeError(f"OBJ inválido: {entry}")
+				raise RuntimeError(f"Arquivo inválido: {entry}")
 		else:
 			if not entry.is_dir():
 				raise RuntimeError(f"Pasta inválida: {entry}")
@@ -71,7 +73,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	if len(bases) != 1:
 		raise ValueError("Blender ainda aceita apenas uma base.")
 
-	if not modes or set(modes) - {"single", "signed", "multilayer"}:
+	if not modes or set(modes) - {"single", "signed", "multilayer", "point_cloud"}:
 		raise ValueError(f"Representações inválida: {modes}")
 
 	basis = bases[0]

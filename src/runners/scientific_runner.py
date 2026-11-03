@@ -20,7 +20,7 @@ def execute_scientific(run_dir: Path) -> None:
 	if len(bases) != 1:
 		raise ValueError("O runner ainda aceita apenas uma base.")
 
-	supported_modes = {"single", "signed", "multilayer"}
+	supported_modes = {"single", "signed", "multilayer", "point_cloud"}
 	if not representations or set(representations) - supported_modes:
 		raise ValueError(f"Representações inválidas: {representations}. Suportadas: {supported_modes}")
 
@@ -62,6 +62,9 @@ def execute_scientific(run_dir: Path) -> None:
 					    not file.stem[3:].isdigit() for file in files)
 				):
 					raise RuntimeError(f"Camadas multilayers inválidas: {parts_dir}")
+			elif mode == "point_cloud":
+				file_path = xp.save_point_cloud(orbital, percent=params["percent"], tolerancia=params["tolerancia"], output_dir=output_dir)
+				files = [file_path]
 
 			for file in files:
 				if (not file.is_file() or file.stat().st_size == 0):

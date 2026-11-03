@@ -16,7 +16,7 @@ def expected_orbitals(job: dict) -> dict[str, list[str]]:
 	if len(bases) != 1:
 		raise ValueError("Unity runner aceita só uma base")
 
-	if not modes or set(modes) - {"single", "signed", "multilayer"}:
+	if not modes or set(modes) - {"single", "signed", "multilayer", "point_cloud"}:
 		raise ValueError(f"Representações inválidas: {modes}")
 
 	basis = bases[0]

@@ -8,8 +8,9 @@ if str(PROJECT_ROOT) not in sys.path:
 	
 import src.io.paths as io
 
-def read_data(file_name: str) -> list[tuple[float, float, float]]:
-	file_path = io.get_path(f"{file_name}.npy", io.POINT_CLOUD_DIR)
+def read_data(file_name: str, input_dir: Path | None = None) -> list[tuple[float, float, float]]:
+	target_dir = input_dir if input_dir is not None else io.POINT_CLOUD_DIR
+	file_path = io.get_path(f"{file_name}.npy", target_dir)
 	
 	points = []
 	with open(file_path, 'r') as f:

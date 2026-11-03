@@ -28,7 +28,7 @@ def _validate_multilayer(layers: int, start_percent:float) -> np.ndarray:
 
 	return percents
 
-def save_point_cloud(orbital: orb.Orbital, percent: float, tolerancia: float):
+def save_point_cloud(orbital: orb.Orbital, percent: float, tolerancia: float, output_dir: Path | None = None):
 	scalar_field = orbital.density
 	space = orbital.space
 	nome_arq = orbital.name
@@ -38,11 +38,13 @@ def save_point_cloud(orbital: orb.Orbital, percent: float, tolerancia: float):
 	tol = tolerancia * np.max(scalar_field)
 	mask = np.abs(scalar_field - level) < tol
 	if not np.any(mask):
-		raise ValueError("Nenhum ponto encontrado dentro da tolerância especificada.")
+		raise ValueError(f"Nenhum ponto encontrado dentro da tolerância especificada: {tol}")
 
 	points = np.column_stack((space.X[mask], space.Y[mask], space.Z[mask]))
-	file_path = io.get_path(f"{nome_arq}.npy", io.POINT_CLOUD_DIR)
+	target_dir = output_dir if output_dir is not None else io.POINT_CLOUD_DIR
+	file_path = io.get_path(f"{nome_arq}.npy", target_dir)
 	np.savetxt(file_path, points, delimiter=",")
+	return file_path
 
 def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: bool = True):
 	with open(file_path, 'w') as f:

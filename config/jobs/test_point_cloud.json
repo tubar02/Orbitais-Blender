@@ -1,0 +1,22 @@
+{
+	"name": "test_point_cloud",
+	"selection": {
+		"type": "range",
+		"n_min": 2,
+		"n_max": 2
+	},
+	"basis": ["complex"],
+	"representations": ["point_cloud"],
+	"overrides": {
+		"scientific": {
+			"space": {
+				"num_div": 25
+			},
+			"representation_params": {
+				"point_cloud": {
+					"tolerancia": 0.01
+				}
+			}
+		}
+	}
+}

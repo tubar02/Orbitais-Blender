@@ -14,7 +14,7 @@ def interpolate_color(t: float) -> tuple[float, float, float]:
 	
 	return (r, g, b)
 
-def create_orbital_material(name: str, color: tuple[float, float, float], alpha: float):
+def create_orbital_material(name: str, color: tuple[float, float, float], alpha: float, emission_strength: float = 0.3):
 	mat = bpy.data.materials.new(name)
 	mat.use_nodes = True
 	mat.blend_method = 'BLEND'
@@ -37,7 +37,7 @@ def create_orbital_material(name: str, color: tuple[float, float, float], alpha:
 	bsdf.inputs['Base Color'].default_value = (*color, 1.0)
 	bsdf.inputs['Alpha'].default_value = alpha
 	bsdf.inputs['Emission Color'].default_value = (*color, 1.0)  # Cor de emissão
-	bsdf.inputs['Emission Strength'].default_value = 0.3  # Ajusta o brilho da emissão
+	bsdf.inputs['Emission Strength'].default_value = emission_strength
 	
 	# Conecta
 	links.new(bsdf.outputs['BSDF'], output_node.inputs['Surface'])
