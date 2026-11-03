@@ -180,7 +180,7 @@
         "id": "09ee625014864b75",
         "type": "exec",
         "z": "5376ca69f972b593",
-        "command": "\"D:\\1\\steamapps\\common\\Blender\\blender.exe\" --background --python-exit-code 1 --python \"C:\\Users\\Tiago\\Desktop\\Thiagao\\Faculdade\\Disciplinas\\TCC\\Orbitais\\src\\runners\\blender_runner.py\" --",
+        "command": "blender --background --python-exit-code 1 --python src/runners/blender_runner.py --",
         "addpay": "payload",
         "append": "",
         "useSpawn": "false",
