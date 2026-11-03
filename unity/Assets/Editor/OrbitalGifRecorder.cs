@@ -148,6 +148,7 @@ public static class OrbitalGifRecorder
 		string outputDir = string.IsNullOrEmpty(runOutputDir) ? Path.Combine(Application.dataPath, "Recordings") : runOutputDir;
 		Debug.Log($"Gravando GIF em: {outputDir}");
 		outputDir = Path.Combine(outputDir, mode);
+		if (!string.IsNullOrEmpty(runOutputDir)) outputDir = Path.Combine(outputDir, "_incomplete");
 		Directory.CreateDirectory(outputDir);
 		
 		MovieRecorderSettings movieSettings = ScriptableObject.CreateInstance<MovieRecorderSettings>();
@@ -228,6 +229,26 @@ public static class OrbitalGifRecorder
 		// Duração alcançada: encerra a gravação atual.
 		controller.StopRecording();
 
+		if (!string.IsNullOrEmpty(runOutputDir))
+		{
+			OrbitalEntry entry = batchOrbitals[batchIndex];
+
+			string fileName = $"orbital_n{entry.n}_l{entry.l}_m{entry.m}_{entry.basis}_{entry.mode}.gif";
+
+			string temporary = Path.Combine(runOutputDir, entry.mode, "_incomplete", fileName);
+
+			string finished = Path.Combine(runOutputDir, entry.mode, fileName);
+
+			if (!IsValidExistingGif(temporary))
+			{
+				Debug.LogError($"GIF temporário inválido: {temporary}");
+				FinishBatch(false);
+				return;
+			}
+
+			File.Move(temporary, finished);
+		}
+
 		controller = null;
 		batchRecording = false;
 
@@ -286,6 +307,13 @@ public static class OrbitalGifRecorder
 
 		try
 		{
+			if (!string.IsNullOrEmpty(runOutputDir))
+			{
+				string tempPath = Path.Combine(runOutputDir, entry.mode, "_incomplete",	fileName + ".gif");
+
+				if (File.Exists(tempPath)) File.Delete(tempPath);
+			}
+
 			controller = CreateRecorder(fileName, recordingDuration, entry.mode, manual: true);
 			controller.PrepareRecording();
 
