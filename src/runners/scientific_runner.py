@@ -59,7 +59,7 @@ def execute_scientific(run_dir: Path) -> None:
 				if (
 					len(files) != params["layers"] or 
 					any(not file.stem.startswith("lvl") or 
-					    not file.stem[:3].isdigit() for file in files)
+					    not file.stem[3:].isdigit() for file in files)
 				):
 					raise RuntimeError(f"Camadas multilayers inválidas: {parts_dir}")
 
