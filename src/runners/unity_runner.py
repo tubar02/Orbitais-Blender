@@ -1,6 +1,7 @@
 import argparse
 import os
 import subprocess
+import time
 from pathlib import Path
 
 import src.core.orbital_selection as sel
@@ -81,7 +82,23 @@ def execute_unity(run_dir: Path) -> list[Path]:
 	count = sum(len(names) for names in orbitals_by_mode.values())
 	print(f"Iniciando Unity para {count} modelos...",	flush=True)
 
-	result = subprocess.run(command, timeout=3600, check=False)
+	# 0 = sem timeout; qualquer valor positivo = limite em segundos.
+	try:
+		timeout_seconds = int(os.environ.get("UNITY_TIMEOUT_SECONDS", "0"))
+	except ValueError as exc:
+		raise ValueError("UNITY_TIMEOUT_SECONDS deve ser um inteiro.") from exc
+
+	if timeout_seconds < 0:
+		raise ValueError("UNITY_TIMEOUT_SECONDS não pode ser negativo.")
+
+	start_time = time.perf_counter()
+
+	try:
+		result = subprocess.run(command, timeout=timeout_seconds or None, check=False)
+	finally:
+		elapsed = time.perf_counter() - start_time
+
+		print(f"Tempo de execução do Unity: {elapsed / 60:.1f} minutos.", flush=True)
 
 	if result.returncode != 0:
 		raise RuntimeError(f"Unity encerrou com código {result.returncode}")
@@ -112,7 +129,7 @@ def execute_unity(run_dir: Path) -> list[Path]:
 				raise RuntimeError(f"Assinatura GIF inválida: {gif}")
 		gif_files.extend(expected_gif)
 
-	return sorted(expected_gif)
+	return sorted(gif_files)
 
 def main():
 	parser = argparse.ArgumentParser()

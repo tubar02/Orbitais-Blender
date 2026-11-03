@@ -67,7 +67,7 @@ public static class OrbitalGifRecorder
 	{
 		return RecordBatch(basis, new[] {mode});
 	}
-
+	
 	public static bool RecordBatch(string basis, string[] modes)
 	{
 		if (CheckRecordCond()) return false;
@@ -85,7 +85,7 @@ public static class OrbitalGifRecorder
 
 			if (entries.Count == 0)
 			{
-				Debug.LogError("Nenhum orbital encontrado: {basis}/{mode}");
+				Debug.LogError($"Nenhum orbital encontrado: {basis}/{mode}");
 				return false;
 			}
 
