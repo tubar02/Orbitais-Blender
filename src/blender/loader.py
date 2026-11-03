@@ -16,7 +16,7 @@ def load_single_orbital(orbital_name, mode, input_dir: Path | None = None):
 
 	if mode == "point_cloud":
 		points = bl.reader.read_data(orbital_name, input_dir=input_dir)
-		obj = bl.scene.create_point_cloud(points, name=orbital_name, radius=0.08)
+		obj = bl.scene.create_point_cloud(points, name=orbital_name, radius=0.04)
 		mat = bl.materials.create_orbital_material(name=f"NeonGreen_{orbital_name}", color=(0.03, 1.0, 0.08), alpha=1.0, emission_strength=4.0)
 		obj.data.materials.append(mat)
 

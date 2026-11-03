@@ -6,15 +6,16 @@
 		"n_max": 2
 	},
 	"basis": ["complex"],
-	"representations": ["point_cloud"],
+	"representations": ["point_cloud", "single"],
 	"overrides": {
 		"scientific": {
+			"percent": 0.05,
 			"space": {
-				"num_div": 25
+				"num_div": 60
 			},
 			"representation_params": {
 				"point_cloud": {
-					"tolerancia": 0.01
+					"tolerancia": 0.005
 				}
 			}
 		}
