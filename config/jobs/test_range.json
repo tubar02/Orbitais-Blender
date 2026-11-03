@@ -1,0 +1,17 @@
+{
+    "name": "test_range",
+    "selection": {
+        "type": "range",
+        "n_min": 1,
+        "n_max": 2
+    },
+    "basis": ["real"],
+    "representations": ["single"],
+    "overrides": {
+        "scientific": {
+            "space": {
+                "num_div": 50
+            }
+        }
+    }
+}
