@@ -9,23 +9,10 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import bpy
 
+import src.core.orbital_selection as sel
 import src.blender as bl
 import src.io.json_io as json_io
 import src.services.run_service as runs
-
-
-def orbital_tasks(selection: dict):
-	if selection["type"] == "single":
-		yield (selection["n"], selection["l"], selection["m"])
-
-	elif selection["type"] == "range":
-		for n in range(selection["n_min"], selection["n_max"] + 1):
-			for l in range(n):
-				for m in range(-l, l + 1):
-					yield n, l, m
-
-	else:
-		raise ValueError("Tipo de seleção desconhecido.")
 
 def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	job = json_io.load_json(run_dir / "job.json")
@@ -43,7 +30,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	global_scale = job["blender"]["fbx"]["global_scale"]
 
 	# Nomes esperados a partir do Job.
-	orbital_names = [f"orbital_n{n}_l{l}_m{m}_{basis}" for n, l, m in orbital_tasks(selection)]
+	orbital_names = [sel.orbital_stem(n, l, m, basis, mode = "single") for n, l, m in sel.iter_orbitals(selection)]
 
 	if not orbital_names:
 		raise RuntimeError("Nenhum orbital solicitado.")
@@ -69,7 +56,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 
 	fbx_files = []
 	for (n, l, m, orb_basis), obj in orbitals.items():
-		orbital_name = f"orbital_n{n}_l{l}_m{m}_{basis}"
+		orbital_name = sel.orbital_stem(n, l, m, orb_basis)
 		print(f"Processando {orbital_name}", flush=True)
 		fbx_path = bl.exporter.export_fbx(obj, orbital_name, mode="single", output_dir=output_dir / "single", global_scale=global_scale)
 		fbx_files.append(fbx_path)

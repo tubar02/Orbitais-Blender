@@ -6,6 +6,7 @@ from typing import Callable
 
 import src.core.orbital as orb
 import src.core.space as sp
+import src.core.orbital_selection as sel
 import src.io.export as xp
 
 def acompanha(desc: str | None= None):
@@ -38,10 +39,8 @@ def validate_interval(n_min: int, n_max: int):
 	return n_min, n_max
 
 def orbital_tasks(n_max: int, n_min: int = 1):
-	for n in range(n_min, n_max + 1):
-		for l in range(0, n):
-			for m in range(-l, l + 1):
-				yield n, l, m
+	selection = {"type": "range", "n_min": n_min, "n_max": n_max}
+	yield from sel.iter_orbitals(selection)
 
 def generate_orbitals(space: sp.Space, n_max: int, basis: orb.OrbitalBasis = orb.OrbitalBasis.REAL, n_min: int = 1):
 	current_n = None

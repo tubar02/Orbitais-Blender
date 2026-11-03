@@ -3,33 +3,19 @@ import os
 import subprocess
 from pathlib import Path
 
+import src.core.orbital_selection as sel
 import src.io.json_io as json_io
 import src.io.paths as paths
 import src.services.run_service as runs
 
 def expected_orbitals(job: dict) -> list[str]:
-	selection = job["selection"]
-
 	if len(job["basis"]) != 1 or list(job["representations"]) != ["single"]:
 		raise ValueError("Unity runner ainda aceita uma base e o modo single.")
-
+	
+	selection = job["selection"]
 	basis = job["basis"][0]
 
-	if selection["type"] == "single":
-		tasks = [(selection["n"], selection["l"], selection["m"])]
-
-	elif selection["type"] == "range":
-		tasks = (
-			(n, l, m)
-			for n in range(selection["n_min"], selection["n_max"] + 1)
-			for l in range(n)
-			for m in range(-l, l + 1)
-		)
-
-	else:
-		raise ValueError("Tipo de seleção desconhecido.")
-
-	return [f"orbital_n{n}_l{l}_m{m}_{basis}_single" for n, l, m in tasks]
+	return [sel.orbital_stem(n, l, m, basis, mode="single") for n, l, m in sel.iter_orbitals(selection)]
 
 def execute_unity(run_dir: Path) -> list[Path]:
 	job = json_io.load_json(run_dir / "job.json")

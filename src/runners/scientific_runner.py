@@ -3,6 +3,7 @@ from pathlib import Path
 
 import src.core.orbital as orb
 import src.core.space as sp
+import src.core.orbital_selection as sel
 import src.io.export as xp
 import src.io.json_io as json_io
 import src.services.orbital_service as orbital_service
@@ -24,14 +25,7 @@ def execute_scientific(run_dir: Path) -> None:
 	num_div = job["space"]["num_div"]
 
 	# Transforma a seleção em uma sequência de orbitais.
-	if selection["type"] == "single":
-		tasks = [(selection["n"], selection["l"], selection["m"])]
-
-	elif selection["type"] == "range":
-		tasks = orbital_service.orbital_tasks(n_max=selection["n_max"],	n_min=selection["n_min"])
-
-	else:
-		raise ValueError("Tipo de seleção desconhecido.")
+	tasks = sel.iter_orbitals(selection)
 
 	output_dir = run_dir / "scientific" / "single"
 	output_dir.mkdir(parents=True, exist_ok=True)

@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 from src.core.space import Space
+from src.core.orbital_selection import orbital_stem
 
 A_0 = 1 # Raio de Bohr (normalizado)
 
@@ -25,7 +26,7 @@ class Orbital:
 
 	@property
 	def name(self) -> str:
-		return f"orbital_n{self.n}_l{self.l}_m{self.m}_{self.basis.value}"
+		return orbital_stem(self.n, self.l, self.m, self.basis.value)
 
 	def __post_init__(self):
 		self._validate()
