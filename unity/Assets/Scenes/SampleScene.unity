@@ -527,95 +527,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitalPresenter
   orbitalEntries:
-  - n: 1
-    l: 0
-    m: 0
-    basis: real
-    mode: single
-    prefab: {fileID: 919132149155446097, guid: 229290c4477c6904e8054aafc3013ef1, type: 3}
   - n: 2
     l: 0
     m: 0
     basis: real
     mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: 0db854e42e556fa4e815252e7d731b79, type: 3}
-  - n: 2
-    l: 0
-    m: 0
-    basis: real
-    mode: single
-    prefab: {fileID: 919132149155446097, guid: 3fd36c71acb2ff04293bd641d815cba0, type: 3}
+    prefab: {fileID: 919132149155446097, guid: 983c46a97a4715b46acfb1c2615dc499, type: 3}
   - n: 2
     l: 1
     m: -1
     basis: real
     mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: 1e4bb6ad465768d4591e2fe72b5295f5, type: 3}
-  - n: 2
-    l: 1
-    m: -1
-    basis: real
-    mode: single
-    prefab: {fileID: 919132149155446097, guid: a2e8bc75af28971448be80199b8d9495, type: 3}
+    prefab: {fileID: 919132149155446097, guid: a496e7a3d689b224eaeef2b20361d2c8, type: 3}
   - n: 2
     l: 1
     m: 0
     basis: real
     mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: 40d824a1afb834c45ba76447412cce72, type: 3}
-  - n: 2
-    l: 1
-    m: 0
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: f0faab12141093d42a415ae68ca9e9b8, type: 3}
-  - n: 2
-    l: 1
-    m: 0
-    basis: real
-    mode: single
-    prefab: {fileID: 919132149155446097, guid: 21aa437f205d5db4791d4f61ca51cb2f, type: 3}
+    prefab: {fileID: 919132149155446097, guid: a1a8d320bdf953b449df8900201ccc8b, type: 3}
   - n: 2
     l: 1
     m: 1
     basis: real
     mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: 3320b6b376f283249985cfe9f8887e72, type: 3}
-  - n: 2
-    l: 1
-    m: 1
-    basis: real
-    mode: single
-    prefab: {fileID: 919132149155446097, guid: 3f6e1288f4be2e149b6cad368892926c, type: 3}
-  - n: 3
-    l: 1
-    m: 0
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: fdf6f48dbec780a42aca8e7c9c18afc7, type: 3}
-  - n: 3
-    l: 2
-    m: -1
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: 91db369b64c31db41a62ba14685a75b6, type: 3}
+    prefab: {fileID: 919132149155446097, guid: b726f0c76d4497b4a9e94f8c9d34efbd, type: 3}
   - n: 3
     l: 2
     m: 0
     basis: real
     mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: 09d25bd3ed24d8e48add1269f3f31775, type: 3}
-  - n: 3
-    l: 2
-    m: 0
-    basis: real
-    mode: signed
-    prefab: {fileID: 919132149155446097, guid: b4dabca11cd43a1418f631024250f70a, type: 3}
+    prefab: {fileID: 919132149155446097, guid: a4904fd0ad08d6348aad9cf56b948d96, type: 3}
   selectedN: 3
-  selectedL: 1
+  selectedL: 2
   selectedM: 0
   selectedBasis: real
-  selectedMode: signed
+  selectedMode: multilayer
   screenFill: 0.95
   rotationSpeed: 90
   targetCamera: {fileID: 0}

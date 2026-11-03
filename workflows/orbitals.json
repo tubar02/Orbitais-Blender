@@ -47,8 +47,8 @@
         "timer": "",
         "winHide": false,
         "oldrc": false,
-        "name": "",
-        "x": 440,
+        "name": "Preparar run",
+        "x": 370,
         "y": 280,
         "wires": [
             [
@@ -72,8 +72,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
-        "y": 280,
+        "x": 400,
+        "y": 220,
         "wires": [
             [
                 "073d8ddff9379f82"
@@ -91,9 +91,9 @@
         "timer": "",
         "winHide": false,
         "oldrc": false,
-        "name": "",
-        "x": 890,
-        "y": 420,
+        "name": "Runner Científico",
+        "x": 630,
+        "y": 240,
         "wires": [
             [
                 "d250f4eb8ad41ff5"
@@ -119,8 +119,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1050,
-        "y": 320,
+        "x": 670,
+        "y": 180,
         "wires": []
     },
     {
@@ -136,8 +136,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1240,
-        "y": 380,
+        "x": 880,
+        "y": 200,
         "wires": []
     },
     {
@@ -152,8 +152,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 580,
-        "y": 360,
+        "x": 560,
+        "y": 300,
         "wires": []
     },
     {
@@ -168,8 +168,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1230,
-        "y": 480,
+        "x": 870,
+        "y": 240,
         "wires": [
             [
                 "09ee625014864b75"
@@ -188,12 +188,129 @@
         "winHide": false,
         "oldrc": false,
         "name": "Blender Runner",
-        "x": 1440,
-        "y": 480,
+        "x": 780,
+        "y": 300,
         "wires": [
             [],
             [],
-            []
+            [
+                "90b76ac74a1c6bf3"
+            ]
         ]
+    },
+    {
+        "id": "90b76ac74a1c6bf3",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Verificar Blender",
+        "func": "const result = msg.payload;\n\nif (result.code !== 0) {\n    node.error(\n        `Etapa Blender falhou: código ${result.code}`,\n        msg\n    );\n    return null;\n}\n\nif (!msg.run_dir) {\n    node.error(\"Run não encontrada.\", msg);\n    return null;\n}\n\nmsg.payload = `\"${msg.run_dir}\"`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 300,
+        "wires": [
+            [
+                "5ccc998394e86ad2"
+            ]
+        ]
+    },
+    {
+        "id": "5ccc998394e86ad2",
+        "type": "exec",
+        "z": "5376ca69f972b593",
+        "command": "python -m src.runners.unity_runner --run",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "0",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Unitty Runner",
+        "x": 1120,
+        "y": 240,
+        "wires": [
+            [
+                "e131fe00b22ddb4c"
+            ],
+            [
+                "f25b5b522daf868f"
+            ],
+            [
+                "5b3a395ecc23321b"
+            ]
+        ]
+    },
+    {
+        "id": "5b3a395ecc23321b",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Verificar Unity",
+        "func": "const result = msg.payload;\n\nif (result.code !== 0) {\n    node.error(\n        `Etapa Unity falhou: código ${result.code}`,\n        msg\n    );\n    return null;\n}\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: \"Run concluída\"\n});\n\nmsg.payload = {\n    ok: true,\n    run_id: msg.run_id,\n    run_dir: msg.run_dir\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 240,
+        "wires": [
+            [
+                "5902ec54f60451d2"
+            ]
+        ]
+    },
+    {
+        "id": "5902ec54f60451d2",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "Run concluída",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e131fe00b22ddb4c",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f25b5b522daf868f",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 200,
+        "wires": []
     }
 ]
