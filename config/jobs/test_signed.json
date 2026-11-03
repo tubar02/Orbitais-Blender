@@ -7,7 +7,7 @@
         "m": 0
     },
     "basis": ["real"],
-    "representations": ["single", "signed"],
+    "representations": ["signed"],
     "overrides": {
         "scientific": {
             "space": {

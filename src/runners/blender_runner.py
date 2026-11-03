@@ -21,23 +21,38 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	bases = job["basis"]
 	representations = job["representations"]
 
-	if len(bases) != 1 or list(representations) != ["single"]:
-		raise ValueError("Blender runner ainda suporta somente uma base e a representação single.")
+	if len(bases) != 1 or len(representations) != 1:
+		raise ValueError("Blender aceita uma base e uma representação por run.")
 
 	basis = bases[0]
-	input_dir = run_dir / "scientific" / "single"
+	mode = next(iter(representations))
+	if mode not in {"single", "signed"}:
+		raise ValueError(f"Representação não suportada: {mode}. Suportadas: single, signed.")
+
+	if mode == "signed" and basis != "real":
+		raise ValueError("signed exige base real.")
+
+	input_dir = run_dir / "scientific" / mode
 	output_dir = run_dir / "blender"
 	global_scale = job["blender"]["fbx"]["global_scale"]
 
+	if not input_dir.is_dir():
+		raise FileNotFoundError(f"Diretório de entrada não encontrado: {input_dir}")
+	
 	# Nomes esperados a partir do Job.
 	orbital_names = [sel.orbital_stem(n, l, m, basis) for n, l, m in sel.iter_orbitals(selection)]
 
 	if not orbital_names:
 		raise RuntimeError("Nenhum orbital solicitado.")
 
-	expected_files = {input_dir / f"{name}.obj"	for name in orbital_names}
+	# O modo single gera arquivos diretamente.
+	# O modo signed gera subpastas com pos.obj e/ou neg.obj.
+	if mode == "single":
+		expected_files = {input_dir / f"{name}.obj"	for name in orbital_names}
+	else:
+		expected_files = {input_dir / name	for name in orbital_names}
 
-	actual_files = set(input_dir.glob("*.obj"))
+	actual_files = set(input_dir.iterdir())
 
 	if expected_files != actual_files:
 		missing = expected_files - actual_files
@@ -49,19 +64,42 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 			f"Inesperados: {[p.name for p in unexpected]}."
 		)
 
-	# Limpa a cena apenas uma vez.
+	# Validação do conteúdo
+	for entry in expected_files:
+		if mode == "single":
+			if not entry.is_file() or entry.stat().st_size == 0:
+				raise RuntimeError(f"OBJ inválido: {entry}")
+		else:
+			if not entry.is_dir():
+				raise RuntimeError(f"Diretório esperado não encontrado: {entry}")
+
+			parts = list(entry.iterdir())
+			names = {p.name for p in parts}
+			if not parts or not names <= {"pos.obj", "neg.obj"}:
+				raise RuntimeError(f"Partes signed inválidas: {entry}")
+
+			for part in parts:
+				if not part.is_file() or part.stat().st_size == 0:
+					raise RuntimeError(f"OBJ inválido: {part}")
+			
+	# Cena limpa
 	bpy.ops.object.select_all(action="SELECT")
 	bpy.ops.object.delete(use_global=False)
-	orbitals = bl.loader.load_all_orbitals(basis, mode="single", input_dir=input_dir)
+
+	orbitals = bl.loader.load_all_orbitals(basis, mode=mode, input_dir=input_dir)
+	expected_key = {(n, l, m, basis) for n, l, m in sel.iter_orbitals(selection)}
+	if set(orbitals) != expected_key:
+		raise RuntimeError("Os orbitais carregados não correspondem ao Job")
 
 	fbx_files = []
 	for (n, l, m, orb_basis), obj in orbitals.items():
 		orbital_name = sel.orbital_stem(n, l, m, orb_basis)
 		print(f"Processando {orbital_name}", flush=True)
-		fbx_path = bl.exporter.export_fbx(obj, orbital_name, mode="single", output_dir=output_dir / "single", global_scale=global_scale)
+		fbx_path = bl.exporter.export_fbx(obj, orbital_name, mode=mode, output_dir=output_dir / mode, global_scale=global_scale)
 		fbx_files.append(fbx_path)
 		print(f"FBX concluído: {fbx_path.name}", flush=True)
 
+	# Um blend com todos os orbitais da run
 	if save_blend:
 		rows = bl.layout.group_orbitals(orbitals)
 		bl.layout.arrange_orbital_grid(rows)
