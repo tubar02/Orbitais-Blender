@@ -14,57 +14,85 @@ import src.io.json_io as json_io
 import src.services.run_service as runs
 
 
-def execute_blender(run_dir: Path, save_blend: bool = False) -> Path:
+def orbital_tasks(selection: dict):
+	if selection["type"] == "single":
+		yield (selection["n"], selection["l"], selection["m"])
+
+	elif selection["type"] == "range":
+		for n in range(selection["n_min"], selection["n_max"] + 1):
+			for l in range(n):
+				for m in range(-l, l + 1):
+					yield n, l, m
+
+	else:
+		raise ValueError("Tipo de seleção desconhecido.")
+
+def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	job = json_io.load_json(run_dir / "job.json")
 
 	selection = job["selection"]
 	bases = job["basis"]
 	representations = job["representations"]
 
-	if selection["type"] != "single":
-		raise ValueError("Blender runner ainda não aceita range.")
-
 	if len(bases) != 1 or list(representations) != ["single"]:
-		raise ValueError(
-			"Blender runner ainda aceita apenas uma base e o modo single."
-		)
+		raise ValueError("Blender runner ainda suporta somente uma base e a representação single.")
 
-	n = selection["n"]
-	l = selection["l"]
-	m = selection["m"]
 	basis = bases[0]
-
-	orbital_name = f"orbital_n{n}_l{l}_m{m}_{basis}"
-
 	input_dir = run_dir / "scientific" / "single"
 	output_dir = run_dir / "blender"
-
-	source_file = input_dir / f"{orbital_name}.obj"
-
-	if not source_file.is_file():
-		raise FileNotFoundError(f"OBJ não encontrado: {source_file}")
-
-	# Começa com uma cena limpa, sem o cubo padrão.
-	bpy.ops.object.select_all(action="SELECT")
-	bpy.ops.object.delete(use_global=False)
-
-	obj = bl.loader.load_single_orbital(orbital_name, mode="single", input_dir=input_dir)
-
 	global_scale = job["blender"]["fbx"]["global_scale"]
 
-	fbx_path = bl.exporter.export_fbx(obj, orbital_name, mode="single",	output_dir=output_dir / "single", global_scale=global_scale)
+	# Nomes esperados a partir do Job.
+	orbital_names = [f"orbital_n{n}_l{l}_m{m}_{basis}" for n, l, m in orbital_tasks(selection)]
+
+	if not orbital_names:
+		raise RuntimeError("Nenhum orbital solicitado.")
+
+	expected_files = {input_dir / f"{name}.obj"	for name in orbital_names}
+
+	actual_files = set(input_dir.glob("*.obj"))
+
+	if expected_files != actual_files:
+		missing = expected_files - actual_files
+		unexpected = actual_files - expected_files
+
+		raise RuntimeError(
+			f"Arquivos OBJ inconsistentes. "
+			f"Ausentes: {[p.name for p in missing]}. "
+			f"Inesperados: {[p.name for p in unexpected]}."
+		)
+
+	# Limpa a cena apenas uma vez.
+	bpy.ops.object.select_all(action="SELECT")
+	bpy.ops.object.delete(use_global=False)
+	orbitals = bl.loader.load_all_orbitals(basis, mode="single", input_dir=input_dir)
+
+	fbx_files = []
+	for (n, l, m, orb_basis), obj in orbitals.items():
+		orbital_name = f"orbital_n{n}_l{l}_m{m}_{basis}"
+		print(f"Processando {orbital_name}", flush=True)
+		fbx_path = bl.exporter.export_fbx(obj, orbital_name, mode="single", output_dir=output_dir / "single", global_scale=global_scale)
+		fbx_files.append(fbx_path)
+		print(f"FBX concluído: {fbx_path.name}", flush=True)
 
 	if save_blend:
-		blend_path = output_dir / f"{orbital_name}.blend"
+		rows = bl.layout.group_orbitals(orbitals)
+		bl.layout.arrange_orbital_grid(rows)
+		bl.scene.organize_collections(orbitals)
+
+		blend_path = output_dir / f"{run_dir.name}.blend"
 
 		bpy.ops.wm.save_as_mainfile(filepath=str(blend_path))
 
-		if not blend_path.is_file():
-			raise RuntimeError(f"Arquivo .blend não encontrado: {blend_path}")
+		if (not blend_path.is_file() or blend_path.stat().st_size == 0):
+			raise RuntimeError(f"Arquivo .blend inválido: {blend_path}")
 
-		print(f"Cena salva: {blend_path}")
+		print(f"Cena completa salva: {blend_path}", flush=True)
 
-	return fbx_path
+	if len(fbx_files) != len(orbital_names):
+		raise RuntimeError("Quantidade de FBXs diferente da esperada.")
+
+	return fbx_files
 
 def main():
 	parser = argparse.ArgumentParser()
@@ -83,11 +111,15 @@ def main():
 	try:
 		runs.start_stage(run_dir, "blender")
 
-		fbx_path = execute_blender(run_dir, args.save_blend)
+		fbx_files = execute_blender(run_dir, args.save_blend)
 
 		runs.complete_stage(run_dir, "blender")
 
-		print(f"Etapa Blender concluída: {fbx_path}")
+		print(
+			f"Etapa Blender concluída: "
+			f"{len(fbx_files)} FBXs gerados.",
+			flush=True
+		)
 
 	except Exception as exc:
 		try:

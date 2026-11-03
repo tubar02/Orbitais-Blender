@@ -39,9 +39,9 @@ def load_single_orbital(orbital_name, mode, input_dir: Path | None = None):
 		
 	return obj
 
-def load_all_orbitals(basis, mode):
+def load_all_orbitals(basis, mode, input_dir: Path | None = None):
 	orbitals = {}
-	dir_path = io.DATA_DIR / mode
+	dir_path = (input_dir if input_dir is not None else io.DATA_DIR / mode)
 	available = bl.reader.discover_orbitals(basis, dir_path)
 
 	for n, l, m, orb_basis, name in available:
