@@ -28,8 +28,8 @@
         "topic": "",
         "payload": "test_single",
         "payloadType": "str",
-        "x": 180,
-        "y": 280,
+        "x": 140,
+        "y": 260,
         "wires": [
             [
                 "c99a843c87259530"
@@ -48,8 +48,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "Preparar run",
-        "x": 370,
-        "y": 280,
+        "x": 330,
+        "y": 260,
         "wires": [
             [
                 "da741f622ceb777d"
@@ -72,8 +72,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 220,
+        "x": 560,
+        "y": 240,
         "wires": [
             [
                 "073d8ddff9379f82"
@@ -92,7 +92,7 @@
         "winHide": false,
         "oldrc": false,
         "name": "Runner Científico",
-        "x": 630,
+        "x": 830,
         "y": 240,
         "wires": [
             [
@@ -110,7 +110,7 @@
         "id": "d250f4eb8ad41ff5",
         "type": "debug",
         "z": "5376ca69f972b593",
-        "name": "Resultado científico",
+        "name": "Saída - Científico",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -119,7 +119,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 670,
+        "x": 850,
         "y": 180,
         "wires": []
     },
@@ -127,7 +127,7 @@
         "id": "cc18a3bb6e2c326e",
         "type": "debug",
         "z": "5376ca69f972b593",
-        "name": "Erros científicos",
+        "name": "Erros - Científico",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -136,24 +136,25 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 880,
-        "y": 200,
+        "x": 1110,
+        "y": 180,
         "wires": []
     },
     {
         "id": "08d084e2ce857a80",
         "type": "debug",
         "z": "5376ca69f972b593",
-        "name": "debug 1",
+        "name": "Erros - Preparação",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 560,
-        "y": 300,
+        "x": 390,
+        "y": 360,
         "wires": []
     },
     {
@@ -168,8 +169,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 870,
-        "y": 240,
+        "x": 630,
+        "y": 340,
         "wires": [
             [
                 "09ee625014864b75"
@@ -188,11 +189,15 @@
         "winHide": false,
         "oldrc": false,
         "name": "Blender Runner",
-        "x": 780,
-        "y": 300,
+        "x": 880,
+        "y": 340,
         "wires": [
-            [],
-            [],
+            [
+                "b2a895f0d79a98cb"
+            ],
+            [
+                "9e9c694e667f3a11"
+            ],
             [
                 "90b76ac74a1c6bf3"
             ]
@@ -210,8 +215,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 980,
-        "y": 300,
+        "x": 1120,
+        "y": 340,
         "wires": [
             [
                 "5ccc998394e86ad2"
@@ -229,9 +234,9 @@
         "timer": "0",
         "winHide": false,
         "oldrc": false,
-        "name": "Unitty Runner",
-        "x": 1120,
-        "y": 240,
+        "name": "Unity Runner",
+        "x": 1290,
+        "y": 340,
         "wires": [
             [
                 "e131fe00b22ddb4c"
@@ -256,8 +261,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1340,
-        "y": 240,
+        "x": 1520,
+        "y": 340,
         "wires": [
             [
                 "5902ec54f60451d2"
@@ -277,7 +282,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1220,
+        "x": 1660,
         "y": 300,
         "wires": []
     },
@@ -285,32 +290,100 @@
         "id": "e131fe00b22ddb4c",
         "type": "debug",
         "z": "5376ca69f972b593",
-        "name": "debug 2",
+        "name": "Saída - Unity",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1080,
-        "y": 180,
+        "x": 1350,
+        "y": 260,
         "wires": []
     },
     {
         "id": "f25b5b522daf868f",
         "type": "debug",
         "z": "5376ca69f972b593",
-        "name": "debug 3",
+        "name": "Erros - Unity",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1340,
-        "y": 200,
+        "x": 1550,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3fbba17e6e644980",
+        "type": "catch",
+        "z": "5376ca69f972b593",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 780,
+        "y": 440,
+        "wires": [
+            [
+                "107d429301e3b16c"
+            ]
+        ]
+    },
+    {
+        "id": "107d429301e3b16c",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "Erros - Pipeline",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "b2a895f0d79a98cb",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "Saída - Blender",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "9e9c694e667f3a11",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "Erros - Blender",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 280,
         "wires": []
     }
 ]
