@@ -41,11 +41,33 @@ public class OrbitalPresenter : MonoBehaviour
 
 	private GameObject currentOrbital;
 
+	#if UNITY_EDITOR
+	public const string ActiveRunKey = "Orbitals.ActiveRun";
+
+	public static string ActiveRunId =>	SessionState.GetString(ActiveRunKey, "");
+	#endif
+
 	private void Start()
 	{
-#if UNITY_EDITOR
+	#if UNITY_EDITOR
 		UpdateCatalog();
-#endif 
+
+		if (!string.IsNullOrEmpty(OrbitalPresenter.ActiveRunId))
+		{
+			if (orbitalEntries.Count == 0)
+			{
+				Debug.LogError("A Run selecionada não possui orbitais.");
+				return;
+			}
+
+			OrbitalEntry first = orbitalEntries[0];
+
+			LoadOrbital(first.n, first.l, first.m, first.basis,	first.mode);
+
+			return;
+		}
+	#endif
+
 		LoadSelectedOrbital();
 	}
 
@@ -156,7 +178,12 @@ public class OrbitalPresenter : MonoBehaviour
 	[ContextMenu("Atualizar catálogo")]
 	private void UpdateCatalog()
 	{
-		const string folder = "Assets/Orbitals";
+		string activeRun = OrbitalPresenter.ActiveRunId;
+		string folder = string.IsNullOrEmpty(activeRun)	? "Assets/Orbitals"	: $"Assets/Orbitals/{activeRun}";
+		if (!AssetDatabase.IsValidFolder(folder))
+		{
+			throw new DirectoryNotFoundException($"Diretório do catálogo não encontrado: {folder}");
+		}
 
 		Regex pattern = new Regex(@"^orbital_n(\d+)_l(\d+)_m(-?\d+)_" +
 			@"(real|complex)_(single|multilayer|signed)$", RegexOptions.IgnoreCase);

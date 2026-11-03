@@ -6,6 +6,13 @@ using UnityEngine;
 
 public static class OrbitalRunImporter
 {
+	[MenuItem("Tools/Orbitais/Usar catálogo geral")]
+	public static void UseGeneralCatalog()
+	{
+		SessionState.SetString(OrbitalPresenter.ActiveRunKey, "");
+		Debug.Log("Catálogo geral ativado.");
+	}
+
 	[MenuItem("Tools/Orbitais/Importar FBX de uma Run")]
 	public static void ImportFromMenu()
 	{
@@ -61,5 +68,9 @@ public static class OrbitalRunImporter
 		}
 
 		Debug.Log($"Run {runId}: {files.Length} FBX importado(s).");
+
+		SessionState.SetString(OrbitalPresenter.ActiveRunKey, runId);
+
+		Debug.Log($"Run ativa: {runId}");
 	}
 }
