@@ -166,6 +166,28 @@ public static class OrbitalRecordingRunner
 		}
 	}
 
+	public static void StartRunFromCommandLine()
+	{
+		string[] args = Environment.GetCommandLineArgs();
+		string runDir = null;
+
+		for (int i = 0; i < args.Length - 1; i++)
+		{
+			if (args[i] == "-orbitalsRun")
+			{
+				runDir = args[i + 1];
+				break;
+			}
+		}
+
+		if (string.IsNullOrWhiteSpace(runDir))
+			throw new ArgumentException("Informe o caminho usando -orbitalsRun.");
+
+		Debug.Log($"Iniciando Run pelo terminal: {runDir}");
+
+		StartRun(runDir);
+	}
+
 	public static void StartRun(string runDir)
 	{
 		if (running || SessionState.GetBool(PendingKey, false))
