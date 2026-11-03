@@ -12,6 +12,9 @@ public static class OrbitalRecordingRunner
 	private const string PendingKey = "Orbitals.Pending";
 	private const string BasisKey = "Orbitals.Basis";
 	private const string ModeKey = "Orbitals.Mode";
+	private const string CommandLineKey = "Orbitals.CommandLine";
+	private const string RunDirectoryKey = "Orbitals.RunDirectory";
+	private const string ExitCodeKey = "Orbitals.ExitCode";
 
 	private static bool running;
 
@@ -57,6 +60,11 @@ public static class OrbitalRecordingRunner
 
 		if (state == PlayModeStateChange.ExitingPlayMode)
 		{
+			if (SessionState.GetBool(CommandLineKey, false) && SessionState.GetInt(ExitCodeKey, -1) == -1)
+			{
+				SessionState.SetInt(ExitCodeKey, 1);
+			}
+
 			EditorApplication.update -= WaitForPresenter;
 			OrbitalGifRecorder.RecordingFinished -= OnRecordingFinished;
 			OrbitalGifRecorder.CancelRecording();
@@ -64,6 +72,11 @@ public static class OrbitalRecordingRunner
 			SessionState.SetBool(PendingKey, false);
 			SessionState.SetBool(AutoExitKey, false);
 			running = false;
+		}
+
+		if (state == PlayModeStateChange.EnteredEditMode && SessionState.GetBool(CommandLineKey, false))
+		{
+			EditorApplication.delayCall += FinishCommandLineRun;
 		}
 	}
 
@@ -117,6 +130,11 @@ public static class OrbitalRecordingRunner
 		OrbitalGifRecorder.RecordingFinished -= OnRecordingFinished;
 
 		running = false;
+
+		if (SessionState.GetBool(CommandLineKey, false))
+		{
+			SessionState.SetInt(ExitCodeKey, success ? 0 : 1);
+		}
 
 		if (success)
 			Debug.Log("Runner: gravação concluída com sucesso.");
@@ -183,9 +201,60 @@ public static class OrbitalRecordingRunner
 		if (string.IsNullOrWhiteSpace(runDir))
 			throw new ArgumentException("Informe o caminho usando -orbitalsRun.");
 
-		Debug.Log($"Iniciando Run pelo terminal: {runDir}");
+		SessionState.SetBool(CommandLineKey, true);
+		SessionState.SetString(RunDirectoryKey,	Path.GetFullPath(runDir));
+		SessionState.SetInt(ExitCodeKey, -1);
 
-		StartRun(runDir);
+		try
+		{
+			StartRun(runDir);
+		}
+		catch (Exception exception)
+		{
+			Debug.LogException(exception);
+			EditorApplication.Exit(1);
+		}
+	}
+
+	private static void FinishCommandLineRun()
+	{
+		if (!SessionState.GetBool(CommandLineKey, false))
+			return;
+
+		int exitCode = SessionState.GetInt(ExitCodeKey, 1);
+		string runDir = SessionState.GetString(RunDirectoryKey, "");
+
+		if (exitCode == 0)
+		{
+			string outputDir = Path.Combine(runDir, "unity", "single");
+
+			string[] gifs = Directory.Exists(outputDir)	? Directory.GetFiles(outputDir, "*.gif") : Array.Empty<string>();
+
+			bool valid = gifs.Length > 0;
+
+			foreach (string gif in gifs)
+			{
+				if (new FileInfo(gif).Length == 0)
+				{
+					valid = false;
+					break;
+				}
+			}
+
+			if (!valid)
+			{
+				Debug.LogError("Gravação finalizada, mas nenhum GIF válido foi encontrado.");
+				exitCode = 1;
+			}
+		}
+
+		Debug.Log($"Unity finalizado. Código: {exitCode}");
+
+		SessionState.SetBool(CommandLineKey, false);
+		SessionState.EraseString(RunDirectoryKey);
+		SessionState.EraseInt(ExitCodeKey);
+
+		EditorApplication.Exit(exitCode);
 	}
 
 	public static void StartRun(string runDir)
