@@ -1,4 +1,4 @@
-
+using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEditor;
@@ -23,6 +23,23 @@ public static class OrbitalGifRecorder
 	private static bool startNextOrbital;
 
 	public static event System.Action<bool> RecordingFinished;
+
+	private const string OutputDirKey = "Orbitals.OutputDirectory";
+
+	private static string runOutputDir => SessionState.GetString(OutputDirKey, "");
+
+	public static void SetOutputDirectory(string directory)
+	{
+		if (string.IsNullOrWhiteSpace(directory))
+			throw new ArgumentException("Diretório de saída inválido.");
+
+		SessionState.SetString(OutputDirKey, Path.GetFullPath(directory));
+	}
+
+	public static void UseDefaultOutputDirectory()
+	{
+		SessionState.EraseString(OutputDirKey);
+	}
 
 	[MenuItem("Tools/Orbitais/Gravar GIF")]
 	public static void RecordGif()
@@ -86,7 +103,9 @@ public static class OrbitalGifRecorder
 
 	private static RecorderController CreateRecorder(string fileName, float duration, bool manual = false)
 	{
-		string outputDir = Path.Combine(Application.dataPath, "Recordings");
+		string outputDir = string.IsNullOrEmpty(runOutputDir) ? Path.Combine(Application.dataPath, "Recordings") : runOutputDir;
+		Debug.Log($"Gravando GIF em: {outputDir}");
+		outputDir = Path.Combine(outputDir, "single");
 		Directory.CreateDirectory(outputDir);
 		
 		MovieRecorderSettings movieSettings = ScriptableObject.CreateInstance<MovieRecorderSettings>();

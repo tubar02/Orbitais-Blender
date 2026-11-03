@@ -10,6 +10,7 @@ public static class OrbitalRunImporter
 	public static void UseGeneralCatalog()
 	{
 		SessionState.SetString(OrbitalPresenter.ActiveRunKey, "");
+		OrbitalGifRecorder.UseDefaultOutputDirectory();
 		Debug.Log("Catálogo geral ativado.");
 	}
 
@@ -70,7 +71,8 @@ public static class OrbitalRunImporter
 		Debug.Log($"Run {runId}: {files.Length} FBX importado(s).");
 
 		SessionState.SetString(OrbitalPresenter.ActiveRunKey, runId);
-
 		Debug.Log($"Run ativa: {runId}");
+
+		OrbitalGifRecorder.SetOutputDirectory(Path.Combine(runDir, "unity"));
 	}
 }
