@@ -1,37 +1,37 @@
 {
-"scientific": {
-	"basis": ["real"],
-	"percent": 0.01,
-	"representation_params": {
-		"point_cloud": {
-			"tolerancia": 0.0001
+	"scientific": {
+		"basis": ["real"],
+		"percent": 0.01,
+		"representation_params": {
+			"point_cloud": {
+				"tolerancia": 0.0001
+			},
+			"single": {},
+			"multilayer": {
+				"layers": 10
+			},
+			"signed": {}
 		},
-		"single": {},
-		"multilayer": {
-			"layers": 10
+		"space": {
+			"num_div": null
+		}
+	},
+	"blender": {
+		"fbx": {
+		"global_scale": 1.0
+		}
+	},
+	"unity": {
+		"presentation": {
+		"rotation_speed": 90.0,
+		"screen_fill": 0.95,
+		"revolutions": 3
 		},
-		"signed": {}
-	},
-	"space": {
-		"num_div": null
+		"recording": {
+		"fps": 50,
+		"resolution": 1080,
+		"quality": 90,
+		"loop": true
+		}
 	}
-},
-"blender": {
-	"fbx": {
-	"global_scale": 1.0
-	}
-},
-"unity": {
-	"presentation": {
-	"rotation_speed": 90.0,
-	"screen_fill": 0.95,
-	"revolutions": 3
-	},
-	"recording": {
-	"fps": 50,
-	"resolution": 1080,
-	"quality": 90,
-	"loop": true
-	}
-}
 }

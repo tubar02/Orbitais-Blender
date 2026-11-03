@@ -14,108 +14,109 @@ import src.blender as bl
 import src.io.json_io as json_io
 import src.services.run_service as runs
 
-def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
-	job = json_io.load_json(run_dir / "job.json")
-
-	selection = job["selection"]
-	bases = job["basis"]
-	representations = job["representations"]
-
-	if len(bases) != 1 or len(representations) != 1:
-		raise ValueError("Blender aceita uma base e uma representação por run.")
-
-	basis = bases[0]
-	mode = next(iter(representations))
-	if mode not in {"single", "signed"}:
-		raise ValueError(f"Representação não suportada: {mode}. Suportadas: single, signed.")
-
-	if mode == "signed" and basis != "real":
-		raise ValueError("signed exige base real.")
-
-	input_dir = run_dir / "scientific" / mode
-	output_dir = run_dir / "blender"
-	global_scale = job["blender"]["fbx"]["global_scale"]
-
+def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: str) -> None:
 	if not input_dir.is_dir():
-		raise FileNotFoundError(f"Diretório de entrada não encontrado: {input_dir}")
-	
-	# Nomes esperados a partir do Job.
-	orbital_names = [sel.orbital_stem(n, l, m, basis) for n, l, m in sel.iter_orbitals(selection)]
+		raise FileNotFoundError(input_dir)
 
-	if not orbital_names:
-		raise RuntimeError("Nenhum orbital solicitado.")
-
-	# O modo single gera arquivos diretamente.
-	# O modo signed gera subpastas com pos.obj e/ou neg.obj.
 	if mode == "single":
-		expected_files = {input_dir / f"{name}.obj"	for name in orbital_names}
+		expected = {input_dir / f"{name}.obj" for name in orbital_names}
+	elif mode == "signed":
+		expected = {input_dir / name for name in orbital_names}
 	else:
-		expected_files = {input_dir / name	for name in orbital_names}
+		raise ValueError(f"Modo inválido: {mode}")
 
-	actual_files = set(input_dir.iterdir())
+	actual = set(input_dir.iterdir())
 
-	if expected_files != actual_files:
-		missing = expected_files - actual_files
-		unexpected = actual_files - expected_files
-
+	if actual != expected:
 		raise RuntimeError(
-			f"Arquivos OBJ inconsistentes. "
-			f"Ausentes: {[p.name for p in missing]}. "
-			f"Inesperados: {[p.name for p in unexpected]}."
+			f"Entradas {mode} inconsistentes. "
+			f"Ausentes: {sorted(p.name for p in expected - actual)}. "
+			f"Inesperadas: {sorted(p.name for p in actual - expected)}."
 		)
 
-	# Validação do conteúdo
-	for entry in expected_files:
+	for entry in expected:
 		if mode == "single":
 			if not entry.is_file() or entry.stat().st_size == 0:
 				raise RuntimeError(f"OBJ inválido: {entry}")
 		else:
 			if not entry.is_dir():
-				raise RuntimeError(f"Diretório esperado não encontrado: {entry}")
+				raise RuntimeError(f"Pasta inválida: {entry}")
 
 			parts = list(entry.iterdir())
-			names = {p.name for p in parts}
-			if not parts or not names <= {"pos.obj", "neg.obj"}:
+
+			if (not parts or not {p.name for p in parts} <= {"pos.obj", "neg.obj"}):
 				raise RuntimeError(f"Partes signed inválidas: {entry}")
 
-			for part in parts:
-				if not part.is_file() or part.stat().st_size == 0:
-					raise RuntimeError(f"OBJ inválido: {part}")
+			if any(not p.is_file() or p.stat().st_size == 0 for p in parts):
+				raise RuntimeError(f"OBJ signed inválido: {entry}")
+
+def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
+	job = json_io.load_json(run_dir / "job.json")
+
+	bases = job["basis"]
+	modes = list(job["representations"])
+
+	if len(bases) != 1:
+		raise ValueError("Blender ainda aceita apenas uma base.")
+
+	if not modes or set(modes) - {"single", "signed"}:
+		raise ValueError(f"Representações inválida: {modes}")
+
+	basis = bases[0]
+
+	if "signed" in modes and basis != "real":
+		raise ValueError("signed exige base real.")
+
+	orbital_keys = list(sel.iter_orbitals(job["selection"]))
+	if not orbital_keys:
+		raise RuntimeError("Nenhum orbital solicitado")
+	orbital_names = [sel.orbital_stem(n, l, m, basis) for n, l, m in orbital_keys]
+	global_scale = job["blender"]["fbx"]["global_scale"]
+	output_dir = run_dir / "blender"
+
+	for mode in modes:
+		validate_scientific_inputs(run_dir / "scientific" / mode, orbital_names, mode)
 			
 	# Cena limpa
 	bpy.ops.object.select_all(action="SELECT")
 	bpy.ops.object.delete(use_global=False)
 
-	orbitals = bl.loader.load_all_orbitals(basis, mode=mode, input_dir=input_dir)
-	expected_key = {(n, l, m, basis) for n, l, m in sel.iter_orbitals(selection)}
-	if set(orbitals) != expected_key:
-		raise RuntimeError("Os orbitais carregados não correspondem ao Job")
-
+	orbitals_by_mode = {}
 	fbx_files = []
-	for (n, l, m, orb_basis), obj in orbitals.items():
-		orbital_name = sel.orbital_stem(n, l, m, orb_basis)
-		print(f"Processando {orbital_name}", flush=True)
-		fbx_path = bl.exporter.export_fbx(obj, orbital_name, mode=mode, output_dir=output_dir / mode, global_scale=global_scale)
-		fbx_files.append(fbx_path)
-		print(f"FBX concluído: {fbx_path.name}", flush=True)
+	expected_keys = {(n, l, m, basis) for n, l, m in orbital_keys}
+
+	for mode in modes:
+		input_dir = run_dir / "scientific" / mode
+		orbitals = bl.loader.load_all_orbitals(basis, mode=mode, input_dir=input_dir)
+
+		if set(orbitals) != expected_keys:
+			raise RuntimeError(f"Orbitais carregados inconsistentes: {mode}")
+
+		orbitals_by_mode[mode] = orbitals
+		for (n, l, m, orb_basis), obj in orbitals.items():
+			orbital_name = sel.orbital_stem(n, l, m, orb_basis)
+			obj.name = sel.orbital_stem(n, l, m, orb_basis, mode=mode)
+			fbx_path = bl.exporter.export_fbx(obj, orbital_name, mode=mode, output_dir=output_dir / mode, global_scale=global_scale)
+			fbx_files.append(fbx_path)
+			print(f"FBX concluído: {fbx_path.name}", flush=True)
+
+	if len(fbx_files) != len(orbital_names) * len(modes):
+		raise RuntimeError("Quantidade incorreta de FBXs.")
 
 	# Um blend com todos os orbitais da run
 	if save_blend:
-		rows = bl.layout.group_orbitals(orbitals)
-		bl.layout.arrange_orbital_grid(rows)
-		bl.scene.organize_collections(orbitals)
+		x_offset = 0.0
 
+		for mode, orbitals in orbitals_by_mode.items():
+			rows = bl.layout.group_orbitals(orbitals)
+			x_offset = bl.layout.arrange_orbital_grid(rows, x_offset=x_offset) + 20.0
+			bl.scene.organize_collections(orbitals, mode=mode)
+			
 		blend_path = output_dir / f"{run_dir.name}.blend"
-
 		bpy.ops.wm.save_as_mainfile(filepath=str(blend_path))
-
 		if (not blend_path.is_file() or blend_path.stat().st_size == 0):
 			raise RuntimeError(f"Arquivo .blend inválido: {blend_path}")
-
-		print(f"Cena completa salva: {blend_path}", flush=True)
-
-	if len(fbx_files) != len(orbital_names):
-		raise RuntimeError("Quantidade de FBXs diferente da esperada.")
+		print(f"Cena salva: {blend_path}", flush=True)
 
 	return fbx_files
 

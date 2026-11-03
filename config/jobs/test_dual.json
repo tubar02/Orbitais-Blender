@@ -1,0 +1,17 @@
+{
+	"name": "test_dual",
+	"selection": {
+		"type": "range",
+		"n_min": 2,
+		"n_max": 2
+	},
+	"basis": ["real"],
+	"representations": ["single", "signed"],
+	"overrides": {
+		"scientific": {
+			"space": {
+				"num_div": 20
+			}
+		}
+	}
+}

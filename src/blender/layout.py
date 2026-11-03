@@ -15,11 +15,12 @@ def group_orbitals(orbitals: dict):
 		rows.setdefault(n, {}).setdefault(l, []).append(obj)
 	return rows
 
-def arrange_orbital_grid(rows, margin_x=8, margin_y=30, margin_l=18):
+def arrange_orbital_grid(rows, margin_x=8, margin_y=30, margin_l=18, x_offset = 0):
 	y_cursor = 0
+	max_right = x_offset
 
 	for n, groups_l in rows.items():
-		x_cursor = 0
+		x_cursor = x_offset
 		row_height = 0
 
 		for l, objs in groups_l.items():
@@ -34,7 +35,11 @@ def arrange_orbital_grid(rows, margin_x=8, margin_y=30, margin_l=18):
 				x_cursor += width + margin_x
 				row_height = max(row_height, height)
 
+				max_right = max(max_right, obj.location.x + width / 2)
+
 			# espaço extra entre blocos de l
 			x_cursor += margin_l
 
 		y_cursor -= row_height + margin_y
+
+	return max_right

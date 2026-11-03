@@ -1,18 +1,18 @@
 {
-    "name": "test_signed",
-    "selection": {
-        "type": "single",
-        "n": 2,
-        "l": 1,
-        "m": 0
-    },
-    "basis": ["real"],
-    "representations": ["signed"],
-    "overrides": {
-        "scientific": {
-            "space": {
-                "num_div": 50
-            }
-        }
-    }
+	"name": "test_signed",
+	"selection": {
+		"type": "single",
+		"n": 2,
+		"l": 1,
+		"m": 0
+	},
+	"basis": ["real"],
+	"representations": ["signed"],
+	"overrides": {
+		"scientific": {
+			"space": {
+				"num_div": 50
+			}
+		}
+	}
 }

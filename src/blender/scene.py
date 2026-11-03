@@ -35,10 +35,16 @@ def move_collection_to_collection(child_col, parent_col):
 			pass
 		parent_col.children.link(child_col)
 
-def organize_collections(orbitals):
+def organize_collections(orbitals, mode=None):
+	prefix = f"{mode}_" if mode else ""
+	mode_col = make_collection(mode) if mode else None
+
 	for (n, l, _, _), obj in orbitals.items():
-		n_col = make_collection(f"n_{n}")
-		l_col = make_collection(f"n_{n}_l_{l}")
+		n_col = make_collection(f"{prefix}n_{n}")
+		l_col = make_collection(f"{prefix}n_{n}_l_{l}")
+
+		if mode_col is not None:
+			move_collection_to_collection(n_col, mode_col)
 		move_collection_to_collection(l_col, n_col)
 		move_to_collection(obj, l_col)
 	
