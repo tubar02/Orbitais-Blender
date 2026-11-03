@@ -131,3 +131,19 @@ def cancel_run(run_dir: Path) -> None:
 	data["finished_at"] = _now()
 
 	_save_run(run_dir, data)
+
+def retry_failed_unity(run_dir: Path) -> None:
+	data = _load_run(run_dir)
+
+	if (data["status"] != "failed" or data["stages"]["unity"] != "failed" or data["current_stage"] is not None):
+		raise ValueError("Somente Runs que falharam na etapa Unity podem ser retomadas por este comando.")
+
+	if any(data["stages"][stage] != "completed"	for stage in ("scientific", "blender")):
+		raise ValueError("Scientific e Blender precisam estar concluídos.")
+
+	data["status"] = "pending"
+	data["stages"]["unity"] = "pending"
+	data["finished_at"] = None
+	data["error"] = None
+
+	_save_run(run_dir, data)

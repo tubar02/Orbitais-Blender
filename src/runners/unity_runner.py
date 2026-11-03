@@ -134,9 +134,13 @@ def execute_unity(run_dir: Path) -> list[Path]:
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--run", type=Path, required=True)
+	parser.add_argument("--resume", action="store_true", help="Retoma a etapa Unity de uma Run con falha.")
 	args = parser.parse_args()
 
 	run_dir = args.run.resolve()
+
+	if args.resume:
+		runs.retry_failed_unity(run_dir)
 
 	try:
 		runs.start_stage(run_dir, "unity")

@@ -235,7 +235,7 @@
         "winHide": false,
         "oldrc": false,
         "name": "Unity Runner",
-        "x": 1290,
+        "x": 1310,
         "y": 340,
         "wires": [
             [
@@ -328,7 +328,7 @@
         "scope": null,
         "uncaught": false,
         "x": 780,
-        "y": 440,
+        "y": 540,
         "wires": [
             [
                 "107d429301e3b16c"
@@ -349,7 +349,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1000,
-        "y": 440,
+        "y": 540,
         "wires": []
     },
     {
@@ -385,5 +385,54 @@
         "x": 1120,
         "y": 280,
         "wires": []
+    },
+    {
+        "id": "d6544a1f6d71f07e",
+        "type": "inject",
+        "z": "5376ca69f972b593",
+        "name": "Retomar Run",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "run_20261103_094459_083da6f2",
+        "payloadType": "str",
+        "x": 890,
+        "y": 420,
+        "wires": [
+            [
+                "05c5de7ec959a6a8"
+            ]
+        ]
+    },
+    {
+        "id": "05c5de7ec959a6a8",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Preparar retomada",
+        "func": "const runId = String(msg.payload).trim();\n\n// Aceita somente IDs no formato utilizado pelo projeto.\nconst pattern = /^run_\\d{8}_\\d{6}_[a-fA-F0-9]{8}$/;\n\nif (!pattern.test(runId)) {\n    node.error(`ID de Run inválido: ${runId}`, msg);\n    return null;\n}\n\nmsg.run_id = runId;\nmsg.run_dir = `runs/${runId}`;\n\n// O nó Unity Runner já possui:\n// python -m src.runners.unity_runner --run\nmsg.payload = `\"${msg.run_dir}\" --resume`;\n\nnode.status({\n    fill: \"blue\",\n    shape: \"dot\",\n    text: `Retomando ${runId}`\n});\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 420,
+        "wires": [
+            [
+                "5ccc998394e86ad2"
+            ]
+        ]
     }
 ]

@@ -62,12 +62,36 @@ public static class OrbitalGifRecorder
 	{
 		return EditorApplication.isPlaying && !batchActive && (controller == null || !controller.IsRecording());
 	}
+	
+	private static bool IsValidExistingGif(string path)
+	{
+		if (!File.Exists(path))
+			return false;
+
+		using var stream = new FileStream(path, FileMode.Open, FileAccess.Read,	FileShare.ReadWrite);
+
+		if (stream.Length < 32)
+			return false;
+
+		byte[] header = new byte[6];
+		if (stream.Read(header, 0, 6) != 6)
+			return false;
+
+		string signature = System.Text.Encoding.ASCII.GetString(header);
+
+		if (signature != "GIF87a" && signature != "GIF89a")
+			return false;
+
+		// Marcador de encerramento do formato GIF.
+		stream.Seek(-1, SeekOrigin.End);
+		return stream.ReadByte() == 0x3B;
+	}
 
 	public static bool RecordBatch(string basis, string mode)
 	{
 		return RecordBatch(basis, new[] {mode});
 	}
-	
+
 	public static bool RecordBatch(string basis, string[] modes)
 	{
 		if (CheckRecordCond()) return false;
@@ -225,6 +249,26 @@ public static class OrbitalGifRecorder
 		}
 
 		OrbitalEntry entry = batchOrbitals[batchIndex];
+		string fileName = $"orbital_n{entry.n}_l{entry.l}_m{entry.m}_{entry.basis}_{entry.mode}";
+
+		// A reutilização só vale para gravações de uma Run.
+		if (!string.IsNullOrEmpty(runOutputDir))
+		{
+			string gifPath = Path.Combine(runOutputDir,	entry.mode,	fileName + ".gif");
+
+			if (IsValidExistingGif(gifPath))
+			{
+				Debug.Log($"Pulando GIF existente: {fileName}");
+
+				batchIndex++;
+				startNextOrbital = true;
+				return;
+			}
+
+			// Arquivo anterior incompleto: remove e regrava.
+			if (File.Exists(gifPath)) File.Delete(gifPath);
+		}
+
 		if (!presenter.LoadOrbital(entry.n, entry.l, entry.m, entry.basis, entry.mode))
 		{
 			Debug.LogError($"Falha ao carregar orbital para gravação");
@@ -239,7 +283,6 @@ public static class OrbitalGifRecorder
 			return;
 		}
 		recordingDuration = 3f * 360f / rotation.rotationSpeed;
-		string fileName = $"orbital_n{entry.n}_l{entry.l}_m{entry.m}_{entry.basis}_{entry.mode}";
 
 		try
 		{

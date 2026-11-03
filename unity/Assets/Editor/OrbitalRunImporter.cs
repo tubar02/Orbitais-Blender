@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
@@ -83,14 +84,27 @@ public static class OrbitalRunImporter
 		string assetFolder = $"Assets/Orbitals/{runId}";
 		string targetDir = Path.Combine(Application.dataPath, "Orbitals", runId);
 
-		if (Directory.Exists(targetDir))
-			throw new IOException($"Esta Run já foi importada: {assetFolder}");
-
 		Directory.CreateDirectory(targetDir);
 
 		foreach (string file in files)
 		{
 			string destination = Path.Combine(targetDir, Path.GetFileName(file));
+
+			if (File.Exists(destination))
+			{
+				// Garante que a cópia corresponde ao FBX original.
+				using var sha = SHA256.Create();
+				using var source = File.OpenRead(file);
+				using var existing = File.OpenRead(destination);
+
+				if (!sha.ComputeHash(source).SequenceEqual(sha.ComputeHash(existing)))
+				{
+					throw new IOException($"FBX importado diferente do original: {destination}");
+				}
+
+				continue;
+			}
+
 			File.Copy(file, destination);
 		}
 
