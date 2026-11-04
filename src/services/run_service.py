@@ -173,3 +173,38 @@ def retry_failed_stage(run_dir: Path, stage: str) -> None:
 	data["error"] = None
 
 	_save_run(run_dir, data)
+
+def recover_interrupted_run(run_dir: Path) -> str:
+	"""Marca uma etapa interrompida como falha para permitir retomada.
+
+	O chamador deve garantir que o processo anterior terminou.
+	"""
+	data = _load_run(run_dir)
+
+	if data["status"] != "running":
+		raise ValueError("A Run não está marcada como running.")
+
+	stage = data["current_stage"]
+
+	if (stage not in STAGE_ORDER or data["stages"].get(stage) != "running"):
+		raise ValueError("Estado inconsistente: etapa em execução inválida.")
+
+	index = STAGE_ORDER.index(stage)
+
+	for previous in STAGE_ORDER[:index]:
+		if data["stages"][previous] != "completed":
+			raise ValueError(f"Etapa anterior não concluída: {previous}")
+
+	for following in STAGE_ORDER[index + 1:]:
+		if data["stages"][following] != "pending":
+			raise ValueError(f"Etapa posterior já iniciada: {following}")
+
+	data["status"] = "failed"
+	data["stages"][stage] = "failed"
+	data["current_stage"] = None
+	data["finished_at"] = _now()
+	data["error"] = (f"Interrupção abrupta na etapa {stage}. Run preparada para retomada manual.")
+
+	_save_run(run_dir, data)
+
+	return stage

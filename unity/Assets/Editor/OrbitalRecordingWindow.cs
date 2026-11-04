@@ -5,7 +5,7 @@ using UnityEngine;
 public class OrbitalRecordingWindow : EditorWindow
 {
 	private readonly string[] bases = { "real", "complex" };
-	private readonly string[] modes = { "single", "multilayer", "signed" };
+	private readonly string[] modes = { "single", "multilayer", "signed", "phase", "point_cloud"};
 
 	private int basisIndex = 0;
 	private int modeIndex = 2;
