@@ -150,8 +150,8 @@ def main():
 	if args.resume:
 		runs.retry_failed_stage(run_dir, "unity")
 
+	runs.start_stage(run_dir, "unity")
 	try:
-		runs.start_stage(run_dir, "unity")
 		gifs = execute_unity(run_dir)
 		runs.complete_stage(run_dir, "unity")
 

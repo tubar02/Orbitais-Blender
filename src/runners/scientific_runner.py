@@ -93,8 +93,8 @@ def main() -> None:
 	if args.resume:
 		run_service.retry_failed_stage(run_dir, "scientific")
 
+	run_service.start_stage(run_dir, "scientific")
 	try:
-		run_service.start_stage(run_dir, "scientific")
 		execute_scientific(run_dir)
 		run_service.complete_stage(run_dir, "scientific")
 

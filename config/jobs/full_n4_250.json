@@ -1,0 +1,29 @@
+{
+	"name": "full_n4_250",
+	"selection": {
+		"type": "range",
+		"n_min": 1,
+		"n_max": 4
+	},
+	"basis": ["real", "complex"],
+	"representations": ["single", "signed", "multilayer", "point_cloud", "phase"],
+	"overrides": {
+		"scientific": {
+			"percent": 0.01,
+			"space": {
+				"num_div": 250
+			},
+			"representation_params": {
+				"multilayer": {
+					"layers": 10
+				},
+				"point_cloud": {
+					"tolerancia": 0.00005
+				},
+				"phase": {
+					"bins": 32
+				}
+			}
+		}
+	}
+}

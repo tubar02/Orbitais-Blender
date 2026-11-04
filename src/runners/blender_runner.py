@@ -198,11 +198,9 @@ def main():
 	if args.resume:
 		runs.retry_failed_stage(run_dir, "blender")
 
+	runs.start_stage(run_dir, "blender")
 	try:
-		runs.start_stage(run_dir, "blender")
-
 		fbx_files = execute_blender(run_dir, args.save_blend)
-
 		runs.complete_stage(run_dir, "blender")
 
 		print(
