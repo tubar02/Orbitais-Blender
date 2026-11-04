@@ -147,4 +147,4 @@ No `test_single`, confira `status: "completed"` no `run.json` e o arquivo `unity
 
 ## Licença
 
-O código autoral do projeto é distribuído sob a [Licença MIT](LICENSE). Os componentes de terceiros seguem suas respectivas licenças.
+O código autoral do projeto é distribuído sob a [Licença MIT](LICENSE.md). Os componentes de terceiros seguem suas respectivas licenças.
