@@ -12,7 +12,7 @@ O Python científico calcula a função de onda e exporta a geometria. O Blender
 | `point_cloud` | Real ou complexa | Pontos da grade dentro de uma faixa de densidade. |
 | `phase` | Complexa | Isosuperfície de densidade com cores associadas a intervalos de fase. |
 
-![Orbital do hidrogênio em rotação](docs/media/orbital-demo.gif)
+![Orbital do hidrogênio em rotação](docs/media/orbital-demo.gif) (docs/media/aa.gif)
 
 ## Escolha uma forma de execução
 
@@ -139,6 +139,11 @@ No `test_single`, confira `status: "completed"` no `run.json` e o arquivo `unity
 - **Interrupção entre etapas.** Se a próxima etapa está `pending`, execute seu comando sem `--resume` e prossiga com as etapas seguintes.
 
 `runs/` e `data/` guardam artefatos locais. Para reproduzir uma figura, registre o commit utilizado e guarde o `job.json`, o `run.json` e o GIF da mesma execução.
+
+## Documentação por componente
+
+- [Workflow Node-RED](workflows/README.md)
+- [Projeto Unity](unity/README.md)
 
 ## Licença
 
