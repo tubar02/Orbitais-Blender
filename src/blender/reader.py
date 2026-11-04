@@ -47,11 +47,18 @@ def read_obj_data(file_name: str | Path) -> tuple[list[tuple[float, float, float
 
 def read_obj_parts(dir_name: str, dir_path: Path):
 	parts = []
-	files = sorted(io.get_data_subdir(dir_name, dir_path), key=lambda p: p.name)
+	files = sorted((p for p in io.get_data_subdir(dir_name, dir_path) if p.suffix.lower() == ".obj"), key=lambda p: p.name)
 	for file_path in files:
 		verts, faces = read_obj_data(file_path)
 
-		parts.append({"name": file_path.stem, "vertices": verts, "faces": faces,})
+		# Metadados opcionais
+		with file_path.open("r", encoding="utf-8") as f:
+			header = f.readline().strip()
+		phase_bins = None
+		if header.startswith("# phase_bins="):
+			phase_bins = int(header.split("=", 1)[1])
+
+		parts.append({"name": file_path.stem, "vertices": verts, "faces": faces, "phase_bins": phase_bins})
 
 	return parts
 

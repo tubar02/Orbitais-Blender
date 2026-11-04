@@ -47,8 +47,11 @@ def save_point_cloud(orbital: orb.Orbital, percent: float, tolerancia: float, ou
 	np.savetxt(file_path, points, delimiter=",")
 	return file_path
 
-def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: bool = True):
+def write_obj(file_path: Path, vertices: np.ndarray, faces: np.ndarray, leave: bool = True, comment: str | None = None):
 	with open(file_path, 'w') as f:
+		if comment is not None:
+			f.write(f"# {comment}\n")
+
 		for vert in tqdm(vertices, desc=f"Salvando vértices em {file_path.name}", colour="green", leave=leave):  # Barra de progresso
 			f.write(f"v {vert[0]} {vert[1]} {vert[2]}\n")
 		for face in tqdm(faces, desc=f"Salvando faces em {file_path.name}", colour="green", leave=leave):
@@ -153,7 +156,7 @@ def save_phase_obj(orbital: orb.Orbital, percent: float, bins: int = 8, output_d
 
 	saved_files = []
 
-	for index in range(bins):
+	for index in tqdm(range(bins), desc=f"Salvando faixas de fase em {orbital.name}", colour="magenta", leave=False):
 		selected = faces[phase_bins == index]
 
 		# É possível que algumas faixas não apareçam.
@@ -168,7 +171,7 @@ def save_phase_obj(orbital: orb.Orbital, percent: float, bins: int = 8, output_d
 
 		path = folder / f"phase_{index:02d}.obj"
 
-		write_obj(path, local_verts, local_faces, leave=False)
+		write_obj(path, local_verts, local_faces, leave=False, comment=f"phase_bins={bins}")
 
 		saved_files.append(path)
 

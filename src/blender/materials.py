@@ -65,10 +65,21 @@ def signed_material_specs(parts):
 		specs[part["name"]] = {"color": colors[part["name"]], "alpha": 1.0}
 	return specs
 
-def phase_material_specs(parts, bins: int):
+def phase_material_specs(parts):
+	bin_counts = {part.get("phase_bins") for part in parts}
+	if len(bin_counts) != 1 or None in bin_counts:
+		raise ValueError("Metadados phase_bins ausentes ou inconsistentes."
+		                "Reexporte os arquivos OBJ de fase")
+	bins = bin_counts.pop()
+	if not 2 <= bins <= 32:
+		raise ValueError("phase_bins inválido")
+
 	specs = {}
 	for part in parts:
 		index = int(part["name"][6:])
+		if not 0 <= index < bins:
+			raise ValueError(f"Faixa de fase inválida: {part['name']}")
+
 		hue = index / bins
 		color = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
 		specs[part["name"]] = {"color": color, "alpha": 1.0}

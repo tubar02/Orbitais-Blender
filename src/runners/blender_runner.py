@@ -136,9 +136,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 		orbitals = {}
 
 		for basis in mode_bases:
-			loaded = bl.loader.load_all_orbitals(basis,	mode=mode,
-			                                    input_dir=input_dir, 
-												phase_bins=job["representations"][mode].get("bins"))
+			loaded = bl.loader.load_all_orbitals(basis,	mode=mode, input_dir=input_dir)
 			orbitals.update(loaded)
 
 		if set(orbitals) != expected_keys:
