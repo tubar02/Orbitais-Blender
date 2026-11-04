@@ -8,9 +8,9 @@ if str(PROJECT_ROOT) not in sys.path:
 import src.blender as bl
 import src.io.paths as io
 
-VALID_MODES = {"point_cloud", "single", "multilayer", "signed"}
+VALID_MODES = {"point_cloud", "single", "multilayer", "signed", "phase"}
 
-def load_single_orbital(orbital_name, mode, input_dir: Path | None = None):
+def load_single_orbital(orbital_name, mode, input_dir: Path | None = None, phase_bins: int | None = None):
 	if mode not in VALID_MODES:
 		raise ValueError(f"Modo de representação inválido: {mode}")
 
@@ -35,18 +35,22 @@ def load_single_orbital(orbital_name, mode, input_dir: Path | None = None):
 			specs = bl.materials.signed_material_specs(parts)
 		elif mode == "multilayer":
 			specs = bl.materials.multilayer_material_specs(parts)
+		elif mode == "phase":
+			if phase_bins is None:
+				raise ValueError("Número de faixas de fase ausente")
+			specs = bl.materials.phase_material_specs(parts, phase_bins)
 
 		bl.materials.apply_materials_from_specs(obj, specs, face_ranges)
 		bl.scene.smooth_object(obj)
 		
 	return obj
 
-def load_all_orbitals(basis, mode, input_dir: Path | None = None):
+def load_all_orbitals(basis, mode, input_dir: Path | None = None, phase_bins: int | None = None):
 	orbitals = {}
 	dir_path = (input_dir if input_dir is not None else io.DATA_DIR / mode)
 	available = bl.reader.discover_orbitals(basis, dir_path)
 
 	for n, l, m, orb_basis, name in available:
-		obj = load_single_orbital(name, mode, input_dir=dir_path)
+		obj = load_single_orbital(name, mode, input_dir=dir_path, phase_bins=phase_bins)
 		orbitals[(n, l, m, orb_basis)] = obj
 	return orbitals

@@ -10,7 +10,10 @@
 			"multilayer": {
 				"layers": 10
 			},
-			"signed": {}
+			"signed": {},
+			"phase": {
+				"bins": 8
+			}
 		},
 		"space": {
 			"num_div": null

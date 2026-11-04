@@ -17,7 +17,7 @@ def execute_scientific(run_dir: Path) -> None:
 	bases = job["basis"]
 	representations = job["representations"]
 
-	supported_modes = {"single", "signed", "multilayer", "point_cloud"}
+	supported_modes = {"single", "signed", "multilayer", "point_cloud", "phase"}
 	if not representations or set(representations) - supported_modes:
 		raise ValueError(f"Representações inválidas: {representations}. Suportadas: {supported_modes}")
 	
@@ -61,6 +61,8 @@ def execute_scientific(run_dir: Path) -> None:
 			elif mode == "point_cloud":
 				file_path = xp.save_point_cloud(orbital, percent=params["percent"], tolerancia=params["tolerancia"], output_dir=output_dir)
 				files = [file_path]
+			elif mode == "phase":
+				files = xp.save_phase_obj(orbital, percent=params["percent"], bins=params["bins"], output_dir=output_dir)
 
 			for file in files:
 				if (not file.is_file() or file.stat().st_size == 0):

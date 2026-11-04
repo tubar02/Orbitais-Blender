@@ -1,4 +1,5 @@
 import bpy
+import colorsys
 
 def interpolate_color(t: float) -> tuple[float, float, float]:
 	if t < 0.5:
@@ -62,6 +63,16 @@ def signed_material_specs(parts):
 	specs = {}
 	for part in parts:
 		specs[part["name"]] = {"color": colors[part["name"]], "alpha": 1.0}
+	return specs
+
+def phase_material_specs(parts, bins: int):
+	specs = {}
+	for part in parts:
+		index = int(part["name"][6:])
+		hue = index / bins
+		color = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
+		specs[part["name"]] = {"color": color, "alpha": 1.0}
+
 	return specs
 
 def apply_materials_from_specs(obj, specs, face_ranges):

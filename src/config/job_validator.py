@@ -1,7 +1,7 @@
 import math
 
 VALID_BASES = {"real", "complex"}
-VALID_MODES = {"point_cloud", "single", "multilayer", "signed"}
+VALID_MODES = {"point_cloud", "single", "multilayer", "signed", "phase"}
 
 def _check_keys(data: dict, allowed: set, context: str) -> None:
 	if not isinstance(data, dict):
@@ -113,6 +113,11 @@ def validate_resolved_job(resolved: dict) -> None:
 			rounded = [round((percent + (1 - percent) * i / layers) * 100) for i in range(layers)]
 			if len(set(rounded)) != layers:
 				raise ValueError("multilayer produziria nomes repetidos.")
+
+		elif mode == "phase":
+			bins = params["bins"]
+			if type(bins) is not int or 2 <= bins <= 32:
+				raise ValueError("phase.bins deve estar entre 2 e 32")
 
 	fbx = resolved["blender"]["fbx"]
 	_positive_number(fbx["global_scale"], "blender.fbx.global_scale")

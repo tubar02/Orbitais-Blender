@@ -1,0 +1,33 @@
+{
+	"name": "test_phase",
+	"selection": {
+		"type": "range",
+		"n_min": 2,
+		"n_max": 2
+	},
+	"basis": ["complex"],
+	"representations": ["single", "phase"],
+	"overrides": {
+		"scientific": {
+			"percent": 0.05,
+			"space": {
+				"num_div": 50
+			},
+			"representation_params": {
+				"phase": {
+					"bins": 8
+				}
+			}
+		},
+		"unity": {
+			"presentation": {
+				"rotation_speed": 180.0,
+				"revolutions": 1
+			},
+			"recording": {
+				"fps": 24,
+				"resolution": 256
+			}
+		}
+	}
+}

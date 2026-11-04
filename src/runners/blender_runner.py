@@ -14,13 +14,14 @@ import src.blender as bl
 import src.io.json_io as json_io
 import src.services.run_service as runs
 
-def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: str, layers: int | None = None) -> None:
+def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: str, 
+                               layers: int | None = None, phase_bins: int | None = None) -> None:
 	if not input_dir.is_dir():
 		raise FileNotFoundError(input_dir)
 
 	if mode == "single":
 		expected = {input_dir / f"{name}.obj" for name in orbital_names}
-	elif mode in {"signed", "multilayer"}:
+	elif mode in {"signed", "multilayer", "phase"}:
 		expected = {input_dir / name for name in orbital_names}
 	elif mode == "point_cloud":
 		expected = {input_dir / f"{name}.npy" for name in orbital_names}
@@ -49,7 +50,7 @@ def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: 
 
 			if mode == "signed":
 				valid = (bool(parts) and names <= {"pos.obj", "neg.obj"})
-			else:
+			elif mode == "multilayer":
 				valid = (
 					layers is not None
 					and len(parts) == layers
@@ -57,6 +58,20 @@ def validate_scientific_inputs(input_dir: Path, orbital_names: list[str], mode: 
 						p.suffix == ".obj"
 						and p.stem.startswith("lvl")
 						and p.stem[3:].isdigit()
+						for p in parts
+					)
+				)
+			elif mode == "phase": 
+				valid = (
+					phase_bins is not None
+					and 1 <= len(parts) <= phase_bins
+					and all(
+						p.is_file()
+						and p.stat().st_size > 0
+						and p.suffix == ".obj"
+						and p.stem.startswith("phase_")
+						and p.stem[6:].isdigit()
+						and 0 <= int(p.stem[6:]) < phase_bins
 						for p in parts
 					)
 				)
@@ -70,7 +85,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	bases = job["basis"]
 	modes = list(job["representations"])
 
-	if not modes or set(modes) - {"single", "signed", "multilayer", "point_cloud"}:
+	if not modes or set(modes) - {"single", "signed", "multilayer", "point_cloud", "phase"}:
 		raise ValueError(f"Representações inválida: {modes}")
 
 	if "signed" in modes and "real" not in bases:
@@ -97,7 +112,8 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 			run_dir / "scientific" / mode,
 			orbital_names,
 			mode,
-			layers=job["representations"][mode].get("layers")
+			layers=job["representations"][mode].get("layers"),
+			phase_bins=job["representations"][mode].get("bins")
 		)
 	
 	# Cena limpa
@@ -116,7 +132,9 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 		orbitals = {}
 
 		for basis in mode_bases:
-			loaded = bl.loader.load_all_orbitals(basis,	mode=mode, input_dir=input_dir)
+			loaded = bl.loader.load_all_orbitals(basis,	mode=mode,
+			                                    input_dir=input_dir, 
+												phase_bins=job["representations"][mode].get("bins"))
 			orbitals.update(loaded)
 
 		if set(orbitals) != expected_keys:
@@ -140,7 +158,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 
 			print(f"FBX concluído: {fbx_path.name}", flush=True)
 
-	expected_count = sum(len(orbital_names) * len(bases_for_mode(mode)) for mode in modes)
+	expected_count = sum(len(orbital_keys) * len(bases_for_mode(mode)) for mode in modes)
 	if len(fbx_files) != expected_count:
 		raise RuntimeError("Quantidade incorreta de FBXs.")
 

@@ -188,7 +188,7 @@ public class OrbitalPresenter : MonoBehaviour
 		}
 
 		Regex pattern = new Regex(@"^orbital_n(\d+)_l(\d+)_m(-?\d+)_" +
-			@"(real|complex)_(single|multilayer|signed|point_cloud)$", RegexOptions.IgnoreCase);
+			@"(real|complex)_(single|multilayer|signed|point_cloud|phase)$", RegexOptions.IgnoreCase);
 
 		string[] guids = AssetDatabase.FindAssets("", new[] { folder });
 		List<OrbitalEntry> entries = new();

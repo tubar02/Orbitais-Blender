@@ -1,5 +1,6 @@
 from pathlib import Path
 import numpy as np
+from scipy.ndimage import map_coordinates
 from tqdm import tqdm
 
 import src.core.orbital as orb
@@ -105,6 +106,73 @@ def save_signed_obj(orbital: orb.Orbital, percent: float, leave: bool = False, o
 		verts, faces = space.apply_marching_cubes(wavefunction, level, direction)
 		file_path = dir_path / f"{sign}.obj"
 		write_obj(file_path, verts, faces, leave=leave)
+
+def save_phase_obj(orbital: orb.Orbital, percent: float, bins: int = 8, output_dir: Path | None = None) -> list[Path]:
+	_validate_percent(percent)
+
+	if type(bins) is not int or not 2 <= bins <= 32:
+		raise ValueError("bins deve estar entre 2 e 32.")
+
+	space = orbital.space
+	density = orbital.density
+
+	level = percent * np.max(density)
+
+	verts, faces = space.apply_marching_cubes(density, level)
+
+	# Centro de cada triângulo da isosuperfície.
+	centers = verts[faces].mean(axis=1)
+
+	# Converte coordenadas físicas em índices da grade.
+	axes = (space.x, space.y, space.z)
+
+	coords = np.vstack([
+		(centers[:, i] - axis[0]) / (axis[1] - axis[0])
+		for i, axis in enumerate(axes)
+	])
+
+	# Interpola as partes real e imaginária da função
+	# de onda nos centros dos triângulos.
+	psi = orbital.wavefunction
+
+	real = map_coordinates(np.real(psi), coords, order=1, mode="nearest")
+	imag = map_coordinates(np.imag(psi), coords, order=1, mode="nearest")
+
+	phase = np.mod(np.angle(real + 1j * imag),	2 * np.pi)
+
+	# Associa cada face a uma faixa de fase.
+	phase_bins = np.floor(phase * bins / (2 * np.pi)).astype(int) % bins
+
+	target = output_dir if output_dir is not None else io.DATA_DIR / "phase"
+
+	folder = io.get_path(orbital.name, target)
+	io.ensure_dir(folder)
+
+	saved_files = []
+
+	for index in range(bins):
+		selected = faces[phase_bins == index]
+
+		# É possível que algumas faixas não apareçam.
+		if len(selected) == 0:
+			continue
+
+		# Mantém somente os vértices usados pela faixa.
+		used, inverse = np.unique(selected,	return_inverse=True)
+
+		local_verts = verts[used]
+		local_faces = inverse.reshape((-1, 3))
+
+		path = folder / f"phase_{index:02d}.obj"
+
+		write_obj(path, local_verts, local_faces, leave=False)
+
+		saved_files.append(path)
+
+	if not saved_files:
+		raise RuntimeError("Nenhuma face de fase gerada.")
+
+	return saved_files
 
 SAVE_MODES = {
 	"point_cloud": lambda *args, **ctx: save_point_cloud(

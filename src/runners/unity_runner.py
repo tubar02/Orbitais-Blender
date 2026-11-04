@@ -13,7 +13,7 @@ def expected_orbitals(job: dict) -> dict[str, list[str]]:
 	bases = job["basis"]
 	modes = list(job["representations"])
 
-	supported = {"single", "signed", "multilayer", "point_cloud"}
+	supported = {"single", "signed", "multilayer", "point_cloud", "phase"}
 
 	if not bases:
 		raise ValueError("Nenhuma base solicitada")
