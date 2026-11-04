@@ -12,6 +12,8 @@ O Python científico calcula a função de onda e exporta a geometria. O Blender
 | `point_cloud` | Real ou complexa | Pontos da grade dentro de uma faixa de densidade. |
 | `phase` | Complexa | Isosuperfície de densidade com cores associadas a intervalos de fase. |
 
+![Orbital do hidrogênio em rotação](docs/media/orbital-demo.gif)
+
 ## Escolha uma forma de execução
 
 | Entrada | Uso |

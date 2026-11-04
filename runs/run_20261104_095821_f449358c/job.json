@@ -1,0 +1,42 @@
+{
+    "name": "test_multi_basis",
+    "selection": {
+        "type": "range",
+        "n_min": 2,
+        "n_max": 2
+    },
+    "basis": [
+        "real",
+        "complex"
+    ],
+    "representations": {
+        "multilayer": {
+            "layers": 4,
+            "percent": 0.01
+        },
+        "signed": {
+            "percent": 0.01
+        }
+    },
+    "space": {
+        "num_div": 40
+    },
+    "blender": {
+        "fbx": {
+            "global_scale": 1.0
+        }
+    },
+    "unity": {
+        "presentation": {
+            "rotation_speed": 180.0,
+            "screen_fill": 0.95,
+            "revolutions": 1
+        },
+        "recording": {
+            "fps": 24,
+            "resolution": 256,
+            "quality": 90,
+            "loop": true
+        }
+    }
+}
