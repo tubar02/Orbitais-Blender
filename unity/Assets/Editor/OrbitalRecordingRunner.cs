@@ -28,10 +28,15 @@ public static class OrbitalRecordingRunner
 
 	public static void StartBatch(string basis, string mode)
 	{
-		StartBatch(basis, new[] {mode});
+		StartBatch(new[] {basis}, new[] {mode});
 	}
 
 	public static void StartBatch(string basis, string[] modes)
+	{
+		StartBatch(new[] {basis}, modes);
+	}
+
+	public static void StartBatch(string[] bases, string[] modes)
 	{
 		if (running || SessionState.GetBool(PendingKey, false))
 		{
@@ -39,10 +44,12 @@ public static class OrbitalRecordingRunner
 			return;
 		}
 
-		if (modes == null || modes.Length == 0) throw new ArgumentException("Nenhuma representação solicitada.");
+		if (modes == null || modes.Length == 0 ||
+			bases == null || bases.Length == 0)
+			throw new ArgumentException("Bases ou representações ausentes.");
 
 		// Salva os argumentos antes de mudar de modo.
-		SessionState.SetString(BasisKey, basis);
+		SessionState.SetString(BasisKey, string.Join(",", bases));
 		SessionState.SetString(ModeKey, string.Join(",", modes));
 		SessionState.SetBool(PendingKey, true);
 		bool shouldAutoExit = !EditorApplication.isPlaying;
@@ -113,7 +120,7 @@ public static class OrbitalRecordingRunner
 			presenter.ConfigurePresentation(settings.rotation_speed, settings.screen_fill, settings.revolutions);
 		}
 
-		string basis = SessionState.GetString(BasisKey, "real");
+		string[] bases = SessionState.GetString(BasisKey, "real").Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
 		string[] modes = SessionState.GetString(ModeKey, "").Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
 
 		SessionState.SetBool(PendingKey, false);
@@ -125,10 +132,10 @@ public static class OrbitalRecordingRunner
 
 		Debug.Log(
 			$"Runner iniciou a gravação: " +
-			$"{basis}/{string.Join(",", modes)}"
+			$"{string.Join(",", bases)}/{string.Join(",", modes)}"
 		);
 
-		if (!OrbitalGifRecorder.RecordBatch(basis, modes))
+		if (!OrbitalGifRecorder.RecordBatch(bases, modes))
 		{
 			Debug.LogError("Não foi possível iniciar o lote.");
 			CancelRun();
@@ -273,8 +280,8 @@ public static class OrbitalRecordingRunner
 			throw new DirectoryNotFoundException(runDir);
 
 		// Importa os FBX e configura a Run ativa.
-		var (basis, modes) = OrbitalRunImporter.ImportRun(runDir);
+		var (bases, modes) = OrbitalRunImporter.ImportRun(runDir);
 		OrbitalRunSettings.Load(runDir);
-		StartBatch(basis, modes);
+		StartBatch(bases, modes);
 	}
 }

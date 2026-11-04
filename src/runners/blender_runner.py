@@ -70,51 +70,78 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	bases = job["basis"]
 	modes = list(job["representations"])
 
-	if len(bases) != 1:
-		raise ValueError("Blender ainda aceita apenas uma base.")
-
 	if not modes or set(modes) - {"single", "signed", "multilayer", "point_cloud"}:
 		raise ValueError(f"Representações inválida: {modes}")
 
-	basis = bases[0]
-
-	if "signed" in modes and basis != "real":
+	if "signed" in modes and "real" not in bases:
 		raise ValueError("signed exige base real.")
+
+	def bases_for_mode(mode):
+		return [basis for basis in bases if mode != "signed" or basis == "real"]
 
 	orbital_keys = list(sel.iter_orbitals(job["selection"]))
 	if not orbital_keys:
 		raise RuntimeError("Nenhum orbital solicitado")
-	orbital_names = [sel.orbital_stem(n, l, m, basis) for n, l, m in orbital_keys]
 	global_scale = job["blender"]["fbx"]["global_scale"]
 	output_dir = run_dir / "blender"
 
+	
 	for mode in modes:
-		validate_scientific_inputs(run_dir / "scientific" / mode, orbital_names, mode, layers=job["representations"][mode].get("layers"))
-			
+		orbital_names = [
+			sel.orbital_stem(n, l, m, basis)
+			for basis in bases_for_mode(mode)
+			for n, l, m in orbital_keys
+		]
+
+		validate_scientific_inputs(
+			run_dir / "scientific" / mode,
+			orbital_names,
+			mode,
+			layers=job["representations"][mode].get("layers")
+		)
+	
 	# Cena limpa
 	bpy.ops.object.select_all(action="SELECT")
 	bpy.ops.object.delete(use_global=False)
 
 	orbitals_by_mode = {}
 	fbx_files = []
-	expected_keys = {(n, l, m, basis) for n, l, m in orbital_keys}
 
 	for mode in modes:
 		input_dir = run_dir / "scientific" / mode
-		orbitals = bl.loader.load_all_orbitals(basis, mode=mode, input_dir=input_dir)
+		mode_bases = bases_for_mode(mode)
+		expected_keys = {(n, l, m, basis)
+		                for basis in mode_bases
+		                for n, l, m in orbital_keys}
+		orbitals = {}
+
+		for basis in mode_bases:
+			loaded = bl.loader.load_all_orbitals(basis,	mode=mode, input_dir=input_dir)
+			orbitals.update(loaded)
 
 		if set(orbitals) != expected_keys:
 			raise RuntimeError(f"Orbitais carregados inconsistentes: {mode}")
 
 		orbitals_by_mode[mode] = orbitals
-		for (n, l, m, orb_basis), obj in orbitals.items():
-			orbital_name = sel.orbital_stem(n, l, m, orb_basis)
-			obj.name = sel.orbital_stem(n, l, m, orb_basis, mode=mode)
-			fbx_path = bl.exporter.export_fbx(obj, orbital_name, mode=mode, output_dir=output_dir / mode, global_scale=global_scale)
+
+		for (n, l, m, basis), obj in orbitals.items():
+			orbital_name = sel.orbital_stem(n, l, m, basis)
+
+			obj.name = sel.orbital_stem(n, l, m, basis, mode=mode)
+			fbx_path = bl.exporter.export_fbx(
+				obj,
+				orbital_name,
+				mode=mode,
+				output_dir=output_dir / mode,
+				global_scale=global_scale
+			)
+
 			fbx_files.append(fbx_path)
+
 			print(f"FBX concluído: {fbx_path.name}", flush=True)
 
-	if len(fbx_files) != len(orbital_names) * len(modes):
+	expected_count = sum(len(orbital_names) * len(bases_for_mode(mode)) for mode in modes)
+	if len(fbx_files) != expected_count:
 		raise RuntimeError("Quantidade incorreta de FBXs.")
 
 	# Um blend com todos os orbitais da run

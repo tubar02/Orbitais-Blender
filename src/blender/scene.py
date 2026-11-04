@@ -39,12 +39,18 @@ def organize_collections(orbitals, mode=None):
 	prefix = f"{mode}_" if mode else ""
 	mode_col = make_collection(mode) if mode else None
 
-	for (n, l, _, _), obj in orbitals.items():
-		n_col = make_collection(f"{prefix}n_{n}")
-		l_col = make_collection(f"{prefix}n_{n}_l_{l}")
+	for (n, l, m, basis), obj in orbitals.items():
+		basis_name = f"{prefix}{basis}"
+		n_name = f"{basis_name}_n_{n}"
+		l_name = f"{n_name}_l_{l}"
+
+		basis_col = make_collection(basis_name)
+		n_col = make_collection(n_name)
+		l_col = make_collection(l_name)
 
 		if mode_col is not None:
-			move_collection_to_collection(n_col, mode_col)
+			move_collection_to_collection(basis_col, mode_col)
+		move_collection_to_collection(n_col, basis_col)
 		move_collection_to_collection(l_col, n_col)
 		move_to_collection(obj, l_col)
 	

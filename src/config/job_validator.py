@@ -86,8 +86,8 @@ def validate_job(job: dict, defaults: dict) -> None:
 		if len(values) != len(set(values)):
 			raise ValueError(f"Valores repetidos em {name}.")
 
-	if "signed" in modes and "complex" in bases:
-		raise ValueError("signed não é compatível com a base complexa.")
+	if "signed" in modes and "real" not in bases:
+		raise ValueError("signed exige que a base real esteja presente.")
 
 	_check_overrides(job.get("overrides", {}), defaults)
 

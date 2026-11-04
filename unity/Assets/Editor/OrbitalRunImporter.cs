@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -32,7 +33,7 @@ public static class OrbitalRunImporter
 		ImportRun(runDir);
 	}
 
-	public static (string basis, string[] modes) ImportRun(string runDir)
+	public static (string[] basis, string[] modes) ImportRun(string runDir)
 	{
 		string runId = Path.GetFileName(Path.GetFullPath(runDir).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
 		string blenderDir = Path.Combine(runDir, "blender");
@@ -53,7 +54,7 @@ public static class OrbitalRunImporter
 		}
 
 		string[] files = modes.SelectMany(mode => Directory.GetFiles(Path.Combine(blenderDir, mode), "*.fbx")).ToArray();
-		string basis = null;
+		HashSet<string> foundBases = new();
 		foreach (string file in files)
 		{
 			string name = Path.GetFileNameWithoutExtension(file);
@@ -70,13 +71,11 @@ public static class OrbitalRunImporter
 			if (fileMode != sourceMode)
 				throw new Exception($"Modo inconsistente no FBX: {name}");
 
-			if (basis == null)
-				basis = fileBasis;
-			else if (basis != fileBasis)
-				throw new Exception("A Run contém múltiplas bases.");
+			foundBases.Add(fileBasis);
+			if (fileMode == "signed" && fileBasis != "real") throw new Exception("signed exige base real.");
 		}
-
-		if (modes.Contains("signed") && basis != "real") throw new Exception("signed exige base real.");
+		string[] bases = foundBases.OrderBy(b => b).ToArray();
+		
 		if (files.Select(Path.GetFileName).Distinct(StringComparer.OrdinalIgnoreCase).Count() != files.Length)
 		{
 			throw new Exception("Nomes de FBX duplicados");
@@ -125,9 +124,9 @@ public static class OrbitalRunImporter
 		OrbitalGifRecorder.SetOutputDirectory(Path.Combine(runDir, "unity"));
 		Debug.Log(
 			$"Run {runId}: {files.Length} FBX(s) importados. " +
-			$"Base: {basis}, Modos: {string.Join(",", modes)}"
+			$"Base: {string.Join(",", bases)}, Modos: {string.Join(",", modes)}"
 		);
 
-		return (basis, modes);
+		return (bases, modes);
 	}
 }

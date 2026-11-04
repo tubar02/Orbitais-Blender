@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+from itertools import product
 
 import src.core.orbital as orb
 import src.core.space as sp
@@ -16,29 +17,24 @@ def execute_scientific(run_dir: Path) -> None:
 	bases = job["basis"]
 	representations = job["representations"]
 
-	# Por enquanto, uma base e o modo single.
-	if len(bases) != 1:
-		raise ValueError("O runner ainda aceita apenas uma base.")
-
 	supported_modes = {"single", "signed", "multilayer", "point_cloud"}
 	if not representations or set(representations) - supported_modes:
 		raise ValueError(f"Representações inválidas: {representations}. Suportadas: {supported_modes}")
-
-	basis = orb.OrbitalBasis(bases[0])
-	if ("signed" in representations and basis != orb.OrbitalBasis.REAL):
-		raise ValueError("signed exige base real.")
 	
 	num_div = job["space"]["num_div"]
 	count = 0
 
-	for n, l, m in sel.iter_orbitals(selection):
+	for basis_name, (n, l, m) in product(bases, sel.iter_orbitals(selection)):
 		print(f"Gerando orbital n={n}, l={l}, m={m}", flush=True)
 
 		space = sp.Space()
-
+		basis = orb.OrbitalBasis(basis_name)
 		orbital = orbital_service.create_orbital(space,	n=n, l=l, m=m, basis=basis,	num_div=num_div)
 
 		for mode, params in representations.items():
+			if mode == "signed" and basis != orb.OrbitalBasis.REAL:
+				continue
+
 			output_dir = run_dir / "scientific" / mode
 
 			if mode == "single":

@@ -94,26 +94,43 @@ public static class OrbitalGifRecorder
 
 	public static bool RecordBatch(string basis, string[] modes)
 	{
+		return RecordBatch(new[] { basis }, modes);
+	}
+
+	public static bool RecordBatch(string[] bases, string[] modes)
+	{
 		if (CheckRecordCond()) return false;
 
-		if (modes == null || modes.Length == 0)
+		if (modes == null || modes.Length == 0 ||
+			bases == null || bases.Length == 0)
 		{
-			Debug.LogError("Nenhuma representação solicitada.");
+			Debug.LogError("Bases ou representações ausentes.");
 			return false;
 		}
 
 		List<OrbitalEntry> orbitals = new();
 		foreach (string mode in modes)
 		{
-			List<OrbitalEntry> entries = presenter.GetOrbitals(basis, mode);
-
-			if (entries.Count == 0)
+			foreach (string basis in bases)
 			{
-				Debug.LogError($"Nenhum orbital encontrado: {basis}/{mode}");
-				return false;
-			}
+				if (mode == "signed" && basis != "real") continue;
 
-			orbitals.AddRange(entries);
+				List<OrbitalEntry> entries = presenter.GetOrbitals(basis, mode);
+
+				if (entries.Count == 0)
+				{
+					Debug.LogError($"Nenhum orbital encontrado: {basis}/{mode}");
+					return false;
+				}
+
+				orbitals.AddRange(entries);
+			}
+		}
+
+		if (orbitals.Count == 0)
+		{
+			Debug.LogError("Nenhum orbital pra gravar");
+			return false;
 		}
 
 		StartSequence(orbitals);

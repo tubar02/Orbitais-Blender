@@ -1,0 +1,32 @@
+{
+	"name": "test_multi_basis",
+	"selection": {
+		"type": "range",
+		"n_min": 2,
+		"n_max": 2
+	},
+	"basis": ["real", "complex"],
+	"representations": ["multilayer", "signed"],
+	"overrides": {
+		"scientific": {
+			"space": {
+				"num_div": 40
+			},
+			"representation_params": {
+				"multilayer": {
+					"layers": 4
+				}
+			}
+		},
+		"unity": {
+			"presentation": {
+				"rotation_speed": 180.0,
+				"revolutions": 1
+			},
+			"recording": {
+				"fps": 24,
+				"resolution": 256
+			}
+		}
+	}
+}

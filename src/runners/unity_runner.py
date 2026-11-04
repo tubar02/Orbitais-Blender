@@ -13,14 +13,15 @@ def expected_orbitals(job: dict) -> dict[str, list[str]]:
 	bases = job["basis"]
 	modes = list(job["representations"])
 
-	if len(bases) != 1:
-		raise ValueError("Unity runner aceita só uma base")
+	supported = {"single", "signed", "multilayer", "point_cloud"}
 
-	if not modes or set(modes) - {"single", "signed", "multilayer", "point_cloud"}:
+	if not bases:
+		raise ValueError("Nenhuma base solicitada")
+
+	if not modes or set(modes) - supported:
 		raise ValueError(f"Representações inválidas: {modes}")
 
-	basis = bases[0]
-	if "signed" in modes and basis != "real":
+	if "signed" in modes and "real" not in bases:
 		raise ValueError("signed exige base real.")
 
 	tasks = list(sel.iter_orbitals(job["selection"]))
@@ -29,7 +30,9 @@ def expected_orbitals(job: dict) -> dict[str, list[str]]:
 
 	orbitals_by_mode = {}
 	for mode in modes:
-		orbital_names = [sel.orbital_stem(n, l, m, basis, mode=mode) for n, l, m in tasks]
+		orbital_names = [sel.orbital_stem(n, l, m, basis, mode=mode)
+		                for basis in bases if mode != "signed" or basis == "real"
+		                for n, l, m in tasks]
 		orbitals_by_mode[mode] = orbital_names
 	return orbitals_by_mode 
 
