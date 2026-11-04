@@ -89,6 +89,9 @@ def validate_job(job: dict, defaults: dict) -> None:
 	if "signed" in modes and "real" not in bases:
 		raise ValueError("signed exige que a base real esteja presente.")
 
+	if "phase" in modes and "complex" not in bases:
+		raise ValueError("phase exige que a base complexa esteja presente.")
+
 	_check_overrides(job.get("overrides", {}), defaults)
 
 def validate_resolved_job(resolved: dict) -> None:
@@ -116,7 +119,7 @@ def validate_resolved_job(resolved: dict) -> None:
 
 		elif mode == "phase":
 			bins = params["bins"]
-			if type(bins) is not int or 2 <= bins <= 32:
+			if type(bins) is not int or not 2 <= bins <= 32:
 				raise ValueError("phase.bins deve estar entre 2 e 32")
 
 	fbx = resolved["blender"]["fbx"]

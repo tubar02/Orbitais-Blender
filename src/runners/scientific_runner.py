@@ -35,6 +35,9 @@ def execute_scientific(run_dir: Path) -> None:
 			if mode == "signed" and basis != orb.OrbitalBasis.REAL:
 				continue
 
+			if mode == "phase" and basis != orb.OrbitalBasis.COMPLEX:
+				continue
+
 			output_dir = run_dir / "scientific" / mode
 
 			if mode == "single":

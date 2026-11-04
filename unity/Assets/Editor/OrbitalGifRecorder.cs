@@ -114,6 +114,7 @@ public static class OrbitalGifRecorder
 			foreach (string basis in bases)
 			{
 				if (mode == "signed" && basis != "real") continue;
+				if (mode == "phase" && basis != "complex") continue;
 
 				List<OrbitalEntry> entries = presenter.GetOrbitals(basis, mode);
 

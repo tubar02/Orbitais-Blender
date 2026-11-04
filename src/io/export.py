@@ -110,6 +110,9 @@ def save_signed_obj(orbital: orb.Orbital, percent: float, leave: bool = False, o
 def save_phase_obj(orbital: orb.Orbital, percent: float, bins: int = 8, output_dir: Path | None = None) -> list[Path]:
 	_validate_percent(percent)
 
+	if orbital.basis != orb.OrbitalBasis.COMPLEX:
+		raise ValueError("O modo 'phase' só aceita orbitais na base complexa")
+
 	if type(bins) is not int or not 2 <= bins <= 32:
 		raise ValueError("bins deve estar entre 2 e 32.")
 
@@ -143,7 +146,7 @@ def save_phase_obj(orbital: orb.Orbital, percent: float, bins: int = 8, output_d
 	# Associa cada face a uma faixa de fase.
 	phase_bins = np.floor(phase * bins / (2 * np.pi)).astype(int) % bins
 
-	target = output_dir if output_dir is not None else io.DATA_DIR / "phase"
+	target = output_dir if output_dir is not None else io.PHASE_OBJ_DIR
 
 	folder = io.get_path(orbital.name, target)
 	io.ensure_dir(folder)
@@ -192,6 +195,12 @@ SAVE_MODES = {
 	"signed_obj": lambda *args, **ctx: save_signed_obj(
 		*args,
 		percent=ctx.get("percent", 0.01)
+	),
+	"phase_obj": lambda *args, **ctx: save_phase_obj(
+		*args,
+		percent=ctx.get("percent", 0.01),
+		bins=ctx.get("bins", 8),
+		output_dir=ctx.get("output_dir")
 	),
 }
 

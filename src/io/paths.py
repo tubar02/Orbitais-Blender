@@ -7,6 +7,7 @@ POINT_CLOUD_DIR = DATA_DIR / "point_cloud"
 SINGLE_OBJ_DIR = DATA_DIR / "single"
 MULTILAYER_OBJ_DIR = DATA_DIR / "multilayer"
 SIGNED_OBJ_DIR = DATA_DIR / "signed"
+PHASE_OBJ_DIR = DATA_DIR / "phase"
 
 UNITY_DATA_DIR = ROOT / "unity" / "Assets" / "Orbitals"
 

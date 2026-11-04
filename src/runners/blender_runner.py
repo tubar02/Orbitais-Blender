@@ -91,8 +91,12 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	if "signed" in modes and "real" not in bases:
 		raise ValueError("signed exige base real.")
 
+	if "phase" in modes and "complex" not in bases:
+		raise ValueError("phase exige base complexa.")
+
 	def bases_for_mode(mode):
-		return [basis for basis in bases if mode != "signed" or basis == "real"]
+		return [basis for basis in bases 
+		        if ((mode != "signed" or basis == "real") and (mode != "phase" or basis == "complex"))]
 
 	orbital_keys = list(sel.iter_orbitals(job["selection"]))
 	if not orbital_keys:

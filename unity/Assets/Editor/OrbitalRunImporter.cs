@@ -73,6 +73,7 @@ public static class OrbitalRunImporter
 
 			foundBases.Add(fileBasis);
 			if (fileMode == "signed" && fileBasis != "real") throw new Exception("signed exige base real.");
+			if (fileMode == "phase" && fileBasis != "complex") throw new Exception("phase exige base complexa.");
 		}
 		string[] bases = foundBases.OrderBy(b => b).ToArray();
 		

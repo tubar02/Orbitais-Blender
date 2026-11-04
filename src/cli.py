@@ -1,4 +1,4 @@
-import numpy as np
+from functools import partial	
 
 import src.cli_save as sv
 import src.core.space as sp
@@ -37,8 +37,9 @@ def main():
 			n_max = 4
 		n_min, n_max = osrv.validate_interval(n_min, n_max)
 
-		mode = sv.ask_save_mode()
-		exporter = xp.SAVE_MODES[mode]
+		mode = sv.ask_save_mode(basis.value)
+		kwargs = sv.ask_save_kwargs(mode)
+		exporter = partial(xp.SAVE_MODES[mode], **kwargs)
 		print("\n")
 		osrv.generate_and_export_orbitals(space, n_max=n_max, basis=basis, n_min=n_min, exporter=exporter)
 
@@ -59,7 +60,7 @@ def main():
 		
 		print("\nDeseja salvar a função de onda em um arquivo? (s/n)")
 		if input().lower() == 's':
-			mode = sv.ask_save_mode()
+			mode = sv.ask_save_mode(basis.value)
 			kwargs = sv.ask_save_kwargs(mode)
 			xp.save_options(mode, orbital, **kwargs)
 
