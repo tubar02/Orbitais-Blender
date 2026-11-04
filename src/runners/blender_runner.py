@@ -88,15 +88,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	if not modes or set(modes) - {"single", "signed", "multilayer", "point_cloud", "phase"}:
 		raise ValueError(f"Representações inválida: {modes}")
 
-	if "signed" in modes and "real" not in bases:
-		raise ValueError("signed exige base real.")
-
-	if "phase" in modes and "complex" not in bases:
-		raise ValueError("phase exige base complexa.")
-
-	def bases_for_mode(mode):
-		return [basis for basis in bases 
-		        if ((mode != "signed" or basis == "real") and (mode != "phase" or basis == "complex"))]
+	bases_by_mode = {mode: sel.bases_for_mode(mode, bases) for mode in modes}
 
 	orbital_keys = list(sel.iter_orbitals(job["selection"]))
 	if not orbital_keys:
@@ -108,7 +100,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 	for mode in modes:
 		orbital_names = [
 			sel.orbital_stem(n, l, m, basis)
-			for basis in bases_for_mode(mode)
+			for basis in bases_by_mode[mode]
 			for n, l, m in orbital_keys
 		]
 
@@ -129,7 +121,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 
 	for mode in modes:
 		input_dir = run_dir / "scientific" / mode
-		mode_bases = bases_for_mode(mode)
+		mode_bases = bases_by_mode[mode]
 		expected_keys = {(n, l, m, basis)
 		                for basis in mode_bases
 		                for n, l, m in orbital_keys}
@@ -160,7 +152,7 @@ def execute_blender(run_dir: Path, save_blend: bool = False) -> list[Path]:
 
 			print(f"FBX concluído: {fbx_path.name}", flush=True)
 
-	expected_count = sum(len(orbital_keys) * len(bases_for_mode(mode)) for mode in modes)
+	expected_count = sum(len(orbital_keys) * len(bases_by_mode[mode]) for mode in modes)
 	if len(fbx_files) != expected_count:
 		raise RuntimeError("Quantidade incorreta de FBXs.")
 

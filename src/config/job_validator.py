@@ -1,5 +1,7 @@
 import math
 
+import src.core.orbital_selection as sel
+
 VALID_BASES = {"real", "complex"}
 VALID_MODES = {"point_cloud", "single", "multilayer", "signed", "phase"}
 
@@ -86,11 +88,8 @@ def validate_job(job: dict, defaults: dict) -> None:
 		if len(values) != len(set(values)):
 			raise ValueError(f"Valores repetidos em {name}.")
 
-	if "signed" in modes and "real" not in bases:
-		raise ValueError("signed exige que a base real esteja presente.")
-
-	if "phase" in modes and "complex" not in bases:
-		raise ValueError("phase exige que a base complexa esteja presente.")
+	for mode in modes:
+		sel.bases_for_mode(mode, bases)
 
 	_check_overrides(job.get("overrides", {}), defaults)
 

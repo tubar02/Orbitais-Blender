@@ -1,5 +1,18 @@
 from collections.abc import Iterator
 
+def bases_for_mode(mode: str, bases: list[str]) -> list[str]:
+	"""Seleciona as bases compatíveis com o modo solicitado."""
+	required_basis = {"signed": "real", "phase": "complex"}.get(mode)
+
+	if required_basis is None:
+		return bases.copy()
+
+	if required_basis not in bases:
+		label = "complexa" if required_basis == "complex" else "real"
+		raise ValueError(f"{mode} exige base {label}.")
+
+	return [required_basis]
+
 def iter_orbitals(selection: dict) -> Iterator[tuple[int, int, int]]:
 	"""
 	Enumera os números quânticos de uma seleção.

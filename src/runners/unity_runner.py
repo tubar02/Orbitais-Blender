@@ -21,12 +21,6 @@ def expected_orbitals(job: dict) -> dict[str, list[str]]:
 	if not modes or set(modes) - supported:
 		raise ValueError(f"Representações inválidas: {modes}")
 
-	if "signed" in modes and "real" not in bases:
-		raise ValueError("signed exige base real.")
-
-	if "phase" in modes and "complex" not in bases:
-		raise ValueError("phase exige base complexa.")
-
 	tasks = list(sel.iter_orbitals(job["selection"]))
 	if not tasks:
 		raise RuntimeError("Nenhum orbital solicitado")
@@ -34,9 +28,7 @@ def expected_orbitals(job: dict) -> dict[str, list[str]]:
 	orbitals_by_mode = {}
 	for mode in modes:
 		orbital_names = [sel.orbital_stem(n, l, m, basis, mode=mode)
-		                for basis in bases if (
-							(mode != "signed" or basis == "real") and
-							(mode != "phase" or basis == "complex"))
+		                for basis in sel.bases_for_mode(mode, bases)
 		                for n, l, m in tasks]
 		orbitals_by_mode[mode] = orbital_names
 	return orbitals_by_mode 

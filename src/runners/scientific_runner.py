@@ -20,6 +20,8 @@ def execute_scientific(run_dir: Path) -> None:
 	supported_modes = {"single", "signed", "multilayer", "point_cloud", "phase"}
 	if not representations or set(representations) - supported_modes:
 		raise ValueError(f"Representações inválidas: {representations}. Suportadas: {supported_modes}")
+
+	bases_by_mode = {mode: sel.bases_for_mode(mode, bases) for mode in representations}
 	
 	num_div = job["space"]["num_div"]
 	count = 0
@@ -32,10 +34,7 @@ def execute_scientific(run_dir: Path) -> None:
 		orbital = orbital_service.create_orbital(space,	n=n, l=l, m=m, basis=basis,	num_div=num_div)
 
 		for mode, params in representations.items():
-			if mode == "signed" and basis != orb.OrbitalBasis.REAL:
-				continue
-
-			if mode == "phase" and basis != orb.OrbitalBasis.COMPLEX:
+			if basis_name not in bases_by_mode[mode]:
 				continue
 
 			output_dir = run_dir / "scientific" / mode
