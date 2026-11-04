@@ -11,7 +11,7 @@
         "id": "20bea0367630439d",
         "type": "inject",
         "z": "5376ca69f972b593",
-        "name": "Gerar job",
+        "name": "Gerar Job",
         "props": [
             {
                 "p": "payload"
@@ -28,8 +28,8 @@
         "topic": "",
         "payload": "test_phase",
         "payloadType": "str",
-        "x": 160,
-        "y": 260,
+        "x": 60,
+        "y": 320,
         "wires": [
             [
                 "c99a843c87259530"
@@ -48,8 +48,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "Preparar run",
-        "x": 330,
-        "y": 260,
+        "x": 230,
+        "y": 320,
         "wires": [
             [
                 "da741f622ceb777d"
@@ -72,8 +72,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 560,
-        "y": 240,
+        "x": 480,
+        "y": 300,
         "wires": [
             [
                 "073d8ddff9379f82"
@@ -92,8 +92,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "Runner Científico",
-        "x": 830,
-        "y": 240,
+        "x": 730,
+        "y": 280,
         "wires": [
             [
                 "d250f4eb8ad41ff5"
@@ -119,7 +119,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 850,
+        "x": 930,
         "y": 180,
         "wires": []
     },
@@ -136,8 +136,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1110,
-        "y": 180,
+        "x": 970,
+        "y": 220,
         "wires": []
     },
     {
@@ -153,7 +153,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 370,
+        "x": 450,
         "y": 340,
         "wires": []
     },
@@ -169,8 +169,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 650,
-        "y": 340,
+        "x": 990,
+        "y": 260,
         "wires": [
             [
                 "09ee625014864b75"
@@ -189,8 +189,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "Blender Runner",
-        "x": 880,
-        "y": 340,
+        "x": 1020,
+        "y": 320,
         "wires": [
             [
                 "b2a895f0d79a98cb"
@@ -215,7 +215,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1120,
+        "x": 1380,
         "y": 340,
         "wires": [
             [
@@ -235,8 +235,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "Unity Runner",
-        "x": 1310,
-        "y": 340,
+        "x": 1410,
+        "y": 420,
         "wires": [
             [
                 "e131fe00b22ddb4c"
@@ -261,8 +261,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1520,
-        "y": 340,
+        "x": 1620,
+        "y": 420,
         "wires": [
             [
                 "5902ec54f60451d2"
@@ -282,8 +282,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1660,
-        "y": 300,
+        "x": 1460,
+        "y": 480,
         "wires": []
     },
     {
@@ -299,8 +299,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1350,
-        "y": 260,
+        "x": 1630,
+        "y": 320,
         "wires": []
     },
     {
@@ -316,8 +316,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1550,
-        "y": 260,
+        "x": 1650,
+        "y": 360,
         "wires": []
     },
     {
@@ -327,8 +327,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 760,
-        "y": 500,
+        "x": 1140,
+        "y": 540,
         "wires": [
             [
                 "107d429301e3b16c"
@@ -348,8 +348,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 980,
-        "y": 500,
+        "x": 1400,
+        "y": 540,
         "wires": []
     },
     {
@@ -365,8 +365,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1080,
-        "y": 240,
+        "x": 1260,
+        "y": 260,
         "wires": []
     },
     {
@@ -382,8 +382,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1120,
-        "y": 280,
+        "x": 1260,
+        "y": 300,
         "wires": []
     },
     {
@@ -407,8 +407,8 @@
         "topic": "",
         "payload": "run_20261103_231458_fc1e4fca",
         "payloadType": "str",
-        "x": 890,
-        "y": 420,
+        "x": 910,
+        "y": 460,
         "wires": [
             [
                 "05c5de7ec959a6a8"
@@ -427,8 +427,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1130,
-        "y": 420,
+        "x": 1150,
+        "y": 460,
         "wires": [
             [
                 "5ccc998394e86ad2"
@@ -456,8 +456,8 @@
         "topic": "",
         "payload": "run_20261103_223335_b99398a4",
         "payloadType": "str",
-        "x": 290,
-        "y": 180,
+        "x": 190,
+        "y": 240,
         "wires": [
             [
                 "7587077c67e21cf0"
@@ -476,8 +476,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 560,
-        "y": 180,
+        "x": 460,
+        "y": 240,
         "wires": [
             [
                 "073d8ddff9379f82"
@@ -505,8 +505,8 @@
         "topic": "",
         "payload": "run_20261104_020316_e33f3a80",
         "payloadType": "str",
-        "x": 380,
-        "y": 420,
+        "x": 880,
+        "y": 380,
         "wires": [
             [
                 "7b9cb3dde2627343"
@@ -525,10 +525,141 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
-        "y": 420,
+        "x": 1140,
+        "y": 380,
         "wires": [
             [
+                "09ee625014864b75"
+            ]
+        ]
+    },
+    {
+        "id": "d6a1e5759cdbbd7d",
+        "type": "inject",
+        "z": "5376ca69f972b593",
+        "name": "Recuperar Run",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": " {     \"run_id\": \"run_20261104_071924_b66bc0e3\",     \"confirm_stopped\": true }",
+        "payloadType": "json",
+        "x": 260,
+        "y": 400,
+        "wires": [
+            [
+                "229605cb107cf954"
+            ]
+        ]
+    },
+    {
+        "id": "229605cb107cf954",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Preparar recuperação",
+        "func": "\nconst data = msg.payload;\n\nif (!data || typeof data !== \"object\") {\n    node.error(\"Payload deve ser um objeto JSON.\", msg);\n    return null;\n}\n\nconst runId = String(data.run_id ?? \"\").trim();\n\nif (!/^run_\\d{8}_\\d{6}_[a-fA-F0-9]{8}$/.test(runId)) {\n    node.error(`ID de Run inválido: ${runId}`, msg);\n    return null;\n}\n\nif (data.confirm_stopped !== true) {\n    node.error(\n        \"Confirme que o processo anterior terminou.\",\n        msg\n    );\n    return null;\n}\n\nmsg.run_id = runId;\nmsg.run_dir = `runs/${runId}`;\n\nmsg.payload =\n    `\"${msg.run_dir}\" --confirm-stopped`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 480,
+        "wires": [
+            [
+                "200fb8bb8669eadf"
+            ]
+        ]
+    },
+    {
+        "id": "200fb8bb8669eadf",
+        "type": "exec",
+        "z": "5376ca69f972b593",
+        "command": "python -m src.runners.recover_run --run",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Recuperar Estado",
+        "x": 550,
+        "y": 480,
+        "wires": [
+            [
+                "cfea6611c6ef7ae5"
+            ],
+            [
+                "2bc3730100598429"
+            ],
+            [
+                "e613384d034984fc"
+            ]
+        ]
+    },
+    {
+        "id": "2bc3730100598429",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "Erros - Recuperação",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "e613384d034984fc",
+        "type": "debug",
+        "z": "5376ca69f972b593",
+        "name": "Status - Recuperação",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "cfea6611c6ef7ae5",
+        "type": "function",
+        "z": "5376ca69f972b593",
+        "name": "Encaminhar retomada",
+        "func": "const raw = String(msg.payload ?? \"\").trim();\n\nif (!raw) {\n    node.error(\"Recuperação sem resposta JSON.\", msg);\n    return null;\n}\n\nlet result;\n\ntry {\n    result = JSON.parse(raw);\n} catch (error) {\n    node.error(`JSON inválido: ${raw}`, msg);\n    return null;\n}\n\nif (!result.ok) {\n    node.error(\n        result.error || \"Falha na recuperação.\",\n        msg\n    );\n    return null;\n}\n\nmsg.run_id = result.run_id;\nmsg.run_dir = result.run_dir;\n\nconst stage = result.failed_stage;\n\nnode.status({\n    fill: \"blue\",\n    shape: \"dot\",\n    text: `Retomando ${stage}`\n});\n\nswitch (stage) {\n    case \"scientific\":\n        msg.payload =\n            `\"${msg.run_dir}\" --resume`;\n        return [msg, null, null];\n\n    case \"blender\":\n        msg.payload =\n            `--run \"${msg.run_dir}\" --save-blend --resume`;\n        return [null, msg, null];\n\n    case \"unity\":\n        msg.payload =\n            `\"${msg.run_dir}\" --resume`;\n        return [null, null, msg];\n\n    default:\n        node.error(\n            `Etapa desconhecida: ${stage}`,\n            msg\n        );\n        return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 400,
+        "wires": [
+            [
+                "5ccc998394e86ad2",
+                "073d8ddff9379f82",
                 "09ee625014864b75"
             ]
         ]
