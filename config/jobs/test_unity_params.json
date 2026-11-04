@@ -1,0 +1,31 @@
+{
+	"name": "test_unity_params",
+	"selection": {
+		"type": "single",
+		"n": 3,
+		"l": 1,
+		"m": 1
+	},
+	"basis": ["real"],
+	"representations": ["signed"],
+	"overrides": {
+		"scientific": {
+			"space": {
+				"num_div": 30
+			}
+		},
+		"unity": {
+			"presentation": {
+				"rotation_speed": 180.0,
+				"screen_fill": 0.15,
+				"revolutions": 2
+			},
+			"recording": {
+				"fps": 24,
+				"resolution": 256,
+				"quality": 75,
+				"loop": true
+			}
+		}
+	}
+}

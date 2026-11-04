@@ -38,6 +38,7 @@ public class OrbitalPresenter : MonoBehaviour
 	[SerializeField, Range(0.1f, 0.95f)] private float screenFill = 0.95f;
 	[SerializeField] private float rotationSpeed = 90f;
 	[SerializeField] private Camera targetCamera;
+	[SerializeField] private int revolutions = 3;
 
 	private GameObject currentOrbital;
 
@@ -105,6 +106,7 @@ public class OrbitalPresenter : MonoBehaviour
 
 		Rotation rotation = pivot.AddComponent<Rotation>();
 		rotation.rotationSpeed = rotationSpeed;
+		rotation.revolutions = revolutions;
 
 		if (currentOrbital != null)
 		{
@@ -248,4 +250,17 @@ public class OrbitalPresenter : MonoBehaviour
 		Debug.Log($"Catálogo atualizado: {entries.Count} orbitais.");
 	}
 #endif
+	
+	public void ConfigurePresentation(float speed, float fill, int revolutionCount)
+	{
+		rotationSpeed = speed;
+		screenFill = fill;
+		revolutions = revolutionCount;
+
+		Debug.Log(
+			$"Apresentação configurada: " +
+			$"{speed}°/s, fill={fill}, " +
+			$"revoluções={revolutionCount}"
+		);
+	}
 }

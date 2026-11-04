@@ -144,7 +144,14 @@ public static class OrbitalGifRecorder
 	}
 
 	private static RecorderController CreateRecorder(string fileName, float duration, string mode, bool manual = false)
-	{
+	{	
+		var settings = OrbitalRunSettings.Current?.recording;
+
+		int fps = settings?.fps ?? FPS;
+		int resolution = settings?.resolution ?? Resolution;
+		uint quality = (uint)(settings?.quality ?? 90);
+		bool loop = settings?.loop ?? true;
+
 		string outputDir = string.IsNullOrEmpty(runOutputDir) ? Path.Combine(Application.dataPath, "Recordings") : runOutputDir;
 		Debug.Log($"Gravando GIF em: {outputDir}");
 		outputDir = Path.Combine(outputDir, mode);
@@ -154,13 +161,13 @@ public static class OrbitalGifRecorder
 		MovieRecorderSettings movieSettings = ScriptableObject.CreateInstance<MovieRecorderSettings>();
 		movieSettings.name = "Orbital GIF";
 		movieSettings.Enabled = true;
-		movieSettings.EncoderSettings = new GifEncoderSettings{Quality = 90u, Loop = true};
-		movieSettings.ImageInputSettings = new GameViewInputSettings{OutputWidth = Resolution,OutputHeight = Resolution};
+		movieSettings.EncoderSettings = new GifEncoderSettings{Quality = quality, Loop = loop};
+		movieSettings.ImageInputSettings = new GameViewInputSettings{OutputWidth = resolution,OutputHeight = resolution};
 		movieSettings.OutputFile = Path.Combine(outputDir, fileName);
 
 		RecorderControllerSettings controllerSettings =	ScriptableObject.CreateInstance<RecorderControllerSettings>();
 		controllerSettings.AddRecorderSettings(movieSettings);
-		controllerSettings.FrameRate = FPS;
+		controllerSettings.FrameRate = fps;
 		controllerSettings.CapFrameRate = true;
 		
 
@@ -303,7 +310,7 @@ public static class OrbitalGifRecorder
 			FinishBatch();
 			return;
 		}
-		recordingDuration = 3f * 360f / rotation.rotationSpeed;
+		recordingDuration = rotation.revolutions * 360f / rotation.rotationSpeed;
 
 		try
 		{

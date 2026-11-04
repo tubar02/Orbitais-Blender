@@ -13,6 +13,7 @@ public static class OrbitalRunImporter
 	{
 		SessionState.SetString(OrbitalPresenter.ActiveRunKey, "");
 		OrbitalGifRecorder.UseDefaultOutputDirectory();
+		OrbitalRunSettings.Clear();
 		Debug.Log("Catálogo geral ativado.");
 	}
 

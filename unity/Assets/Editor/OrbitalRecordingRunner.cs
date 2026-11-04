@@ -107,6 +107,12 @@ public static class OrbitalRecordingRunner
 
 		EditorApplication.update -= WaitForPresenter;
 
+		var settings = OrbitalRunSettings.Current?.presentation;
+		if (settings != null)
+		{
+			presenter.ConfigurePresentation(settings.rotation_speed, settings.screen_fill, settings.revolutions);
+		}
+
 		string basis = SessionState.GetString(BasisKey, "real");
 		string[] modes = SessionState.GetString(ModeKey, "").Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
 
@@ -268,6 +274,7 @@ public static class OrbitalRecordingRunner
 
 		// Importa os FBX e configura a Run ativa.
 		var (basis, modes) = OrbitalRunImporter.ImportRun(runDir);
+		OrbitalRunSettings.Load(runDir);
 		StartBatch(basis, modes);
 	}
 }

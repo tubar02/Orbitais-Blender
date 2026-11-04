@@ -3,6 +3,7 @@ using UnityEngine;
 public class Rotation : MonoBehaviour
 {
 	public float rotationSpeed = 90f;
+	public int revolutions = 3;
 
 	private float elapsedTime = 0f;
 	private float rotationDuration;
@@ -15,7 +16,7 @@ public class Rotation : MonoBehaviour
 		initialRotation = transform.localRotation;
 
 		rotationDuration = 360f / rotationSpeed;
-		totalDuration = 3f * rotationDuration;
+		totalDuration = revolutions * rotationDuration;
 	}
 
 	void Update()
@@ -26,7 +27,7 @@ public class Rotation : MonoBehaviour
 		elapsedTime += Time.deltaTime;
 
 		float cycleTime = elapsedTime % totalDuration;
-		int axisIndex = Mathf.FloorToInt(cycleTime / rotationDuration);
+		int axisIndex = Mathf.FloorToInt(cycleTime / rotationDuration) % 3;
 		float axisTime = cycleTime % rotationDuration;
 		float angle = rotationSpeed * axisTime;
 
