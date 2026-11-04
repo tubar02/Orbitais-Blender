@@ -1,0 +1,30 @@
+{
+	"name": "pilot_n4_250",
+	"selection": {
+		"type": "single",
+		"n": 4,
+		"l": 2,
+		"m": 2
+	},
+	"basis": ["real", "complex"],
+	"representations": ["single", "signed", "multilayer", "point_cloud", "phase"],
+	"overrides": {
+		"scientific": {
+			"percent": 0.01,
+			"space": {
+				"num_div": 250
+			},
+			"representation_params": {
+				"multilayer": {
+					"layers": 10
+				},
+				"point_cloud": {
+					"tolerancia": 0.00005
+				},
+				"phase": {
+					"bins": 32
+				}
+			}
+		}
+	}
+}

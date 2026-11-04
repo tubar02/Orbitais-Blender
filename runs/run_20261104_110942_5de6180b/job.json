@@ -1,0 +1,54 @@
+{
+    "name": "pilot_n4_250",
+    "selection": {
+        "type": "single",
+        "n": 4,
+        "l": 2,
+        "m": 2
+    },
+    "basis": [
+        "real",
+        "complex"
+    ],
+    "representations": {
+        "single": {
+            "percent": 0.01
+        },
+        "signed": {
+            "percent": 0.01
+        },
+        "multilayer": {
+            "layers": 10,
+            "percent": 0.01
+        },
+        "point_cloud": {
+            "tolerancia": 5e-05,
+            "percent": 0.01
+        },
+        "phase": {
+            "bins": 32,
+            "percent": 0.01
+        }
+    },
+    "space": {
+        "num_div": 250
+    },
+    "blender": {
+        "fbx": {
+            "global_scale": 1.0
+        }
+    },
+    "unity": {
+        "presentation": {
+            "rotation_speed": 90.0,
+            "screen_fill": 0.95,
+            "revolutions": 3
+        },
+        "recording": {
+            "fps": 50,
+            "resolution": 1080,
+            "quality": 90,
+            "loop": true
+        }
+    }
+}

@@ -1,0 +1,1165 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.5/staging' branch; Version is '6000.5.7f1 (017862109af0) revision 96354'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'pt' Physical Memory: 16315 MB
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Tiago" at "2026-11-04T11:10:58.2624495Z"
+BatchMode: 0, IsHumanControllingUs: 1, StartBugReporterOnCrash: 1, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-11-04T11:10:58Z
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 8336, path: "D:/Unity/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.3+d7ffd15
+  Session Id:              4b7c1b89808646c2a3d8d8153a658f9e
+  Correlation Id:          8302c226b812035ebc6999a29338adf1
+  External correlation Id: 2873215790295324151
+  Machine Id:              /GNQT8UXQEGhqe8qQAecs9v5t0o=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-Tiago" (connect: 0.00s, validation: 0.00s, handshake: 0.06s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Tiago-notifications" at "2026-11-04T11:10:58.3235504Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 4674206287679-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 0.07s
+
+COMMAND LINE ARGUMENTS:
+D:\Unity\Unity Hub\Editor\6000.5.7f1\Editor\Unity.exe
+-projectPath
+C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity
+-executeMethod
+OrbitalRecordingRunner.StartRunFromCommandLine
+-orbitalsRun
+C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b
+-logFile
+C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity\Editor.log
+Successfully changed project path to: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity
+C:/Users/Tiago/Desktop/Thiagao/Faculdade/Disciplinas/TCC/Orbitais/unity
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-main-allocator-mimalloc-enabled=0"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Logging is directed to a specific file, skipping project log.Player connection [316]  Target information:
+
+Player connection [316]  * "[IP] 192.168.0.12 [Port] 55504 [Flags] 2 [Guid] 255916729 [EditorId] 255916729 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-NB54A80) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [316]  * "[IP] 26.160.7.81 [Port] 55504 [Flags] 2 [Guid] 255916729 [EditorId] 255916729 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-NB54A80) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [316]  * "[IP] 172.28.224.1 [Port] 55504 [Flags] 2 [Guid] 255916729 [EditorId] 255916729 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-NB54A80) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [316] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [316] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-7404" after 0.2 seconds.
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Artifact Garbage Collection - Removed 2 unused hashed content files
+Initialize engine version: 6000.5.7f1 (017862109af0)
+[Subsystems] Discovering subsystems at path D:/Unity/Unity Hub/Editor/6000.5.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Tiago/Desktop/Thiagao/Faculdade/Disciplinas/TCC/Orbitais/unity/Assets
+[D3D12 Device Filter] Vendor Name: NVIDIA
+[D3D12 Device Filter] Device Name: NVIDIA GeForce GTX 1650
+[D3D12 Device Filter] Driver Version: 32.0.15.6094
+[D3D12 Device Filter] Feature Level: 12.1
+[D3D12 Device Filter] Graphics Memory: 3935 MB
+[D3D12 Device Filter] Processor Count: 12
+[D3D12 Device Filter] Device Type: Discrete
+GfxDevice: creating device client; kGfxThreadingModeSplitJobs
+d3d12: failed to query info queue interface (0x80004002).
+Direct3D:
+    Version:         Direct3D 12 [level 12.1]
+    Renderer:        NVIDIA GeForce GTX 1650 (ID=0x2188)
+    Vendor:          NVIDIA
+    VRAM:            3935 MB
+    App VRAM Budget: 3344 MB
+    Driver:          32.0.15.6094
+Initialize mono
+Mono path[0] = 'D:/Unity/Unity Hub/Editor/6000.5.7f1/Editor/Data/Managed'
+Mono path[1] = 'D:/Unity/Unity Hub/Editor/6000.5.7f1/Editor/Data/BCLExtensions/runtime/netstandard2.1'
+Mono path[2] = 'D:/Unity/Unity Hub/Editor/6000.5.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/Unity/Unity Hub/Editor/6000.5.7f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56404
+CodeReloadManager initialized
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Unity/Unity Hub/Editor/6000.5.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001898 seconds.
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.506 seconds
+Domain Reload Profiling: 1101ms
+	BeginReloadAssembly (135ms)
+		CreateAndSetChildDomain (18ms)
+	RebuildCommonClasses (6ms)
+	RebuildNativeTypeToScriptingClass (22ms)
+	initialDomainReloadingComplete (73ms)
+	LoadAllAssembliesAndSetupDomain (356ms)
+		LoadAssemblies (116ms)
+		AnalyzeDomain (262ms)
+			TypeCache.Refresh (260ms)
+				TypeCache.ScanAssembly (239ms)
+	FinalizeReload (509ms)
+		SetupLoadedEditorAssemblies (0ms)
+			BeforeProcessingInitializeOnLoad (115ms)
+			ProcessInitializeOnLoadAttributes (124ms)
+			ProcessInitializeOnLoadMethodAttributes (172ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 59 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.ai.navigation@2.0.14 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.ai.navigation@134dd6a3b97b)
+    com.unity.collab-proxy@2.13.5 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.collab-proxy@120d77864ebc)
+    com.unity.ide.rider@3.0.38 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.ide.rider@1f60b3138684)
+    com.unity.ide.visualstudio@2.0.26 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.ide.visualstudio@a99d56dec63f)
+    com.unity.inputsystem@1.20.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.inputsystem@7a4e1a2a8194)
+    com.unity.recorder@5.1.7 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.recorder@0b23bb7a1fb4)
+    com.unity.timeline@1.8.12 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.timeline@8cd8509afae5)
+    com.unity.visualscripting@1.9.12 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.visualscripting@4edfcc09512f)
+    com.unity.bindings.openimageio@1.0.2 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.bindings.openimageio@94e2abc0bc65)
+    com.unity.searcher@4.9.4 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.searcher@d45a78918735)
+    com.unity.burst@1.8.30 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.burst@2f3d916873ea)
+    com.unity.nuget.mono-cecil@1.11.6 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff)
+    com.unity.test-framework.performance@3.5.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.test-framework.performance@8b56083ec0f0)
+  Built-in packages:
+    com.unity.multiplayer.center@1.0.1 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.multiplayer.center@b860850997d0)
+    com.unity.render-pipelines.universal@17.5.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.render-pipelines.universal@73b4c4ff130e)
+    com.unity.test-framework@1.7.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.test-framework@1405238725ab)
+    com.unity.ugui@2.5.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.ugui@67707a67a4ab)
+    com.unity.modules.accessibility@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.physicscore2d@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.physicscore2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.wind@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.modules.hierarchycore)
+    com.unity.ext.nunit@2.1.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.ext.nunit@44f7d31723bd)
+    com.unity.render-pipelines.core@17.5.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.render-pipelines.core@645717f21c5f)
+    com.unity.shadergraph@17.5.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.shadergraph@8d7376ec43ee)
+    com.unity.render-pipelines.universal-config@17.5.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.render-pipelines.universal-config@fdda01c80fe3)
+    com.unity.collections@6.5.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.collections@ec2c217e4cb2)
+    com.unity.mathematics@1.4.0 (location: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\Library\PackageCache\com.unity.mathematics@981956d94fb6)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.02 seconds
+Starting: D:\Unity\Unity Hub\Editor\6000.5.7f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/Tiago/Desktop/Thiagao/Faculdade/Disciplinas/TCC/Orbitais/unity
+ExitCode: 0 Duration: 0s455ms
+[769/980    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (0.41 seconds), 1 items updated, 980 evaluated
+AssetDatabase: script compilation time: 2.011545s
+Total cache size 33657832
+Total cache size after purge 33657832, took 00:00:00.0647434
+Begin MonoManager ReloadAssembly
+Refreshing native plugins compatible for Editor in 4.91 ms, found 8 plugins.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 7.49 ms, found 8 plugins.
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.657 seconds
+Domain Reload Profiling: 4839ms
+	BeginReloadAssembly (287ms)
+		DisableScriptedObjects (32ms)
+		CreateAndSetChildDomain (76ms)
+	RebuildCommonClasses (11ms)
+	RebuildNativeTypeToScriptingClass (21ms)
+	initialDomainReloadingComplete (75ms)
+	LoadAllAssembliesAndSetupDomain (786ms)
+		LoadAssemblies (443ms)
+		AnalyzeDomain (323ms)
+			TypeCache.Refresh (207ms)
+				TypeCache.ScanAssembly (193ms)
+			BuildScriptInfoCaches (104ms)
+			ResolveRequiredComponents (10ms)
+	FinalizeReload (3659ms)
+		SetupLoadedEditorAssemblies (0ms)
+			BeforeProcessingInitializeOnLoad (105ms)
+			ProcessInitializeOnLoadAttributes (2917ms)
+			ProcessInitializeOnLoadMethodAttributes (194ms)
+			AfterProcessingInitializeOnLoad (3ms)
+		AwakeInstancesAfterBackupRestoration (27ms)
+Starting new worker id: 0 with log in C:/Users/Tiago/Desktop/Thiagao/Faculdade/Disciplinas/TCC/Orbitais/unity/Logs/AssetImportWorkerHW0.log
+
+Asset Pipeline Refresh (id=606f4b75e690a5e47af8688a03ca0130): Total: 7.751 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=4298 ms
+		Asset DB Callback time: managed=87 ms, native=22 ms
+		Scripting: domain reloads=1, domain reload time=1251 ms, compile time=2014 ms, other=76 ms
+		Project Asset Count: scripts=1422, non-scripts=2397
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 25.266ms
+	ApplyChangesToAssetFolders: 0.847ms
+	Scan: 135.609ms
+	Collect global state as custom dependencies: 22.755ms
+	CategorizeScriptCompilationAssets: 78.042ms
+	ProcessAssetsWithTransientArtifactChanges: 98.488ms
+	CategorizeAssets: 60.392ms
+	CompileScripts: 2014.412ms
+	ImportOutOfDateAssets: 3744.008ms (3688.940ms without children)
+		UnloadImportedAssets: 1.192ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 1.177ms
+		ImportSchedulerStart: 52.645ms
+	PostProcessAllAssets: 88.022ms
+		MonoPostProcessAllAssets: 87.911ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 29.552ms
+			SyncVS.PostprocessSyncProject 20.675ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 4.207ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 3.763ms
+			EditModeScopePostprocessor.OnPostprocessAllAssets 1.646ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 1.162ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.602ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.550ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.535ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.434ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.374ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.286ms
+	UnloadStreamsBegin: 3.283ms
+	PersistCurrentRevisions: 0.335ms
+	GenerateScriptTypeHashes: 1.564ms
+	GenerateScriptTypeSerializationHashes: 2.777ms
+	Untracked: 1470.896ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.08 seconds
+Scanning for USB devices : 3.682ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-My project
+Unloading 29 Unused Serialized files (Serialized files now loaded: 0)
+d3d12: upload buffer was too small for the requested resource! Size: 16777216. Requested: 33702400.
+d3d12: upload buffer was too small for the requested resource! Size: 34603008. Requested: 54495560.
+Loaded scene 'Assets/Scenes/SampleScene.unity'
+	Deserialize:            9.811 ms
+	Integration:            275.364 ms
+	Integration of assets:  241.033 ms
+	Thread Wait Time:       49.134 ms
+	Total Operation Time:   575.343 ms
+Unloading 6807 unused Assets / (7.3 MB). Loaded Objects now: 7752.
+Memory consumption went from 0.66 GB to 0.65 GB.
+Total: 20.554600 ms (FindLiveObjects: 1.082800 ms CreateObjectMapping: 3.642100 ms MarkObjects: 8.615800 ms  DeleteObjects: 7.211400 ms)
+
+[LAYOUT] About to load UserSettings\Layouts\default-6000.dwlt, keepMainWindow=False
+Worker ready: AssetImportWorkerHW0 0
+[LAYOUT] About to save layout C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/Tiago/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+[MODES] ModeService[default].InitializeCurrentMode
+[MODES] ModeService[default].RaiseModeChanged(default, default)
+Importing 'GUID: da74481345ee7b94cba8316d392ef1d4 - Path: Assets/Orbitals/run_20261104_110942_5de6180b' with importer (DefaultImporter)
+Imported 'GUID: da74481345ee7b94cba8316d392ef1d4' -> (Import Result ID: '25c083f18936743063dec3e5539849f4') in 0.010 seconds [static dependencies only]. Details - ImportResultOutputID=cfcf86a1ceaacd475fb2feac1f0a740b DependenciesID=185c94545d7ff1c1c245791d22c53a28 StaticDependenciesID=2eee22cb704848eaf0d61151bce0a710 
+Importing 'GUID: 40c23f23fd433224ab2dc5c51da28baf - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_complex_multilayer.fbx' with importer (FBXImporter)
+Imported 'GUID: 40c23f23fd433224ab2dc5c51da28baf' -> (Import Result ID: '9c143f094b2d9c2a0bf2ef1653488f2b') in 2.421 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5d773aa4e5d99fe6cffc35fa6b269c1c DependenciesID=97a0edd08fffb92b016d3b914ef71759 StaticDependenciesID=912528e76ba0058c6c6778d1b92a319e 
+Importing 'GUID: 41ccbb5ccb9ffeb4cbe0d7fbd22c7821 - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_real_signed.fbx' with importer (FBXImporter)
+Imported 'GUID: 41ccbb5ccb9ffeb4cbe0d7fbd22c7821' -> (Import Result ID: '6f8b478d05e21106baec366bfd8f7f31') in 0.829 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6c6d1d55659b09cdbb92bafa3375728c DependenciesID=9f66935cfd43f21114762f6950407569 StaticDependenciesID=bb5999179b1e203d4c2c1424c94455d0 
+Importing 'GUID: 91c21d6f5b8560f4cb3b1103bd20863f - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_complex_single.fbx' with importer (FBXImporter)
+Imported 'GUID: 91c21d6f5b8560f4cb3b1103bd20863f' -> (Import Result ID: 'c586c1551fe01d1ae90e1f27117f717e') in 1.045 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=45ab76fd8136e83271656d6900077e29 DependenciesID=2bcca2d163ccfbf8bdaad625596b756e StaticDependenciesID=0745f80ad39459071b31302e48c1fb20 
+Importing 'GUID: 02b430f0cf2567c4e88b340ef87dfbea - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_real_single.fbx' with importer (FBXImporter)
+Imported 'GUID: 02b430f0cf2567c4e88b340ef87dfbea' -> (Import Result ID: 'c96f822d2e430bf8ea1fe97d39afc87b') in 0.928 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=fd394bb6622e77458cd035eb0e8728e7 DependenciesID=8c38b8bf0a17ab9403c507737d60fda1 StaticDependenciesID=81f1568967845418a978fc98e0511a5e 
+Importing 'GUID: b2f04d1019edd264293ae8e7a1fafe17 - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_complex_point_cloud.fbx' with importer (FBXImporter)
+Imported 'GUID: b2f04d1019edd264293ae8e7a1fafe17' -> (Import Result ID: '7a7b173faa5ed9eeabdf53d9caf6fca2') in 0.285 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ec9ef2101e56b71f3c09e6f01c4632a3 DependenciesID=fedc00f03bb257fb6b7413b84b432e14 StaticDependenciesID=32ebb47a6f015e63bb4a8145b13dbff7 
+Importing 'GUID: 6706688adf0857241a161a27fd783df2 - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_real_point_cloud.fbx' with importer (FBXImporter)
+Imported 'GUID: 6706688adf0857241a161a27fd783df2' -> (Import Result ID: 'b387e4be745bbc3f94e609f8ab1f2d17') in 0.193 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6977c26daa57d649b1193683eb9868ee DependenciesID=86781f139263dbeca1d3bcb0de4c6893 StaticDependenciesID=8837eef3a02f8bcec9b425d0be0b5356 
+Importing 'GUID: f7dea2de92f26f9489575004485fee79 - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_real_multilayer.fbx' with importer (FBXImporter)
+Imported 'GUID: f7dea2de92f26f9489575004485fee79' -> (Import Result ID: 'c59ee67860cb99585b24f01ff9e95597') in 1.291 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4e6f53c4191f12a9b63162ede6f9486b DependenciesID=54bea4704c7d3c72fd14557fe22201ac StaticDependenciesID=d12951544834a5b7de44d0888005b0ac 
+Importing 'GUID: ef5a78abe9fff5d47b107952141fd6aa - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_complex_phase.fbx' with importer (FBXImporter)
+Imported 'GUID: ef5a78abe9fff5d47b107952141fd6aa' -> (Import Result ID: '3dbfc6421e4b44f6795e1239728444c5') in 0.971 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=12a66f507124b03084c0fced06920621 DependenciesID=4b2ed60cb11afaa580b859b2fecd22cb StaticDependenciesID=e8d3636ed6715314f47fa906ecd0f715 
+Refreshing native plugins compatible for Editor in 4.64 ms, found 8 plugins.
+
+Asset Pipeline Refresh (id=b6a510a07cf7a834c984c442977dd94f): Total: 8.411 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=9 (actual=9, local cache=0, cache server=0)
+		Asset DB Process Time: managed=80 ms, native=8090 ms
+		Asset DB Callback time: managed=193 ms, native=46 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1423, non-scripts=2405
+		Asset File Changes: new=9, changed=9, moved=0, deleted=0
+		Scan Filter Count: 0
+	ApplyChangesToAssetFolders: 0.205ms
+	Scan: 59.926ms
+	Collect global state as custom dependencies: 0.830ms
+	OnSourceAssetsModified: 1.252ms
+	CategorizeScriptCompilationAssets: 0.051ms
+	ProcessAssetsWithTransientArtifactChanges: 0.410ms
+	CategorizeAssets: 40.553ms
+	ImportOutOfDateAssets: 8036.252ms (21.436ms without children)
+		ImportManagerImport: 7981.820ms (2.016ms without children)
+			UpdateCategorizedAssets: 0.381ms
+		UnloadImportedAssets: 0.240ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.659ms
+		ImportSchedulerStart: 32.048ms
+	PostProcessAllAssets: 174.130ms
+		XRBuildSystem.XRAssetImported 7.580ms
+		VersionControlSettings.HiddenFilePostprocess 0.504ms
+		MonoPostProcessAllAssets: 143.257ms
+			AssetPostprocessor.OnPostprocessAllAssets 91.814ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 27.953ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 6.498ms
+			AssetChangedListener.OnPostprocessAllAssets 6.424ms
+			SyncVS.PostprocessSyncProject 1.496ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 1.376ms
+			MaterialPostprocessor.OnPostprocessAllAssets 0.615ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.557ms
+			UVCSAssetPostprocessor.OnPostprocessAllAssets 0.457ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.427ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.402ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.394ms
+			PostProcessor.OnPostprocessAllAssets 0.387ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.374ms
+			SampleDependencyImporterPostProcessor.OnPostprocessAllAssets 0.365ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 0.319ms
+			AssetEvents.OnPostprocessAllAssets 0.251ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.235ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.220ms
+			AssetReloadNotifier.OnPostprocessAllAssets 0.203ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.193ms
+			SamplePostprocessor.OnPostprocessAllAssets 0.172ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.163ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.115ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.086ms
+	PostAssetChangesProfiler: 64.768ms
+	GatherAllCurrentPrimaryImportResultRevisions: 0.412ms
+	UnloadStreamsBegin: 2.410ms
+	PersistCurrentRevisions: 0.308ms
+	Untracked: 23.250ms
+
+Run run_20261104_110942_5de6180b: 8 FBX(s) importados. Base: complex,real, Modos: single,signed,multilayer,point_cloud,phase
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalRunImporter:ImportRun (string) (at Assets/Editor/OrbitalRunImporter.cs:126)
+OrbitalRecordingRunner:StartRun (string) (at Assets/Editor/OrbitalRecordingRunner.cs:283)
+OrbitalRecordingRunner:StartRunFromCommandLine () (at Assets/Editor/OrbitalRecordingRunner.cs:227)
+
+(Filename: Assets/Editor/OrbitalRunImporter.cs Line: 126)
+
+Unity configurado: 50 FPS, 1080px, 90°/s, 3 revolução(ões).
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalRunSettings:Load (string) (at Assets/Editor/OrbitalRunSettings.cs:82)
+OrbitalRecordingRunner:StartRun (string) (at Assets/Editor/OrbitalRecordingRunner.cs:284)
+OrbitalRecordingRunner:StartRunFromCommandLine () (at Assets/Editor/OrbitalRecordingRunner.cs:227)
+
+(Filename: Assets/Editor/OrbitalRunSettings.cs Line: 82)
+
+<RI> Initializing input.
+Using Windows.Gaming.Input
+[Project] Loading completed in 23.124 seconds
+	Project init time: 				11.249 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.182 seconds
+		Asset Database init time: 		0.207 seconds
+		Global illumination init time: 	0.036 seconds
+		Assemblies load time: 			1.142 seconds
+		Unity extensions init time: 	0.054 seconds
+		Asset Database refresh time: 	7.752 seconds
+	Scene opening time: 			11.600 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1793790681386,"processId":7404,"projectLoad":23.124218499999999,"projectInit":11.248903,"templateInit":0.0,"packageManagerInit":0.1817787,"assetDatabaseInit":0.2072924,"globalIlluminationInit":0.0363814,"assembliesLoad":1.1423727,"unityExtensionsInit":0.0543285,"assetDatabaseRefresh":7.7515363,"sceneOpening":11.6001209}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1793790681455,"processId":7404,"editorVersion":"6000.5.7f1 (017862109af0)","branch":"6000.5/staging","buildType":"Release","platform":"Windows"}
+Asset Pipeline Refresh (id=01c2cc66669bdb848b1116f59081fcd3): Total: 0.018 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+Refreshing native plugins compatible for Editor in 4.49 ms, found 8 plugins.
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.800 seconds
+Domain Reload Profiling: 3865ms
+	BeginReloadAssembly (723ms)
+		DisableScriptedObjects (144ms)
+		CreateAndSetChildDomain (416ms)
+	RebuildCommonClasses (12ms)
+	RebuildNativeTypeToScriptingClass (21ms)
+	initialDomainReloadingComplete (72ms)
+	LoadAllAssembliesAndSetupDomain (238ms)
+		LoadAssemblies (133ms)
+		AnalyzeDomain (47ms)
+			TypeCache.Refresh (8ms)
+			ResolveRequiredComponents (33ms)
+	FinalizeReload (2801ms)
+		SetupLoadedEditorAssemblies (0ms)
+			BeforeProcessingInitializeOnLoad (141ms)
+			ProcessInitializeOnLoadAttributes (548ms)
+			ProcessInitializeOnLoadMethodAttributes (162ms)
+			AfterProcessingInitializeOnLoad (3ms)
+		AwakeInstancesAfterBackupRestoration (1406ms)
+No restricted APIs configured; Validation skipped.
+Checking 23 assemblies for restricted APIs found 0 usage(s) in 5 ms
+Refreshing native plugins compatible for Editor in 4.45 ms, found 8 plugins.
+
+Asset Pipeline Refresh (id=62b9f93fe49df414aa1c64f16f89f6a5): Total: 5.588 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=3189 ms
+		Asset DB Callback time: managed=895 ms, native=384 ms
+		Scripting: domain reloads=1, domain reload time=1116 ms, compile time=2 ms, other=0 ms
+		Project Asset Count: scripts=1423, non-scripts=2405
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 2.252ms
+	ApplyChangesToAssetFolders: 0.355ms
+	Collect global state as custom dependencies: 3.032ms
+	ProcessAssetsWithTransientArtifactChanges: 227.528ms
+	CategorizeAssets: 51.832ms
+	CompileScripts: 2.055ms
+	ImportOutOfDateAssets: 2852.504ms (2818.248ms without children)
+		CollectScriptTypesHashes: 2.017ms
+		ReloadNativeAssets: 1.260ms
+		UnloadImportedAssets: 2.047ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.669ms
+		ImportSchedulerStart: 30.250ms
+	PostProcessAllAssets: 1270.193ms
+		AssemblyValidation.PostprocessAllAssets 36.174ms
+		PostProcessCallbackCreateDeferredMaterials 19.874ms
+		PostprocessAssetsUpdateCachedIcon 18.002ms
+		RaytracingShaderImportPostprocess 10.156ms
+		ShaderAssetModifiedCallback 9.794ms
+		ComputeShaderImportPostprocess 9.318ms
+		SpeedTreeImporter.PostprocessAllAssets 8.002ms
+		BlockShaderImporter.PostprocessAllAssets 3.598ms
+		LocalizationDatabase.AssetDatabasePostprocessCallback 3.534ms
+		XRBuildSystem.XRAssetImported 1.359ms
+		MonoPostProcessAllAssets: 892.792ms
+			SyncVS.PostprocessSyncProject 277.502ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 232.002ms
+			PostProcessor.OnPostprocessAllAssets 60.326ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 48.234ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 47.508ms
+			MaterialPostprocessor.OnPostprocessAllAssets 41.230ms
+			AssetPostprocessor.OnPostprocessAllAssets 39.619ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 26.339ms
+			AssetChangedListener.OnPostprocessAllAssets 17.181ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 11.252ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 7.253ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 6.835ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 6.381ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 2.355ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 2.133ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 1.023ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 0.715ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.592ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.444ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.417ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.374ms
+			UVCSAssetPostprocessor.OnPostprocessAllAssets 0.373ms
+			EditModeScopePostprocessor.OnPostprocessAllAssets 0.365ms
+			SamplePostprocessor.OnPostprocessAllAssets 0.333ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.324ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.323ms
+			SampleDependencyImporterPostProcessor.OnPostprocessAllAssets 0.309ms
+			AssetEvents.OnPostprocessAllAssets 0.262ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.186ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.172ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.171ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.146ms
+			AssetReloadNotifier.OnPostprocessAllAssets 0.130ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.091ms
+	PostAssetChangesProfiler: 9.319ms
+	GatherAllCurrentPrimaryImportResultRevisions: 0.167ms
+	PersistCurrentRevisions: 0.120ms
+	GenerateScriptTypeHashes: 3.767ms
+	GenerateScriptTypeSerializationHashes: 6.031ms
+	Untracked: 1161.608ms
+
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            1.583 ms
+	Integration:            477.915 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.040 ms
+	Total Operation Time:   479.540 ms
+Catálogo atualizado: 8 orbitais.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:UpdateCatalog () (at Assets/Scripts/OrbitalPresenter.cs:250)
+OrbitalPresenter:Start () (at Assets/Scripts/OrbitalPresenter.cs:54)
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 250)
+
+Orbital carregado: orbital_n4_l2_m2_complex_multilayer
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalPresenter:Start () (at Assets/Scripts/OrbitalPresenter.cs:66)
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Apresentação configurada: 90°/s, fill=0,95, revoluções=3
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:ConfigurePresentation (single,single,int) (at Assets/Scripts/OrbitalPresenter.cs:260)
+OrbitalRecordingRunner:WaitForPresenter () (at Assets/Editor/OrbitalRecordingRunner.cs:120)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 260)
+
+Runner iniciou a gravação: complex,real/single,signed,multilayer,point_cloud,phase
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalRecordingRunner:WaitForPresenter () (at Assets/Editor/OrbitalRecordingRunner.cs:133)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalRecordingRunner.cs Line: 133)
+
+Iniciando gravação de 8 orbital(is).
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartSequence (System.Collections.Generic.List`1<OrbitalEntry>) (at Assets/Editor/OrbitalGifRecorder.cs:216)
+OrbitalGifRecorder:RecordBatch (string[],string[]) (at Assets/Editor/OrbitalGifRecorder.cs:137)
+OrbitalRecordingRunner:WaitForPresenter () (at Assets/Editor/OrbitalRecordingRunner.cs:138)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 216)
+
+Start Indexing on Editor startup
+[Indexing] Starting Initial Indexing for Assets
+Asset Pipeline Refresh (id=4907ff7ef4f0fd7478baf68f72397bf4): Total: 0.017 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Created GICache directory at C:/Users/Tiago/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.055s, timestamps: [40.330 - 40.385]
+Orbital carregado: orbital_n4_l2_m2_complex_single
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:318)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Gravando GIF em: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:CreateRecorder (string,single,string,bool) (at Assets/Editor/OrbitalGifRecorder.cs:174)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:342)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 174)
+
+Gravando 1/8: orbital_n4_l2_m2_complex_single
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:354)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 354)
+
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "Nus3D3PI"... (expires: 2026-11-04T11:52:00Z)
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+TrimDiskCacheJob: Current cache size 0mb
+GIF 1 finalizado.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:280)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 280)
+
+Orbital carregado: orbital_n4_l2_m2_real_single
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:318)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Gravando GIF em: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:CreateRecorder (string,single,string,bool) (at Assets/Editor/OrbitalGifRecorder.cs:174)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:342)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 174)
+
+Gravando 2/8: orbital_n4_l2_m2_real_single
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:354)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 354)
+
+GIF 2 finalizado.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:280)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 280)
+
+Orbital carregado: orbital_n4_l2_m2_real_signed
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:318)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Gravando GIF em: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:CreateRecorder (string,single,string,bool) (at Assets/Editor/OrbitalGifRecorder.cs:174)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:342)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 174)
+
+Gravando 3/8: orbital_n4_l2_m2_real_signed
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:354)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 354)
+
+Asset Pipeline Refresh (id=fa734127471e8584ea1ec18d2c7d4d5c): Total: 0.006 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=8e8bcbdb18c1f934ab24524b50a047d1): Total: 0.006 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+GIF 3 finalizado.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:280)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 280)
+
+Orbital carregado: orbital_n4_l2_m2_complex_multilayer
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:318)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Gravando GIF em: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:CreateRecorder (string,single,string,bool) (at Assets/Editor/OrbitalGifRecorder.cs:174)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:342)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 174)
+
+Gravando 4/8: orbital_n4_l2_m2_complex_multilayer
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:354)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 354)
+
+GIF 4 finalizado.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:280)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 280)
+
+Orbital carregado: orbital_n4_l2_m2_real_multilayer
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:318)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Gravando GIF em: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:CreateRecorder (string,single,string,bool) (at Assets/Editor/OrbitalGifRecorder.cs:174)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:342)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 174)
+
+Gravando 5/8: orbital_n4_l2_m2_real_multilayer
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:354)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 354)
+
+GIF 5 finalizado.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:280)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 280)
+
+Orbital carregado: orbital_n4_l2_m2_complex_point_cloud
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:318)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Gravando GIF em: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:CreateRecorder (string,single,string,bool) (at Assets/Editor/OrbitalGifRecorder.cs:174)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:342)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 174)
+
+Gravando 6/8: orbital_n4_l2_m2_complex_point_cloud
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:354)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 354)
+
+GIF 6 finalizado.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:280)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 280)
+
+Orbital carregado: orbital_n4_l2_m2_real_point_cloud
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:318)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Gravando GIF em: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:CreateRecorder (string,single,string,bool) (at Assets/Editor/OrbitalGifRecorder.cs:174)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:342)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 174)
+
+Gravando 7/8: orbital_n4_l2_m2_real_point_cloud
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:354)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 354)
+
+Asset Pipeline Refresh (id=d08ed449579185d40a6f8a90b328342f): Total: 0.007 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+GIF 7 finalizado.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:280)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 280)
+
+Orbital carregado: orbital_n4_l2_m2_complex_phase
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalPresenter:LoadOrbital (int,int,int,string,string) (at Assets/Scripts/OrbitalPresenter.cs:118)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:318)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Scripts/OrbitalPresenter.cs Line: 118)
+
+Gravando GIF em: C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\runs\run_20261104_110942_5de6180b\unity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:CreateRecorder (string,single,string,bool) (at Assets/Editor/OrbitalGifRecorder.cs:174)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:342)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 174)
+
+Gravando 8/8: orbital_n4_l2_m2_complex_phase
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:354)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 354)
+
+Asset Pipeline Refresh (id=cf54a348672fd424c99b4bc0057325a2): Total: 0.006 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+GIF 8 finalizado.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:280)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 280)
+
+Lote concluído!
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:292)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalGifRecorder.cs Line: 292)
+
+Runner: gravação concluída com sucesso.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalRecordingRunner:OnRecordingFinished (bool) (at Assets/Editor/OrbitalRecordingRunner.cs:157)
+OrbitalGifRecorder:FinishBatch (bool) (at Assets/Editor/OrbitalGifRecorder.cs:382)
+OrbitalGifRecorder:StartNextOrbital () (at Assets/Editor/OrbitalGifRecorder.cs:293)
+OrbitalGifRecorder:UpdateBatch () (at Assets/Editor/OrbitalGifRecorder.cs:232)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/Editor/OrbitalRecordingRunner.cs Line: 157)
+
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            1.176 ms
+	Integration:            300.975 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.043 ms
+	Total Operation Time:   302.198 ms
+Unloading 6198 unused Assets / (25.2 MB). Loaded Objects now: 8975.
+Memory consumption went from 1.02 GB to 1.00 GB.
+Total: 52.394700 ms (FindLiveObjects: 1.097800 ms CreateObjectMapping: 3.023700 ms MarkObjects: 33.913400 ms  DeleteObjects: 14.358400 ms)
+
+[Licensing::Client] Successfully resolved entitlement details
+Starting new worker id: 1 with log in C:/Users/Tiago/Desktop/Thiagao/Faculdade/Disciplinas/TCC/Orbitais/unity/Logs/AssetImportWorkerHW1.log
+[Worker0] Imported GUID: 40c23f23fd433224ab2dc5c51da28baf - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_complex_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '231029ede263591ed6fdd6b388ad848e') in 0.6610199 seconds
+Starting new worker id: 2 with log in C:/Users/Tiago/Desktop/Thiagao/Faculdade/Disciplinas/TCC/Orbitais/unity/Logs/AssetImportWorkerHW2.log
+[Worker0] Imported GUID: d1953bc1f9e4a0741ae26805309b07fb - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l0_m0_real_signed.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '0c922d4b06f713650a97c4b0eb19dd06') in 0.0540303 seconds
+[Worker0] Imported GUID: 43227a3b2af937d40940064d0bacff80 - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m0_real_signed.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '3300c36150f16c6c6bb24354f8a014b8') in 0.0562116 seconds
+[Worker0] Imported GUID: f7dea2de92f26f9489575004485fee79 - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_real_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '25544b9c7a8dcb74913028ae55d88482') in 0.2355665 seconds
+UPID Received '48fc2016-0a33-4faa-bdf2-b16e6b6191fe'.
+[Worker0] Imported GUID: b2f04d1019edd264293ae8e7a1fafe17 - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_complex_point_cloud.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'a53b7d483d5063231a8d8f77c709b638') in 0.1659675 seconds
+[Worker0] Imported GUID: 08d13f1c8a72c5d4095015aa09b5d7d2 - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m0_real_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '90eee4b23b67a58f254969f20fad8098') in 0.047787 seconds
+[Worker0] Imported GUID: 425780eb901ee1d4fa42cc52504ae10a - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m1_complex_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'ffe8b987b8fcbf3bbbaa4dc6dbd479ea') in 0.0492214 seconds
+[Worker0] Imported GUID: 41ccbb5ccb9ffeb4cbe0d7fbd22c7821 - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_real_signed.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '40634692bdce0640a5dbb3618299b1d2') in 0.2487548 seconds
+[Worker0] Imported GUID: 6706688adf0857241a161a27fd783df2 - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_real_point_cloud.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'ad9ff8c4aa7293a20ae9b256952759b2') in 0.1692261 seconds
+[Worker0] Imported GUID: 91c21d6f5b8560f4cb3b1103bd20863f - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_complex_single.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'dd9d1dfc6376b0ae5cfa2b76cbd8be8a') in 0.1666023 seconds
+[Worker0] Imported GUID: 865644f557763ab47b0bbea68221ecec - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m-1_real_signed.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '0c75dbc2b520414b9709e7846c6f9621') in 0.0360475 seconds
+[Worker0] Imported GUID: 5e8adbdc0f9e4dd40a56f27510c8fbeb - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m1_real_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '0e25b5883eb257c7cdbc99e24e50a8ab') in 0.0513961 seconds
+[Worker0] Imported GUID: 267c01472e84859478c898b3e3e37253 - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m-1_complex_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'c81c0ecebdbf1ee748589e7673ba162c') in 0.0456162 seconds
+[Worker0] Imported GUID: da74481345ee7b94cba8316d392ef1d4 - Path: Assets/Orbitals/run_20261104_110942_5de6180b - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '0663589e543446fa92735179034a9be0') in 0.0281758 seconds
+[Worker0] Imported GUID: c998fa0f3294d0d4b975a75ecd3c56be - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l0_m0_real_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'ea00327ff033d34eaec4f8b9afe04f3a') in 0.0410238 seconds
+[Worker0] Imported GUID: 02b430f0cf2567c4e88b340ef87dfbea - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_real_single.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '887c1a423ff8d70910072b5c609422a3') in 0.1667218 seconds
+[Worker0] Imported GUID: ccb611d70e5b822419843d437d8643a7 - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m-1_real_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'f3d88769340928d8396155278debcfa9') in 0.0402934 seconds
+[Worker0] Imported GUID: d21c9cb0826e21d4a929061cb6ddd614 - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m0_complex_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '4cfc8484c682070d2208ed54621c4348') in 0.0561044 seconds
+[Worker0] Imported GUID: 702634ceb463d03459df196aece27621 - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l1_m1_real_signed.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'cfa0c7847d5df63d792e15df46a0821d') in 0.0357504 seconds
+[Worker0] Imported GUID: ef5a78abe9fff5d47b107952141fd6aa - Path: Assets/Orbitals/run_20261104_110942_5de6180b/orbital_n4_l2_m2_complex_phase.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '771b84e0c1ef4fa83770098413a5a435') in 0.1849198 seconds
+[Worker0] Imported GUID: 5c70488261e323f42852a42b46054ad4 - Path: Assets/Orbitals/run_20261104_095821_f449358c/orbital_n2_l0_m0_complex_multilayer.fbx - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '4b8811039c8b6cbd3e357165d11d42b7') in 0.0578218 seconds
+Worker ready: AssetImportWorkerHW1 1
+Worker ready: AssetImportWorkerHW2 2
+Asset Pipeline Refresh (id=91f9ffc0b0866024c8fc8f7388ecedb9): Total: 0.025 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Unity finalizado. Código: 0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OrbitalRecordingRunner:FinishCommandLineRun () (at Assets/Editor/OrbitalRecordingRunner.cs:265)
+UnityEditor.EditorApplication:Internal_CallDelayFunctions ()
+
+(Filename: Assets/Editor/OrbitalRecordingRunner.cs Line: 265)
+
+MonoPathRemapper: Attempts to remap: 49361; Successful remaps: 19352
+Serialized file version minimum: 23, current 23
+[LAYOUT] About to save layout C:\Users\Tiago\Desktop\Thiagao\Faculdade\Disciplinas\TCC\Orbitais\unity\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/Tiago/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+Importing 'GUID: 0000000000000000c000000000000000 - Path: ProjectSettings/EditorSettings.asset' with importer (LibraryAssetImporter)
+Imported 'GUID: 0000000000000000c000000000000000' -> (Import Result ID: '004c164f267930a2e0a5315dc62f5e67') in 0.005 seconds [static dependencies only]. Details - ImportResultOutputID=fc08cc28cef36a03227c22ef67b54535 DependenciesID=d83f79871f1af59527983be595b4e7b7 StaticDependenciesID=a2fc10b1870a66674bffc1fd6b89eebd 
+Refreshing native plugins compatible for Editor in 6.10 ms, found 8 plugins.
+Asset Pipeline Refresh (id=4b049fcc65886ae4d9b60bc6796ef90b): Total: 0.094 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+[Licensing::IpcConnector] LicenseClient-Tiago-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-Tiago channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+CodeReloadManager destroyed
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1793791058590,"processId":7404,"allocatedMemory":52464131,"memoryLabels":[{"Default":236291},{"Permanent":15516},{"NewDelete":66717},{"Thread":4207480},{"Manager":820104},{"VertexData":8},{"Geometry":816},{"Texture":24},{"Shader":861622},{"Material":24},{"GfxDevice":62072},{"GfxThread":6912},{"Animation":952},{"Audio":1168},{"FreeType":8},{"FontEngine":736},{"Physics":2146},{"Physics2D":16},{"Serialization":206368},{"Input":45280},{"JobScheduler":256},{"TextLib":19030},{"Mono":48},{"MonoCode":256},{"ScriptingNativeRuntime":1664940},{"BaseObject":1722530},{"Resource":1208},{"Renderer":3080},{"Transform":4685},{"File":18950},{"WebCam":616},{"Culling":32},{"Terrain":11442},{"Wind":24},{"STL":40},{"String":9886},{"StaticString":3808},{"Utility":2673402},{"Curl":48},{"PoolAlloc":2360},{"AI":80},{"TypeTree":14869},{"CodeReload":448},{"RuntimeInitializeOnLoadManager":64},{"Sprites":102},{"SpriteAtlas":120},{"GI":7816},{"Director":8296},{"CloudService":6920},{"WebRequest":15364},{"VR":47114},{"SceneManager":608},{"Video":208},{"LazyScriptCache":32},{"NativeArray":33048660},{"Camera":17},{"Secure":2377},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":728},{"Hierarchy":1176},{"UIElements":1001328},{"CoreStats":13688},{"Identifiers":6768},{"Gui":268058},{"EditorUtility":194050},{"VersionControl":8},{"Undo":931},{"AssetDatabase":4752268},{"AssetImporter":40},{"EditorGi":328},{"UnityConnect":35382},{"Upm":1912},{"UpmDiagnostics":8},{"AssetCompliance":64},{"DrivenProperties":72},{"LocalIPC":260},{"ProfilerEditor":9746},{"CoreBusinessMetrics":3480},{"Windowing":456},{"Licensing":776},{"AssetReference":32},{"IPCStream":32}]}
