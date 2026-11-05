@@ -1,0 +1,14 @@
+{
+    "run_id": "run_20261105_004752_48130282",
+    "status": "completed",
+    "current_stage": null,
+    "created_at": "2026-11-05T00:47:52.062895+00:00",
+    "started_at": "2026-11-05T00:47:52.748629+00:00",
+    "finished_at": "2026-11-05T01:01:13.950983+00:00",
+    "stages": {
+        "scientific": "completed",
+        "blender": "completed",
+        "unity": "completed"
+    },
+    "error": null
+}

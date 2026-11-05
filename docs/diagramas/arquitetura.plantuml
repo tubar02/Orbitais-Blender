@@ -1,0 +1,20 @@
+@startuml
+!include estilo.iuml
+skinparam nodesep 26
+skinparam ranksep 34
+skinparam rectangleBorderColor #35516A
+skinparam rectangleBackgroundColor #EAF1F6
+rectangle "**Node-RED**\nCoordenação das etapas" as node
+rectangle "**Registros da Run**\njob.json · run.json" as run #F4F5F6
+rectangle "**Python científico**\nCálculo e exportação" as sci
+rectangle "**Blender**\nPreparação dos modelos" as blend
+rectangle "**Unity**\nApresentação e gravação" as unity
+rectangle "**Animações**\nGIF" as out #E8F3EC
+node -right-> run : prepara e\nacompanha
+node -down-> sci
+node -down-> blend : aciona os runners
+node -down-> unity
+sci -right-> blend : OBJ / pontos
+blend -right-> unity : FBX
+unity -right-> out
+@enduml

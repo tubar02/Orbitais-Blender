@@ -1,0 +1,41 @@
+{
+  "name": "fig_unity_a",
+  "selection": {
+    "type": "single",
+    "n": 4,
+    "l": 2,
+    "m": 2
+  },
+  "basis": [
+    "real"
+  ],
+  "representations": [
+    "signed"
+  ],
+  "overrides": {
+    "scientific": {
+      "percent": 0.01,
+      "space": {
+        "num_div": 250
+      }
+    },
+    "blender": {
+      "fbx": {
+        "global_scale": 1.0
+      }
+    },
+    "unity": {
+      "presentation": {
+        "rotation_speed": 90.0,
+        "screen_fill": 0.7,
+        "revolutions": 3
+      },
+      "recording": {
+        "fps": 50,
+        "resolution": 1080,
+        "quality": 90,
+        "loop": true
+      }
+    }
+  }
+}

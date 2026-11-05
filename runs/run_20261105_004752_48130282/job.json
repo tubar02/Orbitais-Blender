@@ -1,0 +1,53 @@
+{
+    "name": "cena_blender_n1_n2",
+    "selection": {
+        "type": "range",
+        "n_min": 1,
+        "n_max": 2
+    },
+    "basis": [
+        "real",
+        "complex"
+    ],
+    "representations": {
+        "single": {
+            "percent": 0.01
+        },
+        "signed": {
+            "percent": 0.01
+        },
+        "multilayer": {
+            "layers": 5,
+            "percent": 0.01
+        },
+        "point_cloud": {
+            "tolerancia": 0.0005,
+            "percent": 0.01
+        },
+        "phase": {
+            "bins": 12,
+            "percent": 0.01
+        }
+    },
+    "space": {
+        "num_div": 80
+    },
+    "blender": {
+        "fbx": {
+            "global_scale": 1.0
+        }
+    },
+    "unity": {
+        "presentation": {
+            "rotation_speed": 180.0,
+            "screen_fill": 0.15,
+            "revolutions": 2
+        },
+        "recording": {
+            "fps": 24,
+            "resolution": 256,
+            "quality": 75,
+            "loop": true
+        }
+    }
+}

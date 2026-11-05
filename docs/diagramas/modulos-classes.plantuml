@@ -1,0 +1,20 @@
+@startuml
+!include estilo.iuml
+skinparam classBackgroundColor #EAF1F6
+skinparam classBorderColor #35516A
+skinparam classAttributeFontColor #182C40
+skinparam ranksep 23
+hide circle
+class Orbital {
+  n, l, m
+  basis
+  wavefunction
+  density
+}
+class Space {
+  num_div
+  R, THETA, PHI
+  static_space_update()
+}
+Orbital "0..*" -down-> "1" Space : space
+@enduml

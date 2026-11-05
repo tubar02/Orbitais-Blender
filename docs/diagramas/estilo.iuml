@@ -1,0 +1,19 @@
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 14
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam roundcorner 9
+skinparam ArrowColor #35516A
+skinparam ArrowFontColor #24374A
+skinparam ArrowFontSize 13
+skinparam defaultFontColor #182C40
+skinparam sequence {
+  LifeLineBorderColor #7190A6
+  ParticipantBackgroundColor #EAF1F6
+  ParticipantBorderColor #35516A
+  GroupBackgroundColor #EFF4F8
+  GroupBorderColor #7190A6
+  DividerBackgroundColor #EAF1F6
+  DividerBorderColor #7190A6
+}
+hide stereotype

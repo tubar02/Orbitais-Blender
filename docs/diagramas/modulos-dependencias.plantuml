@@ -1,0 +1,18 @@
+@startuml
+!include estilo.iuml
+skinparam nodesep 34
+skinparam ranksep 28
+skinparam rectangleBorderColor #35516A
+skinparam rectangleBackgroundColor #EAF1F6
+rectangle "**runners**\nPreparação e execução" as runners
+rectangle "**config**\nResolução e validação" as config
+rectangle "**services**\nOperações sobre orbitais e Runs" as services
+rectangle "**core**\nOrbitais, seleção e grade" as core
+rectangle "**io**\nCaminhos, JSON e exportação" as io
+runners -down-> config
+runners -down-> services
+runners -down-> core
+runners -down-> io
+services -down-> core
+services -down-> io
+@enduml
