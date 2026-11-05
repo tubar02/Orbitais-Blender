@@ -1,0 +1,29 @@
+{
+"name": "cena_blender_n1_n2",
+"selection": {
+	"type": "range",
+	"n_min": 1,
+	"n_max": 2
+},
+"basis": ["real", "complex"],
+"representations": ["single", "signed", "multilayer", "point_cloud", "phase"],
+"overrides": {
+	"scientific": {
+	"percent": 0.01,
+	"space": {
+		"num_div": 100
+	},
+	"representation_params": {
+		"multilayer": {
+		"layers": 5
+		},
+		"point_cloud": {
+		"tolerancia": 0.0005
+		},
+		"phase": {
+		"bins": 12
+		}
+	}
+	}
+}
+}

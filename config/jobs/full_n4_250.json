@@ -11,7 +11,7 @@
 		"scientific": {
 			"percent": 0.01,
 			"space": {
-				"num_div": 250
+				"num_div": 300
 			},
 			"representation_params": {
 				"multilayer": {
