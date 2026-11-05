@@ -23,8 +23,11 @@ def acompanha(desc: str | None= None):
 	return deco
 
 @acompanha("Gerando orbital atômico")
-def create_orbital(space: sp.Space, n: int, l: int, m: int, basis: orb.OrbitalBasis = orb.OrbitalBasis.REAL, num_div: int | None = None) -> orb.Orbital:
-	space.static_space_update(n, num_div)
+def create_orbital(space: sp.Space, n: int, l: int, m: int, basis: orb.OrbitalBasis = orb.OrbitalBasis.REAL, 
+                   num_div: int | None = None, *, update_space: bool = True) -> orb.Orbital:
+	"""Cria o orbital. Com update_space=False, usa a grade já preparada."""
+	if update_space:
+		space.static_space_update(n, num_div)
 	orbital = orb.Orbital(n, l, m, space, basis=basis)
 	return orbital
 

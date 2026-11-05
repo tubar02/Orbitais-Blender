@@ -25,13 +25,18 @@ def execute_scientific(run_dir: Path) -> None:
 	
 	num_div = job["space"]["num_div"]
 	count = 0
+	space = None
+	current_n = None
 
 	for basis_name, (n, l, m) in product(bases, sel.iter_orbitals(selection)):
 		print(f"Gerando orbital n={n}, l={l}, m={m}", flush=True)
 
-		space = sp.Space()
+		new_grid = space is None or n != current_n
+		if new_grid:
+			space = sp.Space()
+			current_n = n
 		basis = orb.OrbitalBasis(basis_name)
-		orbital = orbital_service.create_orbital(space,	n=n, l=l, m=m, basis=basis,	num_div=num_div)
+		orbital = orbital_service.create_orbital(space,	n=n, l=l, m=m, basis=basis,	num_div=num_div, update_space=new_grid)
 
 		for mode, params in representations.items():
 			if basis_name not in bases_by_mode[mode]:
@@ -73,8 +78,8 @@ def execute_scientific(run_dir: Path) -> None:
 			print(f"{orbital.name} modo {mode} concluído.", flush=True)
 
 		count += 1
-		# Libera as referências ao orbital e à grade.
-		del orbital, space
+		# Libera as referências ao orbital
+		del orbital
 
 	if count == 0:
 		raise RuntimeError("Nenhum orbital foi gerado.")

@@ -1,29 +1,42 @@
 {
-"name": "cena_blender_n1_n2",
-"selection": {
-	"type": "range",
-	"n_min": 1,
-	"n_max": 2
-},
-"basis": ["real", "complex"],
-"representations": ["single", "signed", "multilayer", "point_cloud", "phase"],
-"overrides": {
-	"scientific": {
-	"percent": 0.01,
-	"space": {
-		"num_div": 100
+	"name": "cena_blender_n1_n2",
+	"selection": {
+		"type": "range",
+		"n_min": 1,
+		"n_max": 2
 	},
-	"representation_params": {
-		"multilayer": {
-		"layers": 5
+	"basis": ["real", "complex"],
+	"representations": ["single", "signed", "multilayer", "point_cloud", "phase"],
+	"overrides": {
+		"scientific": {
+			"percent": 0.01,
+			"space": {
+				"num_div": 80
+			},
+			"representation_params": {
+				"multilayer": {
+					"layers": 5
+					},
+				"point_cloud": {
+					"tolerancia": 0.0005
+					},
+				"phase": {
+					"bins": 12
+					}
+			}
 		},
-		"point_cloud": {
-		"tolerancia": 0.0005
-		},
-		"phase": {
-		"bins": 12
+		"unity": {
+			"presentation": {
+				"rotation_speed": 180.0,
+				"screen_fill": 0.75,
+				"revolutions": 2
+			},
+			"recording": {
+				"fps": 24,
+				"resolution": 256,
+				"quality": 75,
+				"loop": true
+			}
 		}
 	}
-	}
-}
 }
