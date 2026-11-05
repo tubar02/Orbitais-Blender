@@ -145,6 +145,11 @@ No `test_single`, confira `status: "completed"` no `run.json` e o arquivo `unity
 - [Workflow Node-RED](workflows/README.md)
 - [Projeto Unity](unity/README.md)
 
+## Monografia
+
+A fundamentação teórica, os métodos e os resultados do projeto
+estão descritos na [monografia](docs/monografia.pdf).
+
 ## Licença
 
 O código autoral do projeto é distribuído sob a [Licença MIT](LICENSE.md). Os componentes de terceiros seguem suas respectivas licenças.
