@@ -24,4 +24,18 @@ Para renderização local no Windows, confira se `java -version` funciona no ter
 - [Comparação das representações do orbital (4,2,2)](media/representacoes.png)
 - [Três quadros da animação no modo signed](media/quadros-gif.png)
 - [Orbital do hidrogênio em rotação](media/orbital-demo.gif)
-- [Quadro B da comparação de parâmetros do Unity](media/unity-parametros-B.png), extraído do GIF piloto. O painel será completado com os quadros A e C.
+- [Game View e Inspector no Unity](media/unity-editor.png)
+- [Comparação do enquadramento e da resolução](media/unity-parametros.png)
+- [Quadro B do painel](media/unity-parametros-B.png), extraído do GIF piloto.
+
+
+### Gravações do painel de parâmetros
+
+O painel usa o orbital `(4,2,2)`, base real e modo `signed`, com quadros de mesma largura.
+A imagem de 540 × 540 foi ampliada por vizinho mais próximo.
+
+| Quadro | Run | screen_fill | Resolução |
+|---|---|---|---|
+| A | `run_20261105_041007_b4f2d7ec` | 0.70 | 1080 × 1080 |
+| B | `run_20261104_110942_5de6180b` | 0.95 | 1080 × 1080 |
+| C | `run_20261105_043243_fd7cebca` | 0.95 | 540 × 540 |

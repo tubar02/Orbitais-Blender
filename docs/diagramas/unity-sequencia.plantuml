@@ -1,26 +1,42 @@
-@startuml
+@startuml unity-sequencia-preparacao
 !include estilo.iuml
-skinparam maxMessageSize 175
+skinparam maxMessageSize 0
+skinparam sequenceMessageAlign center
 hide footbox
 participant "OrbitalRecording\nRunner" as Runner
 participant "OrbitalRun\nImporter" as Importer
+participant "OrbitalRun\nSettings" as Settings
+participant "Orbital\nPresenter" as Presenter
+Runner -> Importer : ImportRun(runDir)
+Runner -> Settings : Load(runDir)
+Runner -> Runner : Iniciar Play Mode
+Runner -> Settings : Current.presentation
+Runner -> Presenter : ConfigurePresentation(...)
+@enduml
+
+@startuml unity-sequencia-gravacao
+!include estilo.iuml
+skinparam maxMessageSize 0
+skinparam sequenceMessageAlign center
+hide footbox
+participant "OrbitalRecording\nRunner" as Runner
 participant "OrbitalGif\nRecorder" as Gif
 participant "Orbital\nPresenter" as Presenter
-== Preparação da Run ==
-Runner -> Importer : Importar FBXs da Run
-Importer --> Runner : Bases e modos importados
-Runner -> Runner : Ler job.json e iniciar Play Mode
-Runner -> Presenter : Configurar apresentação
-Runner -> Gif : Iniciar lote
-== Gravação ==
-loop Para cada orbital, base e modo do lote
-  alt GIF válido já existe
-    Gif -> Gif : Reaproveitar arquivo
-  else Gravação necessária
-    Gif -> Presenter : Carregar e enquadrar modelo
-    Presenter --> Gif : Rotação configurada
-    Gif -> Gif : Gravar a Game View e salvar GIF
-  end
+participant "Rotation" as Rot
+participant "OrbitalRun\nSettings" as Settings
+Runner -> Gif : RecordBatch(bases, modes)
+loop Para cada gravação necessária
+    Gif -> Presenter : LoadOrbital(...)
+    Presenter -> Rot : Criar e configurar
+    Gif -> Presenter : Obter CurrentRotation
+    Gif -> Rot : Ler velocidade e voltas
+    Gif -> Settings : Current.recording
+    Gif -> Gif : Calcular duração e gravar
+    note over Presenter, Rot
+      Unity executa Rotation.Update()
+      durante a captura da Game View.
+    end note
+    Gif -> Gif : Encerrar captura e validar GIF
 end
-Gif --> Runner : Informar término do lote
+Gif --> Runner : RecordingFinished(success)
 @enduml

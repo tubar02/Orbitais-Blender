@@ -527,44 +527,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitalPresenter
   orbitalEntries:
-  - n: 2
-    l: 0
-    m: 0
-    basis: real
-    mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: 983c46a97a4715b46acfb1c2615dc499, type: 3}
-  - n: 2
-    l: 1
-    m: -1
-    basis: real
-    mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: a496e7a3d689b224eaeef2b20361d2c8, type: 3}
-  - n: 2
-    l: 1
-    m: 0
-    basis: real
-    mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: a1a8d320bdf953b449df8900201ccc8b, type: 3}
-  - n: 2
-    l: 1
-    m: 1
-    basis: real
-    mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: b726f0c76d4497b4a9e94f8c9d34efbd, type: 3}
-  - n: 3
+  - n: 4
     l: 2
-    m: 0
+    m: 2
+    basis: complex
+    mode: multilayer
+    prefab: {fileID: 919132149155446097, guid: 40c23f23fd433224ab2dc5c51da28baf, type: 3}
+  - n: 4
+    l: 2
+    m: 2
+    basis: complex
+    mode: phase
+    prefab: {fileID: 919132149155446097, guid: ef5a78abe9fff5d47b107952141fd6aa, type: 3}
+  - n: 4
+    l: 2
+    m: 2
+    basis: complex
+    mode: point_cloud
+    prefab: {fileID: 919132149155446097, guid: b2f04d1019edd264293ae8e7a1fafe17, type: 3}
+  - n: 4
+    l: 2
+    m: 2
+    basis: complex
+    mode: single
+    prefab: {fileID: 919132149155446097, guid: 91c21d6f5b8560f4cb3b1103bd20863f, type: 3}
+  - n: 4
+    l: 2
+    m: 2
     basis: real
     mode: multilayer
-    prefab: {fileID: 919132149155446097, guid: a4904fd0ad08d6348aad9cf56b948d96, type: 3}
-  selectedN: 3
+    prefab: {fileID: 919132149155446097, guid: f7dea2de92f26f9489575004485fee79, type: 3}
+  - n: 4
+    l: 2
+    m: 2
+    basis: real
+    mode: point_cloud
+    prefab: {fileID: 919132149155446097, guid: 6706688adf0857241a161a27fd783df2, type: 3}
+  - n: 4
+    l: 2
+    m: 2
+    basis: real
+    mode: signed
+    prefab: {fileID: 919132149155446097, guid: 41ccbb5ccb9ffeb4cbe0d7fbd22c7821, type: 3}
+  - n: 4
+    l: 2
+    m: 2
+    basis: real
+    mode: single
+    prefab: {fileID: 919132149155446097, guid: 02b430f0cf2567c4e88b340ef87dfbea, type: 3}
+  selectedN: 4
   selectedL: 2
-  selectedM: 0
+  selectedM: 2
   selectedBasis: real
-  selectedMode: multilayer
+  selectedMode: signed
   screenFill: 0.95
   rotationSpeed: 90
   targetCamera: {fileID: 0}
+  revolutions: 3
 --- !u!1 &1956983885
 GameObject:
   m_ObjectHideFlags: 0
